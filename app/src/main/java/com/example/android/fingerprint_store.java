@@ -53,7 +53,7 @@ import java.util.List;
 
 public class fingerprint_store extends AppCompatActivity  {
     //implements View.OnClickListener
-    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php" ;
+    String ServerURL = "http://192.168.73.69:80/Android/fingerprint_store.php" ;
     EditText lat, longi,fingerprint;
     TextView imageid ;
     Button button;

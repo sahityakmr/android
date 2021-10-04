@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
     //implements View.OnClickListener
-    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
+    String ServerURL = "http://192.168.73.69:80/Android/get_data.php" ;
     EditText fname, lname,mobile,aadhar,pan,dob, imageid ;
     Button button;
     String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7;

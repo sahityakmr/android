@@ -39,7 +39,7 @@ public class mark_attendance extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    String HttpURL = "http://192.168.73.69:80/android/finger_check.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
