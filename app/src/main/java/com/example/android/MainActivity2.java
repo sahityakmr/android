@@ -37,19 +37,19 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
-//implements View.OnClickListener
-    String ServerURL = "http://192.168.29.218:80/Android/get_data.php" ;
+    //implements View.OnClickListener
+    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
     EditText fname, lname,mobile,aadhar,pan,dob, imageid ;
     Button button;
     String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7;
     DatePickerDialog picker;
-//    Button btnGet;
+    //    Button btnGet;
 //    TextView tvw;
 //    Boolean CheckEditText ;
 //    public Calendar mcalendar;
 //
 //    public int day,month,year;
-  //  @RequiresApi(api = Build.VERSION_CODES.N)
+    //  @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,19 +109,19 @@ public class MainActivity2 extends AppCompatActivity  {
 
     public void GetData(){
 
-       TempName = fname.getText().toString();
+        TempName = fname.getText().toString();
 
-       Temp2 = lname.getText().toString();
+        Temp2 = lname.getText().toString();
 
-       Temp3 = mobile.getText().toString();
+        Temp3 = mobile.getText().toString();
 
-       Temp4 = aadhar.getText().toString();
+        Temp4 = aadhar.getText().toString();
 
-       Temp5 = pan.getText().toString();
+        Temp5 = pan.getText().toString();
 
-       Temp6 = dob.getText().toString();
+        Temp6 = dob.getText().toString();
 
-       Temp7 = imageid.getText().toString();
+        Temp7 = imageid.getText().toString();
 
     }
 
@@ -139,6 +139,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 String EmailHolder4 = pan ;
                 String EmailHolder5 = dob ;
                 String EmailHolder6 = imageid ;
+
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
@@ -174,12 +175,12 @@ public class MainActivity2 extends AppCompatActivity  {
             protected void onPostExecute(String result) {
 
                 super.onPostExecute(result);
-
-
+                String str = imageid;
                 Toast.makeText(MainActivity2.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity2.this,MainActivity3.class);
+                Intent intent = new Intent(getApplicationContext(),fingerprint_store.class);
+                intent.putExtra("message_key",Temp7);
                 startActivity(intent);
-                intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                 finish();
 

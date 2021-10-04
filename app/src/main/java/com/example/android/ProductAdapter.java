@@ -1,11 +1,13 @@
 package com.example.android;
 import android.content.Context;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
+
     }
 
     @Override
@@ -38,15 +41,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         Product product = productList.get(position);
 
-      //  loading the image
+
+        //  loading the image
         Glide.with(mCtx)
                 .load(product.getImage())
-               .into(holder.imageView);
+                .into(holder.imageView);
 
         holder.textViewTitle.setText(product.getTitle());
         holder.textViewShortDesc.setText(product.getShortdesc());
         holder.textViewRating.setText(String.valueOf(product.getRating()));
         holder.textViewPrice.setText(String.valueOf(product.getPrice()));
+        //holder.imageView.setImageResource(product.getImage());
+        holder.textViewRating.setTag(position);
+        holder.textViewRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (position == 0) {
+                    Intent intent = new Intent(v.getContext(), UserLoginActivity.class);
+                    mCtx.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

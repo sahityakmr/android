@@ -34,42 +34,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, final int viewType) {
-        // int viewType
-        // Inflate Layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-//        view.setOnClickListener(new View.OnClickListener() {
-//
-//
-//            @Override
-//            public void onClick(View v) {
-//                if(position == 0)
-//
-//                {
-//                    Log.i("W4K","Click-"+position);
-//
-//                    //Log.d(TAG, "onClick: card view tapped");
-//                    Intent intent = new Intent(v.getContext(), MainActivity51.class);
-//                    mcontext.startActivity(intent);
-//                    Toast.makeText(v.getContext(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-//
-//
-//
-//
-//
-//                }
-//
-//                if(position==1)
-//
-//                {
-//                    //Log.d(TAG, "onClick: card view tapped");
-//                    Intent intent = new Intent(v.getContext(), MainActivity3.class);
-//                    mcontext.startActivity(intent);
-//                    Toast.makeText(v.getContext(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//            }
-//        });
+
         return new RecyclerViewHolder(view);
     }
 
@@ -122,6 +88,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
                 }
+
+                if (position == 6) {
+                    Intent intent = new Intent(v.getContext(), mark_attendance.class);
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
+                }
+
+                if (position == 2) {
+                    Intent intent = new Intent(v.getContext(), gps_s.class);
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
+                }
+
+                if (position == 5) {
+                    Intent intent = new Intent(v.getContext(), gps_s.class);
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -135,27 +122,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // this method returns the size of recyclerview
         return courseDataArrayList.size();
     }
-
-    // View Holder Class to handle Recycler View.
-//    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-//
-//        private TextView courseTV;
-//        private ImageView courseIV;
-//        private CardView cardView;
-//        public ClipData.Item currentItem;
-//        public View view;
-//
-//        public RecyclerViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            courseTV = itemView.findViewById(R.id.idTVCourse);
-//            courseIV = itemView.findViewById(R.id.idIVcourseIV);
-//            cardView = itemView.findViewById(R.id.cv_id);
-//
-//
-//
-//
-//        }
-//    }
 
 
    // public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -172,30 +138,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             courseTV = itemView.findViewById(R.id.idTVCourse);
             courseIV = itemView.findViewById(R.id.idIVcourseIV);
             cardView = itemView.findViewById(R.id.cv_id);
-//            itemView.setOnClickListener(this);
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            //your implementation.
-//            if (position==0) {
-//                Intent intent = new Intent(v.getContext(), MainActivity51.class);
-//                mcontext.startActivity(intent);
-//
-//                Toast.makeText(v.getContext(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-//            }
-//
-//            if (position==1) {
-//                Intent intent = new Intent(v.getContext(), MainActivity3.class);
-//                mcontext.startActivity(intent);
-//
-//                Toast.makeText(v.getContext(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-//            }
 
 
-          //  https://www.journaldev.com/12372/android-recyclerview-example
-          //  https://stackoverflow.com/questions/44238018/recyclerview-onclick-for-multiple-buttons-and-handling-from-activity
-          //  https://github.com/hasancse91/Android-CardView-RecyclerView/commit/18a307edbd856f3ccf939aee248ee4542c632b7b
 
 
         }
@@ -205,5 +149,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     }
-   // public String getIdRecyclerData (String link){return link.substring(link.lastIndexOf("=")+1);}
 }

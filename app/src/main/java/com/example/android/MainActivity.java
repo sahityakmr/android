@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     EditText First_Name, Last_Name, Email, Password ;
     String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.29.218:80/android/UserRegistration.php";
+    String HttpURL = "http://192.168.1.106:80/android/UserRegistration.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
