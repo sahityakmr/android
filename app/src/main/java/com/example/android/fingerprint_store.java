@@ -21,6 +21,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -57,6 +66,7 @@ public class fingerprint_store extends AppCompatActivity  {
     EditText lat, longi,fingerprint;
     TextView imageid ;
     Button button;
+    Button button2;
     String TempName, Temp2, Temp3,Temp7;
     DatePickerDialog picker;
     TextView receiver_msg;
@@ -90,8 +100,7 @@ public class fingerprint_store extends AppCompatActivity  {
 
 
 
-
-        button = (Button) findViewById(R.id.button);
+            button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +113,78 @@ public class fingerprint_store extends AppCompatActivity  {
             }
         });
 
+
+
+        button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(fingerprint_store.this, button2);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.one:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.two:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.three:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.four:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.five:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.six:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.seven:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.eight:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.nine:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.ten:
+                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            default:
+                                return true;
+
+                        }
+
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });//closing the setOnClickListener method
     }
+
+
+
+
 
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
