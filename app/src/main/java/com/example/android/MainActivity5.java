@@ -51,7 +51,7 @@ public class MainActivity5 extends AppCompatActivity {
 
     String ImagePath = "image_path" ;
 
-    String ServerUploadPath ="http://192.168.73.69:80/android/img_upload_to_server1.php" ;
+    String ServerUploadPath ="http://192.168.1.106:80/android/img_upload_to_server1.php" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

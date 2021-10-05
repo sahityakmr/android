@@ -39,7 +39,7 @@ public class mark_attendance extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.73.69:80/android/finger_check.php";
+    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -49,6 +49,7 @@ public class mark_attendance extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationClient;
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
+    String latitude,longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,8 @@ public class mark_attendance extends AppCompatActivity {
         // method to get the location
         getLastLocation();
 
-
+        latitude= latitudeTextView.getText().toString();
+        longitude = longitTextView.getText().toString();
 
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +81,7 @@ public class mark_attendance extends AppCompatActivity {
 
                 if(CheckEditText){
 
-                    UserLoginFunction(FINGERSTRINGHolder);
+                    UserLoginFunction(FINGERSTRINGHolder,latitude,longitude);
 
                 }
                 else {
@@ -220,7 +222,7 @@ public class mark_attendance extends AppCompatActivity {
     public void CheckEditTextIsEmptyOrNot(){
 
       //  EmailHolder = Email.getText().toString();
-        //PasswordHolder = Password.getText().toString();
+        PasswordHolder = latitudeTextView.getText().toString();
         FINGERSTRINGHolder = FINGERSTRING.getText().toString();
 
         if(TextUtils.isEmpty(FINGERSTRINGHolder))
@@ -233,7 +235,7 @@ public class mark_attendance extends AppCompatActivity {
         }
     }
 
-    public void UserLoginFunction(final String Fg){
+    public void UserLoginFunction(final String Fg, final String lat, final String longi){
 
         class UserLoginClass extends AsyncTask<String,Void,String> {
 
@@ -251,7 +253,20 @@ public class mark_attendance extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
+                if(httpResponseMsg.equalsIgnoreCase("Data Matchedupdated succesfully"))
+                {
+
+                    finish();
+
+                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+
+                    //intent.putExtra(UserEmail,email);
+                    intent.putExtra(userFinger,Fg);
+                    startActivity(intent);
+
+                }
+                if(httpResponseMsg.equalsIgnoreCase("Data Matched<br />"))
+                {
 
                     finish();
 
@@ -277,7 +292,8 @@ public class mark_attendance extends AppCompatActivity {
 //                hashMap.put("password",params[1]);
 
                 hashMap.put("Fg",params[0]);
-
+                hashMap.put("lat",params[1]);
+                hashMap.put("longi",params[2]);
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
@@ -286,7 +302,7 @@ public class mark_attendance extends AppCompatActivity {
 
         UserLoginClass userLoginClass = new UserLoginClass();
 
-        userLoginClass.execute(Fg);
+        userLoginClass.execute(Fg,lat,longi);
     }
 
 
