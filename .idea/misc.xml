@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main2.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/finger_string.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/fingerprint_store.xml" value="0.9" />
       </map>
     </option>

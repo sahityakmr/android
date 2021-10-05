@@ -3,6 +3,7 @@ package com.example.android;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -58,16 +60,19 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class fingerprint_store extends AppCompatActivity  {
     //implements View.OnClickListener
     String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php" ;
     EditText lat, longi,fingerprint;
+    EditText FINGERSTRING;
     TextView imageid ;
     Button button;
     Button button2;
-    String TempName, Temp2, Temp3,Temp7;
+    Button submit;
+    String TempName, Temp2, Temp3,Temp7,Temp6;
     DatePickerDialog picker;
     TextView receiver_msg;
     FusedLocationProviderClient mFusedLocationClient;
@@ -130,12 +135,94 @@ public class fingerprint_store extends AppCompatActivity  {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.one:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                setContentView(R.layout.finger_string);
+                                FINGERSTRING = (EditText)findViewById(R.id.editText21);
+                                submit = (Button)findViewById(R.id.button11);
+                                submit.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+
+                                        GetData();
+
+                                        InsertData(Temp6);
+
+                                    }
+                                });
+                                public void GetData() {
+
+
+                                Temp6 = FINGERSTRING.getText().toString();
+                            }
+
+
+                            public void InsertData(final String FINGERSTRING){
+
+                                class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+                                    @Override
+                                    protected String doInBackground(String... params) {
+
+                                        String NameHolder = FINGERSTRING.getText().toString() ;
+
+
+
+                                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                                        nameValuePairs.add(new BasicNameValuePair("FINGERSTRING", NameHolder));
+
+                                        try {
+                                            HttpClient httpClient = new DefaultHttpClient();
+
+                                            HttpPost httpPost = new HttpPost(ServerURL);
+
+                                            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                                            HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                                            HttpEntity httpEntity = httpResponse.getEntity();
+
+
+                                        } catch (ClientProtocolException e) {
+
+                                        } catch (IOException e) {
+
+                                        }
+                                        return "Data Inserted Successfully";
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(String result) {
+
+                                        super.onPostExecute(result);
+
+
+                                        Toast.makeText(fingerprint_store.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(fingerprint_store.this,getLastLocation());
+                                        startActivity(intent);
+                                        intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+
+                                        finish();
+
+                                    }
+                                }
+
+                                SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+
+                                sendPostReqAsyncTask.execute(FINGERSTRING);
+                            }
+
+
+
+
+                            Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                                 return true;
+
 
                             case R.id.two:
                                 Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                                 return true;
+
+
 
                             case R.id.three:
                                 Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
@@ -173,7 +260,13 @@ public class fingerprint_store extends AppCompatActivity  {
                                 return true;
 
                         }
-
+                        @Override
+                        public void onBackPressed()
+                        {
+                            // Instead of setcontentview() i am restarting the activity.
+                            Intent i = new Intent(getApplicationContext(),fingerprint_store.class);
+                            startActivity(i);
+                        }
                     }
                 });
 

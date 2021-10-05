@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/one"
-        android:title="Fingure 1"/>
+        android:title="Fingure 1" />
 	
 	<item
         android:id="@+id/two"
