@@ -253,7 +253,7 @@ public class mark_attendance extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                if(httpResponseMsg.equalsIgnoreCase("Data Matchedupdated succesfully"))
+                if(httpResponseMsg.equalsIgnoreCase("Data Matched new"))
                 {
 
                     finish();
@@ -265,7 +265,7 @@ public class mark_attendance extends AppCompatActivity {
                     startActivity(intent);
 
                 }
-                if(httpResponseMsg.equalsIgnoreCase("Data Matched<br />"))
+                if(httpResponseMsg.equalsIgnoreCase("Data updated"))
                 {
 
                     finish();
@@ -277,6 +277,7 @@ public class mark_attendance extends AppCompatActivity {
                     startActivity(intent);
 
                 }
+
                 else{
 
                     Toast.makeText(mark_attendance.this,httpResponseMsg,Toast.LENGTH_LONG).show();

@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -22,6 +24,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import android.app.Activity;
 import android.view.Menu;
@@ -31,9 +36,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import java.io.IOException;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -62,36 +69,72 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class fingerprint_store extends AppCompatActivity  {
-    //implements View.OnClickListener
     String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php" ;
-    EditText lat, longi,fingerprint;
-    EditText FINGERSTRING;
-    TextView imageid ;
+    EditText FINGERSTRING,fingure1,fingure2,fingure3,fingure4,fingure5,fingure6,fingure7,fingure8,fingure9,fingure10;
+    TextView imageid;
     Button button;
-    Button button2;
-    Button submit;
-    String TempName, Temp2, Temp3,Temp7,Temp6;
+    Button button4,button5,button6,button7,button8,button9,button10,button11,button12,button13,button14;
+    String TempName, Temp2, Temp3,Temp7,Tempf1,Tempf2,Tempf3,Tempf4,Tempf5,Tempf6,Tempf7,Tempf8,Tempf9,Tempf10;
     DatePickerDialog picker;
     TextView receiver_msg;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
+    TextView fileContent;
+    TextView name;
+    SharedPreferences SharedPreferences;
+    Context context;
+
+
+    public static final String mypreference = "mypref";
+    public static final String Name = "nameKey";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fingerprint_store);
 
-//        lat = (EditText) findViewById(R.id.editText2);
-//        longi = (EditText) findViewById(R.id.editText3);
-        fingerprint = (EditText) findViewById(R.id.editText4);
 
+        imageid = (TextView) findViewById(R.id.imageid);
 
-        imageid = (TextView) findViewById(R.id.editText5);
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
         imageid.setText(str);
+        fingure1 =findViewById(R.id.received_value_id3);
+        fingure2 =findViewById(R.id.received_value_id4);
+        fingure3 =findViewById(R.id.received_value_id5);
+        fingure4 =findViewById(R.id.received_value_id6);
+        fingure5 =findViewById(R.id.received_value_id7);
+        fingure6 =findViewById(R.id.received_value_id8);
+        fingure7 =findViewById(R.id.received_value_id9);
+        fingure8 =findViewById(R.id.received_value_id10);
+        fingure9 =findViewById(R.id.received_value_id11);
+        fingure10 =findViewById(R.id.received_value_id12);
+        button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
+        button7 = (Button) findViewById(R.id.button7);
+        button8 = (Button) findViewById(R.id.button9);
+        button9 = (Button) findViewById(R.id.button10);
+        button10 = (Button) findViewById(R.id.button11);
+        button11 = (Button) findViewById(R.id.button12);
+        button12 = (Button) findViewById(R.id.button13);
+        button13 = (Button) findViewById(R.id.button14);
+
+
+
+
+
+
+
+
+
+
         latitudeTextView = findViewById(R.id.received_value_id);
         longitTextView = findViewById(R.id.received_value_id2);
 
@@ -105,180 +148,179 @@ public class fingerprint_store extends AppCompatActivity  {
 
 
 
-            button = (Button) findViewById(R.id.button);
+
+        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
                 GetData();
+                fin1();
+                fin2();
+                fin3();
+                fin4();
+                fin5();
+                fin6();
+                fin7();
+                fin8();
+                fin9();
+                fin10();
 
-                InsertData(TempName, Temp2, Temp3,Temp7);
+                InsertData(TempName, Temp2,Tempf1,Tempf2,Tempf3,Tempf4,Tempf5,Tempf6,Tempf7,Tempf8,Tempf9,Tempf10,Temp7);
+
 
             }
         });
 
 
 
-        button2 = (Button) findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
+        button4.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
 
+            fin1();
+
+        }
+    });
+
+
+        button5.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(fingerprint_store.this, button2);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+            public void onClick(View view) {
 
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.one:
-                                setContentView(R.layout.finger_string);
-                                FINGERSTRING = (EditText)findViewById(R.id.editText21);
-                                submit = (Button)findViewById(R.id.button11);
-                                submit.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
+                fin2();
 
-
-                                        GetData();
-
-                                        InsertData(Temp6);
-
-                                    }
-                                });
-                                public void GetData() {
-
-
-                                Temp6 = FINGERSTRING.getText().toString();
-                            }
-
-
-                            public void InsertData(final String FINGERSTRING){
-
-                                class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
-                                    @Override
-                                    protected String doInBackground(String... params) {
-
-                                        String NameHolder = FINGERSTRING.getText().toString() ;
-
-
-
-                                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-                                        nameValuePairs.add(new BasicNameValuePair("FINGERSTRING", NameHolder));
-
-                                        try {
-                                            HttpClient httpClient = new DefaultHttpClient();
-
-                                            HttpPost httpPost = new HttpPost(ServerURL);
-
-                                            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                                            HttpResponse httpResponse = httpClient.execute(httpPost);
-
-                                            HttpEntity httpEntity = httpResponse.getEntity();
-
-
-                                        } catch (ClientProtocolException e) {
-
-                                        } catch (IOException e) {
-
-                                        }
-                                        return "Data Inserted Successfully";
-                                    }
-
-                                    @Override
-                                    protected void onPostExecute(String result) {
-
-                                        super.onPostExecute(result);
-
-
-                                        Toast.makeText(fingerprint_store.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(fingerprint_store.this,getLastLocation());
-                                        startActivity(intent);
-                                        intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                                        finish();
-
-                                    }
-                                }
-
-                                SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-
-                                sendPostReqAsyncTask.execute(FINGERSTRING);
-                            }
-
-
-
-
-                            Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-
-                            case R.id.two:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-
-
-                            case R.id.three:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.four:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.five:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.six:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.seven:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.eight:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.nine:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            case R.id.ten:
-                                Toast.makeText(fingerprint_store.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-
-                            default:
-                                return true;
-
-                        }
-                        @Override
-                        public void onBackPressed()
-                        {
-                            // Instead of setcontentview() i am restarting the activity.
-                            Intent i = new Intent(getApplicationContext(),fingerprint_store.class);
-                            startActivity(i);
-                        }
-                    }
-                });
-
-                popup.show();//showing popup menu
             }
-        });//closing the setOnClickListener method
+        });
+
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin3();
+
+            }
+        });
+
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin4();
+
+            }
+        });
+
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin5();
+
+            }
+        });
+
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin6();
+
+            }
+        });
+
+        button10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin7();
+
+            }
+        });
+
+        button11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin8();
+
+            }
+        });
+
+        button12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin9();
+
+            }
+        });
+
+        button13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fin10();
+
+            }
+
+
+        });
+
+
+}
+
+    public void fin1() {
+        Tempf1 = fingure1.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 1", Toast.LENGTH_SHORT).show();
+    }
+    public void fin2() {
+
+        Tempf2 = fingure2.getText().toString();
+
+        Toast.makeText(fingerprint_store.this, "You Clicked : 2", Toast.LENGTH_SHORT).show();
     }
 
+    public void fin3() {
+        Tempf3 = fingure3.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 3", Toast.LENGTH_SHORT).show();
+    }
 
+    public void fin4() {
+        Tempf4 = fingure4.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 4", Toast.LENGTH_SHORT).show();
+    }
 
+    public void fin5() {
+        Tempf5 = fingure5.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 5", Toast.LENGTH_SHORT).show();
+    }
 
+    public void fin6() {
+        Tempf6 = fingure6.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 6", Toast.LENGTH_SHORT).show();
+    }
 
+    public void fin7() {
+        Tempf7 = fingure7.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 7", Toast.LENGTH_SHORT).show();
+    }
+
+    public void fin8() {
+        Tempf8 = fingure8.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 8", Toast.LENGTH_SHORT).show();
+    }
+
+    public void fin9() {
+        Tempf9 = fingure9.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 9", Toast.LENGTH_SHORT).show();
+    }
+
+    public void fin10() {
+        Tempf10 = fingure10.getText().toString();
+        Toast.makeText(fingerprint_store.this, "You Clicked : 10", Toast.LENGTH_SHORT).show();
+    }
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         // check if permissions are given
@@ -384,6 +426,7 @@ public class fingerprint_store extends AppCompatActivity  {
 
 
 
+
     public void GetData(){
 
 
@@ -391,13 +434,15 @@ public class fingerprint_store extends AppCompatActivity  {
 
         Temp2 = longitTextView.getText().toString();
 
-        Temp3 = fingerprint.getText().toString();
+
 
         Temp7 = imageid.getText().toString();
 
+        //Temp3 = FINGERSTRING.getText().toString();
     }
 
-    public void InsertData(final String lat, final String longi,final String fingerprint,final String imageid){
+    public void InsertData(final String lat, final String longi,final String file,final String file2,final String file3,final String file4,final String file5,final String file6,final String file7,final String file8,final String file9,final String file10,final String imageid){
+
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
@@ -405,16 +450,37 @@ public class fingerprint_store extends AppCompatActivity  {
 
                 String NameHolder = latitudeTextView.getText().toString() ;
 
-                String EmailHolder = longitTextView.getText().toString() ;
-                String EmailHolder2 = fingerprint ;
+                String EmailHolder = longitTextView.getText().toString();
+                String tempHolder =  fingure1.getText().toString();
+                String tempHolder2 =  fingure2.getText().toString();
+                String tempHolder3 =  fingure3.getText().toString();
+                String tempHolder4 =  fingure4.getText().toString();
+                String tempHolder5 =  fingure5.getText().toString();
+                String tempHolder6 =  fingure6.getText().toString();
+                String tempHolder7 =  fingure7.getText().toString();
+                String tempHolder8 =  fingure8.getText().toString();
+                String tempHolder9 =  fingure9.getText().toString();
+                String tempHolder10 =  fingure10.getText().toString();
 
-                String EmailHolder6 = imageid ;
+
+
+
+                String EmailHolder6 = imageid;
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
                 nameValuePairs.add(new BasicNameValuePair("lat", NameHolder));
                 nameValuePairs.add(new BasicNameValuePair("longi", EmailHolder));
-                nameValuePairs.add(new BasicNameValuePair("fingerprint", EmailHolder2));
+                nameValuePairs.add(new BasicNameValuePair("file", tempHolder));
+                nameValuePairs.add(new BasicNameValuePair("file2", tempHolder2));
+                nameValuePairs.add(new BasicNameValuePair("file3", tempHolder3));
+                nameValuePairs.add(new BasicNameValuePair("file4", tempHolder4));
+                nameValuePairs.add(new BasicNameValuePair("file5", tempHolder5));
+                nameValuePairs.add(new BasicNameValuePair("file6", tempHolder6));
+                nameValuePairs.add(new BasicNameValuePair("file7", tempHolder7));
+                nameValuePairs.add(new BasicNameValuePair("file8", tempHolder8));
+                nameValuePairs.add(new BasicNameValuePair("file9", tempHolder9));
+                nameValuePairs.add(new BasicNameValuePair("file10", tempHolder10));
 
                 nameValuePairs.add(new BasicNameValuePair("imageid", EmailHolder6));
 
@@ -456,7 +522,8 @@ public class fingerprint_store extends AppCompatActivity  {
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
 
-        sendPostReqAsyncTask.execute(lat, longi, fingerprint,imageid);
+       sendPostReqAsyncTask.execute(lat, longi, file,file2,file3,file4,file5,file6,file7,file8,file9,file10,imageid);
+
     }
 
 
@@ -467,5 +534,13 @@ public class fingerprint_store extends AppCompatActivity  {
             getLastLocation();
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (checkPermissions()) {
+            getLastLocation();
+        }
 
+    }
 }
+
