@@ -39,7 +39,7 @@ public class mark_attendance extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -111,7 +111,10 @@ public class mark_attendance extends AppCompatActivity {
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        Location location = task.getResult();
+                        // Location location = task.getResult();
+                        Location location = new Location("");
+                        location.setLatitude(23.23);
+                        location.setLongitude(23.24);
                         if (location == null) {
                             requestNewLocationData();
                         } else {

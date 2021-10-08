@@ -1,25 +1,18 @@
 package com.example.android;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.android.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,12 +26,11 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
     //implements View.OnClickListener
-    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
+    String ServerURL = "http://192.168.29.218:80/Android/get_data.php" ;
     EditText fname, lname,mobile,aadhar,pan,dob, imageid ;
     Button button;
     String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7;
@@ -177,7 +169,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 super.onPostExecute(result);
                 String str = imageid;
                 Toast.makeText(MainActivity2.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(),fingerprint_store.class);
+                Intent intent = new Intent(getApplicationContext(), FingerPrintStoreActivity.class);
                 intent.putExtra("message_key",Temp7);
                 startActivity(intent);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

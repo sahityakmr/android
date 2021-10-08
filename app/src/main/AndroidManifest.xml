@@ -46,7 +46,7 @@
         <activity android:name=".MainActivity6" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivity5" />
-        <activity android:name=".fingerprint_store" />
+        <activity android:name=".FingerPrintStoreActivity" />
         <activity android:name=".mark_attendance" />
         <activity android:name=".mark_attendance_dashboard" />
         <activity android:name=".SettingsActivity" />

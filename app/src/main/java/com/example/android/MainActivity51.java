@@ -51,7 +51,7 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 	private Button buttonRegister;
 	private ProgressDialog progressDialog;
 	private EditText editTextEmail;
-	private static final String URL_REGISTER_DEVICE = "http://192.168.1.106:80/Android/RegisterDevice.php";
+	private static final String URL_REGISTER_DEVICE = "http://192.168.29.218:80/Android/RegisterDevice.php";
 
 
 
