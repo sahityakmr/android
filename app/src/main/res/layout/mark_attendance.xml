@@ -51,7 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/fingerstring"
-        android:hint="Enter Your Password Here"
+        android:hint="Place your finger here"
         android:gravity="center"/>
 
 

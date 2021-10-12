@@ -37,9 +37,9 @@ public class MainActivity1 extends AppCompatActivity {
         // added data to array list
         recyclerDataArrayList.add(new RecyclerData("Enroll Employee", R.drawable.employee));
         recyclerDataArrayList.add(new RecyclerData("Enroll Supervisor ", R.drawable.hierarchy));
-        recyclerDataArrayList.add(new RecyclerData("Supervisor List", R.drawable.clipboard));
+        recyclerDataArrayList.add(new RecyclerData("Precise Location Share", R.drawable.clipboard));
         recyclerDataArrayList.add(new RecyclerData("Employee List", R.drawable.clipboard));
-        recyclerDataArrayList.add(new RecyclerData("Search Employee", R.drawable.search));
+        recyclerDataArrayList.add(new RecyclerData("Attendance List", R.drawable.search));
         recyclerDataArrayList.add(new RecyclerData("Search Supervisor", R.drawable.search));
         recyclerDataArrayList.add(new RecyclerData("Mark Attendance", R.drawable.immigration));
         recyclerDataArrayList.add(new RecyclerData("Upload Data", R.drawable.cloud));

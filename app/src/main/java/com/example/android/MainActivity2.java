@@ -29,18 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
-    //implements View.OnClickListener
-    String ServerURL = "http://192.168.29.218:80/Android/get_data.php" ;
-    EditText fname, lname,mobile,aadhar,pan,dob, imageid ;
+
+    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
+    EditText fname, lname,mobile,aadhar,pan,dob, imageid, address ;
     Button button;
-    String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7;
+    String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7,Temp8;
     DatePickerDialog picker;
-    //    Button btnGet;
-//    TextView tvw;
-//    Boolean CheckEditText ;
-//    public Calendar mcalendar;
-//
-//    public int day,month,year;
     //  @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +48,9 @@ public class MainActivity2 extends AppCompatActivity  {
         imageid = (EditText) findViewById(R.id.editText8);
         pan = (EditText) findViewById(R.id.editText6);
         dob = (EditText) findViewById(R.id.editText7);
-        // dob.setInputType(InputType.TYPE_NULL);
+        address = (EditText) findViewById(R.id.editaddress);
 
-        //   dob.setOnClickListener(this);
-//        day=mcalendar.get(Calendar.DAY_OF_MONTH);
-//        year=mcalendar.get(Calendar.YEAR);
-//        month=mcalendar.get(Calendar.MONTH);
         button = (Button) findViewById(R.id.button);
-        //   btnGet = (Button)findViewById(R.id.button99);
-        // button.setOnClickListener(this);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +60,7 @@ public class MainActivity2 extends AppCompatActivity  {
 
                 GetData();
 
-                InsertData(TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7);
+                InsertData(TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7,Temp8);
 
             }
         });
@@ -115,9 +103,11 @@ public class MainActivity2 extends AppCompatActivity  {
 
         Temp7 = imageid.getText().toString();
 
+        Temp8 = address.getText().toString();
+
     }
 
-    public void InsertData(final String fname, final String lname,final String mobile,final String aadhar,final String pan,final String dob,final String imageid){
+    public void InsertData(final String fname, final String lname,final String mobile,final String aadhar,final String pan,final String dob,final String imageid,final String address){
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
@@ -131,6 +121,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 String EmailHolder4 = pan ;
                 String EmailHolder5 = dob ;
                 String EmailHolder6 = imageid ;
+                String EmailHolder7 = address;
 
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -138,6 +129,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 nameValuePairs.add(new BasicNameValuePair("fname", NameHolder));
                 nameValuePairs.add(new BasicNameValuePair("lname", EmailHolder));
                 nameValuePairs.add(new BasicNameValuePair("mobile", EmailHolder2));
+                nameValuePairs.add(new BasicNameValuePair("address", EmailHolder7));
                 nameValuePairs.add(new BasicNameValuePair("aadhar", EmailHolder3));
                 nameValuePairs.add(new BasicNameValuePair("pan", EmailHolder4));
                 nameValuePairs.add(new BasicNameValuePair("dob", EmailHolder5));
@@ -181,7 +173,7 @@ public class MainActivity2 extends AppCompatActivity  {
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
 
-        sendPostReqAsyncTask.execute(fname, lname, mobile, aadhar, pan, dob,imageid);
+        sendPostReqAsyncTask.execute(fname, lname, mobile, address, aadhar, pan, dob,imageid);
     }
 
 }

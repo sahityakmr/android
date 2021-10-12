@@ -1,5 +1,6 @@
 package com.example.android;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class MainActivity3 extends AppCompatActivity {
 
     ImageView imageView;
 
-    EditText imageName;
+    TextView imageName;
 
     ProgressDialog progressDialog ;
 
@@ -51,7 +52,7 @@ public class MainActivity3 extends AppCompatActivity {
 
     String ImagePath = "image_path" ;
 
-    String ServerUploadPath ="http://192.168.29.218:80/android/img_upload_to_server.php" ;
+    String ServerUploadPath ="http://192.168.1.106:80/android/img_upload_to_server.php" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,10 @@ public class MainActivity3 extends AppCompatActivity {
 
         imageView = (ImageView)findViewById(R.id.imageView);
 
-        imageName = (EditText)findViewById(R.id.editTextImageName);
+        imageName = (TextView) findViewById(R.id.editTextImageName);
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        imageName.setText(str);
 
         SelectImageGallery = (Button)findViewById(R.id.buttonSelect);
 

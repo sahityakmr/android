@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 //apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
@@ -82,12 +83,15 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.2.0'
 
 
+
     // Import the BoM for the Firebase platform
 
 
     // Declare the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
+    implementation "androidx.core:core-ktx:+"
+  //  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 
 }

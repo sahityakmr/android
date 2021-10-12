@@ -55,7 +55,7 @@ import java.util.List;
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
     private static long Threshold = 1500;
-    String ServerURL = "http://192.168.29.218:80/Android/fingerprint_store.php";
+    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
     EditText FINGERSTRING, fingure1, fingure2, fingure3, fingure4, fingure5, fingure6, fingure7, fingure8, fingure9, fingure10;
     TextView imageid;
     Button button;
@@ -306,10 +306,10 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        // Location location = task.getResult();
-                        Location location = new Location("");
-                        location.setLatitude(23.23);
-                        location.setLongitude(23.24);
+                         Location location = task.getResult();
+//                        Location location = new Location("");
+////                        location.setLatitude(23.23);
+////                        location.setLongitude(23.24);
 
                         if (location == null) {
                             requestNewLocationData();
@@ -483,6 +483,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
                 Toast.makeText(FingerPrintStoreActivity.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity3.class);
+                intent.putExtra("message_key",imageid);
                 startActivity(intent);
                 intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
 

@@ -35,7 +35,7 @@ public class MainActivity4 extends AppCompatActivity {
 
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
-    private static final String URL_PRODUCTS = "http://192.168.29.218:80/Android/Api.php";
+    private static final String URL_PRODUCTS = "http://192.168.1.106:80/Android/Api.php";
 
     //a list to store all the products
     List<Product> productList;
@@ -45,7 +45,7 @@ public class MainActivity4 extends AppCompatActivity {
 
     ListView SubjectListView;
     ProgressBar progressBarSubject;
-    String ServerURL = "http://192.168.29.218:80/Android/Subjects.php";
+    String ServerURL = "http://192.168.1.106:80/Android/Subjects.php";
     EditText editText ;
     List<String> listString = new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter ;
@@ -134,12 +134,12 @@ public class MainActivity4 extends AppCompatActivity {
  
                                 //adding the product to product list
                                 productList.add(new Product(
-                                        product.getString("f_name"),
-                                        product.getString("mobile"),
-                                        product.getString("aadhar_no"),
+                                        product.getString("firstname"),
+                                        product.getString("contact_info"),
+                                        product.getString("aadhar"),
                                         product.getString("image_name"),
-                                        product.getString("l_name"),
-                                        product.getString("image_path")
+                                        product.getString("lastname"),
+                                        product.getString("photo")
                                 ));
                             }
  
