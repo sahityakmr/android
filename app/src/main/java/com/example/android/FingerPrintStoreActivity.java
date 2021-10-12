@@ -55,51 +55,45 @@ import java.util.List;
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
     private static long Threshold = 1500;
-    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
-    EditText FINGERSTRING, fingure1, fingure2, fingure3, fingure4, fingure5, fingure6, fingure7, fingure8, fingure9, fingure10;
-    TextView imageid;
+    String ServerURL = "http://192.168.29.218:80/Android/fingerprint_store.php";
     Button button;
     Button button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14;
-    String TempName, Temp2, Temp3, Temp7, Tempf1, Tempf2, Tempf3, Tempf4, Tempf5, Tempf6, Tempf7, Tempf8, Tempf9, Tempf10;
     DatePickerDialog picker;
     TextView receiver_msg;
     FusedLocationProviderClient mFusedLocationClient;
-    TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
-    TextView fileContent;
-    TextView name;
-    SharedPreferences SharedPreferences;
     Context context;
     MFS100 mfs100 = null;
     boolean isCaptureRunning = true;
-    private long mLastAttTime=0l;
+    private long mLastAttTime = 0l;
     private FingerData lastCapFingerData = null;
-
-    public static final String mypreference = "mypref";
-    public static final String Name = "nameKey";
+    private String latitude;
+    private String longitude;
+    private String imageId;
+    private String[] fingerprints;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fingerprint_store);
+        fingerprints = new String[10];
+        fingerprints[0] = "default";
+        fingerprints[1] = "default";
+        fingerprints[2] = "default";
+        fingerprints[3] = "default";
+        fingerprints[4] = "default";
+        fingerprints[5] = "default";
+        fingerprints[6] = "default";
+        fingerprints[7] = "default";
+        fingerprints[8] = "default";
+        fingerprints[9] = "default";
 
 
-        imageid = (TextView) findViewById(R.id.imageid);
+
 
         Intent intent = getIntent();
-        String str = intent.getStringExtra("message_key");
-        imageid.setText(str);
-        fingure1 = findViewById(R.id.received_value_id3);
-        fingure2 = findViewById(R.id.received_value_id4);
-        fingure3 = findViewById(R.id.received_value_id5);
-        fingure4 = findViewById(R.id.received_value_id6);
-        fingure5 = findViewById(R.id.received_value_id7);
-        fingure6 = findViewById(R.id.received_value_id8);
-        fingure7 = findViewById(R.id.received_value_id9);
-        fingure8 = findViewById(R.id.received_value_id10);
-        fingure9 = findViewById(R.id.received_value_id11);
-        fingure10 = findViewById(R.id.received_value_id12);
+        imageId = intent.getStringExtra("message_key");
         button4 = (Button) findViewById(R.id.button4);
         button5 = (Button) findViewById(R.id.button5);
         button6 = (Button) findViewById(R.id.button6);
@@ -112,10 +106,6 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         button13 = (Button) findViewById(R.id.button14);
 
 
-
-        latitudeTextView = findViewById(R.id.received_value_id);
-        longitTextView = findViewById(R.id.received_value_id2);
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -126,23 +116,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                GetData();
-                fin1();
-                fin2();
-                fin3();
-                fin4();
-                fin5();
-                fin6();
-                fin7();
-                fin8();
-                fin9();
-                fin10();
-
-                InsertData(TempName, Temp2, Tempf1, Tempf2, Tempf3, Tempf4, Tempf5, Tempf6, Tempf7, Tempf8, Tempf9, Tempf10, Temp7);
-
-
+                InsertData(latitude, longitude, fingerprints[0], fingerprints[1], fingerprints[2], fingerprints[3], fingerprints[4], fingerprints[5], fingerprints[6], fingerprints[7], fingerprints[8], fingerprints[9], imageId);
             }
         });
 
@@ -244,55 +218,52 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
     }
 
     public void fin1() {
-        // StartSyncCapture();
-        Tempf1 = fingure1.getText().toString();
+        StartSyncCapture(fingerprints, 0);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 1", Toast.LENGTH_SHORT).show();
     }
 
     public void fin2() {
-
-        Tempf2 = fingure2.getText().toString();
-
+        StartSyncCapture(fingerprints, 1);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 2", Toast.LENGTH_SHORT).show();
     }
 
     public void fin3() {
-        Tempf3 = fingure3.getText().toString();
+        StartSyncCapture(fingerprints, 2);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 3", Toast.LENGTH_SHORT).show();
     }
 
     public void fin4() {
-        Tempf4 = fingure4.getText().toString();
+        StartSyncCapture(fingerprints, 3);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 4", Toast.LENGTH_SHORT).show();
     }
 
     public void fin5() {
-        Tempf5 = fingure5.getText().toString();
+        StartSyncCapture(fingerprints, 4);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 5", Toast.LENGTH_SHORT).show();
     }
 
     public void fin6() {
-        Tempf6 = fingure6.getText().toString();
+        StartSyncCapture(fingerprints, 5);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 6", Toast.LENGTH_SHORT).show();
     }
 
     public void fin7() {
-        Tempf7 = fingure7.getText().toString();
+        StartSyncCapture(fingerprints, 6);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 7", Toast.LENGTH_SHORT).show();
     }
 
     public void fin8() {
-        Tempf8 = fingure8.getText().toString();
+        StartSyncCapture(fingerprints, 7);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 8", Toast.LENGTH_SHORT).show();
     }
 
     public void fin9() {
-        Tempf9 = fingure9.getText().toString();
+        StartSyncCapture(fingerprints, 8);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 9", Toast.LENGTH_SHORT).show();
     }
 
     public void fin10() {
-        Tempf10 = fingure10.getText().toString();
+        StartSyncCapture(fingerprints, 9);
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 10", Toast.LENGTH_SHORT).show();
     }
 
@@ -306,7 +277,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                         Location location = task.getResult();
+                        Location location = task.getResult();
 //                        Location location = new Location("");
 ////                        location.setLatitude(23.23);
 ////                        location.setLongitude(23.24);
@@ -314,8 +285,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            latitudeTextView.setText(location.getLatitude() + "");
-                            longitTextView.setText(location.getLongitude() + "");
+                            latitude = String.valueOf(location.getLatitude());
+                            longitude = String.valueOf(location.getLongitude());
 
                         }
                     }
@@ -354,10 +325,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            latitudeTextView.setText("Latitude: " + mLastLocation.getLatitude() + "");
-            longitTextView.setText("Longitude: " + mLastLocation.getLongitude() + "");
-
-
+            latitude = String.valueOf(mLastLocation.getLatitude());
+            longitude = String.valueOf(mLastLocation.getLongitude());
         }
 
 
@@ -400,20 +369,6 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         }
     }
 
-
-    public void GetData() {
-
-
-        TempName = latitudeTextView.getText().toString();
-
-        Temp2 = longitTextView.getText().toString();
-
-
-        Temp7 = imageid.getText().toString();
-
-        //Temp3 = FINGERSTRING.getText().toString();
-    }
-
     public void InsertData(final String lat, final String longi, final String file, final String file2, final String file3, final String file4, final String file5, final String file6, final String file7, final String file8, final String file9, final String file10, final String imageid) {
 
 
@@ -421,39 +376,25 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
             @Override
             protected String doInBackground(String... params) {
 
-                String NameHolder = latitudeTextView.getText().toString();
-
-                String EmailHolder = longitTextView.getText().toString();
-                String tempHolder = fingure1.getText().toString();
-                String tempHolder2 = fingure2.getText().toString();
-                String tempHolder3 = fingure3.getText().toString();
-                String tempHolder4 = fingure4.getText().toString();
-                String tempHolder5 = fingure5.getText().toString();
-                String tempHolder6 = fingure6.getText().toString();
-                String tempHolder7 = fingure7.getText().toString();
-                String tempHolder8 = fingure8.getText().toString();
-                String tempHolder9 = fingure9.getText().toString();
-                String tempHolder10 = fingure10.getText().toString();
-
 
                 String EmailHolder6 = imageid;
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-                nameValuePairs.add(new BasicNameValuePair("lat", NameHolder));
-                nameValuePairs.add(new BasicNameValuePair("longi", EmailHolder));
-                nameValuePairs.add(new BasicNameValuePair("file", tempHolder));
-                nameValuePairs.add(new BasicNameValuePair("file2", tempHolder2));
-                nameValuePairs.add(new BasicNameValuePair("file3", tempHolder3));
-                nameValuePairs.add(new BasicNameValuePair("file4", tempHolder4));
-                nameValuePairs.add(new BasicNameValuePair("file5", tempHolder5));
-                nameValuePairs.add(new BasicNameValuePair("file6", tempHolder6));
-                nameValuePairs.add(new BasicNameValuePair("file7", tempHolder7));
-                nameValuePairs.add(new BasicNameValuePair("file8", tempHolder8));
-                nameValuePairs.add(new BasicNameValuePair("file9", tempHolder9));
-                nameValuePairs.add(new BasicNameValuePair("file10", tempHolder10));
+                nameValuePairs.add(new BasicNameValuePair("lat", lat));
+                nameValuePairs.add(new BasicNameValuePair("longi", longi));
+                nameValuePairs.add(new BasicNameValuePair("file", file));
+                nameValuePairs.add(new BasicNameValuePair("file2", file2));
+                nameValuePairs.add(new BasicNameValuePair("file3", file3));
+                nameValuePairs.add(new BasicNameValuePair("file4", file4));
+                nameValuePairs.add(new BasicNameValuePair("file5", file5));
+                nameValuePairs.add(new BasicNameValuePair("file6", file6));
+                nameValuePairs.add(new BasicNameValuePair("file7", file7));
+                nameValuePairs.add(new BasicNameValuePair("file8", file8));
+                nameValuePairs.add(new BasicNameValuePair("file9", file9));
+                nameValuePairs.add(new BasicNameValuePair("file10", file10));
 
-                nameValuePairs.add(new BasicNameValuePair("imageid", EmailHolder6));
+                nameValuePairs.add(new BasicNameValuePair("imageid", imageid));
 
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
@@ -483,7 +424,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
                 Toast.makeText(FingerPrintStoreActivity.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity3.class);
-                intent.putExtra("message_key",imageid);
+                intent.putExtra("message_key", imageid);
                 startActivity(intent);
                 intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
 
@@ -651,7 +592,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         }
     }
 
-    private void StartSyncCapture() {
+    private void StartSyncCapture(String[] fingerprints, int index) {
         new Thread(new Runnable() {
 
             @Override
@@ -666,7 +607,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                         SetTextOnUIThread(mfs100.GetErrorMsg(ret));
                     } else {
                         lastCapFingerData = fingerData;
-
+                        fingerprints[index] = new String(fingerData.ISOTemplate());
                         final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
                                 fingerData.FingerImage().length);
                         FingerPrintStoreActivity.this.runOnUiThread(new Runnable() {

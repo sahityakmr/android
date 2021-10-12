@@ -31,7 +31,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class mark_attendance extends AppCompatActivity {
 
@@ -39,7 +41,7 @@ public class mark_attendance extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -245,6 +247,7 @@ public class mark_attendance extends AppCompatActivity {
                     finish();
 
                     Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+                    List<Biomatric> allFingers = new ArrayList<>();
 
                     //intent.putExtra(UserEmail,email);
                     intent.putExtra(userFinger,Fg);

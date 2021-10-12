@@ -46,7 +46,13 @@
         <activity android:name=".MainActivity6" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivity5" />
-        <activity android:name=".FingerPrintStoreActivity" />
+        <activity android:name=".FingerPrintStoreActivity" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity android:name=".mark_attendance" />
         <activity android:name=".mark_attendance_dashboard" />
         <activity android:name=".SettingsActivity" />
