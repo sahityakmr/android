@@ -23,6 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,6 +35,10 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +50,8 @@ public class mark_attendance extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
+    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    private static final String URL = "http://192.168.1.106:80/Android/get_all.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -52,6 +62,8 @@ public class mark_attendance extends AppCompatActivity {
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
     String latitude,longitude;
+    List<Biomatric> allFingers = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,6 +260,7 @@ public class mark_attendance extends AppCompatActivity {
 
                     Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
                     List<Biomatric> allFingers = new ArrayList<>();
+                    loadfingers();
 
                     //intent.putExtra(UserEmail,email);
                     intent.putExtra(userFinger,Fg);
@@ -294,6 +307,49 @@ public class mark_attendance extends AppCompatActivity {
 
         userLoginClass.execute(Fg,lat,longi);
     }
+
+
+    private void loadfingers() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            JSONArray array = new JSONArray(response);
+
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+
+                                //getting product object from json array
+                                JSONObject finger = array.getJSONObject(i);
+
+                                //adding the product to product list
+                                allFingers.add(new Biomatric(
+                                        finger.getString("image_name"),
+                                        finger.getString("fingerprint")
+                                ));
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //adding our stringrequest to queue
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
 
 
     @Override

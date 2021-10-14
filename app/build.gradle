@@ -49,6 +49,8 @@ android {
         jniLibs.srcDirs 'src/main/jniLibs'
     }
 
+
+
 }
 
 dependencies {

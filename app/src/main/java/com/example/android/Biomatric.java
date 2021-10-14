@@ -1,18 +1,20 @@
 package com.example.android;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Biomatric {
-    String imageId;
-    String[] fingerPrint;
-    public Biomatric(String imageid, String[] fingerPrint) {
-        this.imageId = imageid;
-        this.fingerPrint = fingerPrint;
+    private String image_name;
+    private String fingerprint;
+    public Biomatric(String image_name, String fingerprint) {
+        this.image_name = image_name;
+        this.fingerprint = fingerprint;
     }
 
     public String getImageId() {
-        return imageId;
+        return image_name;
     }
-    public String[] getfingerPrint() {
-        return fingerPrint;
+    public String getfingerPrint() {
+        return fingerprint;
     }
 
 
