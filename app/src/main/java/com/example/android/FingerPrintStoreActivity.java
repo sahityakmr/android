@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,7 @@ import java.util.List;
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
     private static long Threshold = 1500;
-    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
+    String ServerURL = "http://192.168.29.218:80/Android/fingerprint_store.php";
     Button button;
     Button button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14;
     DatePickerDialog picker;
@@ -88,8 +89,6 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         fingerprints[7] = "default";
         fingerprints[8] = "default";
         fingerprints[9] = "default";
-
-
 
 
         Intent intent = getIntent();
@@ -607,7 +606,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                         SetTextOnUIThread(mfs100.GetErrorMsg(ret));
                     } else {
                         lastCapFingerData = fingerData;
-                        fingerprints[index] = new String(fingerData.ISOTemplate());
+                        fingerprints[index] = "#" + Base64.encodeToString(fingerData.ISOTemplate(), Base64.DEFAULT) + "#";
                         final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
                                 fingerData.FingerImage().length);
                         FingerPrintStoreActivity.this.runOnUiThread(new Runnable() {

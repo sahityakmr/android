@@ -58,8 +58,8 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     Button LogIn;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
-    private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
+    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
+    private static final String URL_PRODUCTS = "http://192.168.29.218:80/android/get_all.php";
     Boolean CheckEditText;
     ProgressDialog progressDialog;
     HashMap<String, String> hashMap = new HashMap<>();

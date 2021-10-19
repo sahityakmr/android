@@ -31,7 +31,7 @@ import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
 
-    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
+    String ServerURL = "http://192.168.29.218:80/Android/get_data.php" ;
     EditText fname, lname,mobile,aadhar,pan,dob, imageid, address ;
     TextView supervisorid;
     Button button;
