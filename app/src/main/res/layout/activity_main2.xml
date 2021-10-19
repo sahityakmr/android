@@ -123,11 +123,22 @@
         android:inputType="textEmailAddress"
         android:layout_centerInParent="true"/>
 
+    <TextView
+        android:id="@+id/editText98"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText8"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:layout_centerInParent="true"/>
+
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText7"
+        android:layout_below="@+id/editText98"
         android:layout_marginTop="72dp"
         android:text="Submit Data" />
 </RelativeLayout>

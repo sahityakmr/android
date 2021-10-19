@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 
@@ -32,8 +33,10 @@ public class MainActivity2 extends AppCompatActivity  {
 
     String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
     EditText fname, lname,mobile,aadhar,pan,dob, imageid, address ;
+    TextView supervisorid;
     Button button;
-    String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7,Temp8;
+    private String UserEmail;
+    String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7,Temp8,Temp9;
     DatePickerDialog picker;
     //  @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -49,6 +52,10 @@ public class MainActivity2 extends AppCompatActivity  {
         pan = (EditText) findViewById(R.id.editText6);
         dob = (EditText) findViewById(R.id.editText7);
         address = (EditText) findViewById(R.id.editaddress);
+        supervisorid = (TextView) findViewById(R.id.editText98);
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        supervisorid.setText(str);
 
         button = (Button) findViewById(R.id.button);
 
@@ -60,7 +67,7 @@ public class MainActivity2 extends AppCompatActivity  {
 
                 GetData();
 
-                InsertData(TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7,Temp8);
+                InsertData(TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7,Temp8,Temp9);
 
             }
         });
@@ -105,9 +112,11 @@ public class MainActivity2 extends AppCompatActivity  {
 
         Temp8 = address.getText().toString();
 
+        Temp9 = supervisorid.getText().toString();
+
     }
 
-    public void InsertData(final String fname, final String lname,final String mobile,final String aadhar,final String pan,final String dob,final String imageid,final String address){
+    public void InsertData(final String fname, final String lname,final String mobile,final String aadhar,final String pan,final String dob,final String imageid,final String address,final String supervisor){
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
@@ -122,6 +131,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 String EmailHolder5 = dob ;
                 String EmailHolder6 = imageid ;
                 String EmailHolder7 = address;
+                String EmailHolder8 = supervisor;
 
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -134,6 +144,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 nameValuePairs.add(new BasicNameValuePair("pan", EmailHolder4));
                 nameValuePairs.add(new BasicNameValuePair("dob", EmailHolder5));
                 nameValuePairs.add(new BasicNameValuePair("imageid", EmailHolder6));
+                nameValuePairs.add(new BasicNameValuePair("supervisor", EmailHolder8));
 
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
@@ -173,7 +184,7 @@ public class MainActivity2 extends AppCompatActivity  {
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
 
-        sendPostReqAsyncTask.execute(fname, lname, mobile, address, aadhar, pan, dob,imageid);
+        sendPostReqAsyncTask.execute(fname, lname, mobile, address, aadhar, pan, dob,imageid,supervisor);
     }
 
 }

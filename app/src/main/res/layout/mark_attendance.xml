@@ -41,7 +41,7 @@
 
 
 
-    <EditText
+    <Button
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#fbfefd"
@@ -51,7 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/fingerstring"
-        android:hint="Place your finger here"
+        android:text="Place your finger here"
         android:gravity="center"/>
 
 
@@ -62,6 +62,6 @@
         android:layout_below="@+id/fingerstring"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/Login" />
+        android:id="@+id/Login5" />
 
 </RelativeLayout>

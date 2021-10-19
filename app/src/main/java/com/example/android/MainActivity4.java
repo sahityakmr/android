@@ -1,10 +1,14 @@
 package com.example.android;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +28,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.android.R;
+import com.mantra.mfs100.FingerData;
+import com.mantra.mfs100.MFS100;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
  
-public class MainActivity4 extends AppCompatActivity {
+public class MainActivity4 extends FragmentActivity {
 
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
@@ -122,6 +129,7 @@ public class MainActivity4 extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("TAG", "onResponseWorking: " + response);
                         try {
                             //converting the string to json array object
                             JSONArray array = new JSONArray(response);
@@ -242,6 +250,11 @@ public class MainActivity4 extends AppCompatActivity {
 
         }
     }
+
+
+
+
+
 
     @Override
     protected void onDestroy() {

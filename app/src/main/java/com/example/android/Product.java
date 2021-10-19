@@ -1,5 +1,8 @@
 package com.example.android;
-public class Product {
+
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String image_path;
     private String mobile;
     private String aadhar_no;

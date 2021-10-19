@@ -2,6 +2,7 @@ package com.example.android;
 import android.content.Context;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,12 +59,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             public void onClick(View v) {
 
 
-                if (position == 0) {
-                    Intent intent = new Intent(v.getContext(), UserLoginActivity.class);
-                    mCtx.startActivity(intent);
+                    Bundle b = new Bundle();
+                    b.putSerializable("product", product);
 
-                    Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
-                }
+                    employee_bottomsheet bottomSheet = new employee_bottomsheet();
+                   // bottomSheet.setEmployeeName(list.get(position).getEmployeeName());
+
+                   // bottomSheet.setEmployeeName(list.get(position).getEmployeeName())
+                    bottomSheet.show(((MainActivity4)mCtx).getSupportFragmentManager(),
+                            "ModalBottomSheet");
+
             }
         });
     }

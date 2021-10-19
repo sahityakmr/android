@@ -6,13 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +39,9 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mantra.mfs100.FingerData;
+import com.mantra.mfs100.MFS100;
+import com.mantra.mfs100.MFS100Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,25 +51,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class mark_attendance extends AppCompatActivity {
+public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
-    EditText Email, Password,FINGERSTRING;
-    Button LogIn ;
+    EditText Email, Password;
+    Button FINGERSTRING;
+    Button LogIn;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
-    String finalResult ;
+    String finalResult;
     String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
-    private static final String URL = "http://192.168.1.106:80/Android/get_all.php";
-    Boolean CheckEditText ;
+    private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
+    Boolean CheckEditText;
     ProgressDialog progressDialog;
-    HashMap<String,String> hashMap = new HashMap<>();
+    HashMap<String, String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     //public static final String UserEmail = "";
     public static final String userFinger = "";
     FusedLocationProviderClient mFusedLocationClient;
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
-    String latitude,longitude;
+    String latitude, longitude;
     List<Biomatric> allFingers = new ArrayList<>();
+    private String[] fingerprints;
+    MFS100 mfs100 = null;
+    boolean isCaptureRunning = true;
+    private long mLastAttTime = 0l;
+    private FingerData lastCapFingerData = null;
+    Context context;
+    private static long Threshold = 1500;
 
 
     @Override
@@ -71,8 +86,8 @@ public class mark_attendance extends AppCompatActivity {
         setContentView(R.layout.mark_attendance);
 
 
-        FINGERSTRING = (EditText)findViewById(R.id.fingerstring);
-        LogIn = (Button)findViewById(R.id.Login);
+        FINGERSTRING = findViewById(R.id.fingerstring);
+        LogIn = findViewById(R.id.Login5);
 
 
         latitudeTextView = findViewById(R.id.received_value_id);
@@ -81,10 +96,24 @@ public class mark_attendance extends AppCompatActivity {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // method to get the location
-        getLastLocation();
+        mFusedLocationClient.getLastLocation();
 
-        latitude= latitudeTextView.getText().toString();
+        latitude = latitudeTextView.getText().toString();
         longitude = longitTextView.getText().toString();
+        fingerprints = new String[10];
+        fingerprints[0] = "default";
+
+
+        FINGERSTRING.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StartSyncCapture(fingerprints, 0);
+
+
+            }
+
+        });
+
 
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,12 +121,12 @@ public class mark_attendance extends AppCompatActivity {
 
                 CheckEditTextIsEmptyOrNot();
 
-                if(CheckEditText){
+                if (CheckEditText) {
 
-                    UserLoginFunction(FINGERSTRINGHolder,latitude,longitude);
+                    UserLoginFunction(fingerprints[0], latitude, longitude);
+                    loadfingers();
 
-                }
-                else {
+                } else {
 
                     Toast.makeText(mark_attendance.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
@@ -105,8 +134,8 @@ public class mark_attendance extends AppCompatActivity {
 
             }
         });
-    }
 
+    }
 
 
     @SuppressLint("MissingPermission")
@@ -124,7 +153,7 @@ public class mark_attendance extends AppCompatActivity {
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                          Location location = task.getResult();
+                        Location location = task.getResult();
 //                        Location location = new Location("");
 //                        location.setLatitude(23.23);
 //                        location.setLongitude(23.24);
@@ -175,9 +204,7 @@ public class mark_attendance extends AppCompatActivity {
             longitTextView.setText("Longitude: " + mLastLocation.getLongitude() + "");
 
 
-
         }
-
 
 
     };
@@ -209,7 +236,8 @@ public class mark_attendance extends AppCompatActivity {
     // If everything is alright then
     @Override
     public void
-    onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                               @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == PERMISSION_ID) {
@@ -219,31 +247,96 @@ public class mark_attendance extends AppCompatActivity {
         }
     }
 
-    public void CheckEditTextIsEmptyOrNot(){
+    public void CheckEditTextIsEmptyOrNot() {
 
-      //  EmailHolder = Email.getText().toString();
+        //  EmailHolder = Email.getText().toString();
         PasswordHolder = latitudeTextView.getText().toString();
         FINGERSTRINGHolder = FINGERSTRING.getText().toString();
 
-        if(TextUtils.isEmpty(FINGERSTRINGHolder))
-        {
-            CheckEditText = false;
-        }
-        else {
-
-            CheckEditText = true ;
-        }
+        CheckEditText = !TextUtils.isEmpty(FINGERSTRINGHolder);
     }
 
-    public void UserLoginFunction(final String Fg, final String lat, final String longi){
 
-        class UserLoginClass extends AsyncTask<String,Void,String> {
+    private void loadfingers() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PRODUCTS,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            //JSONObject obj = new JSONObject(response);
+                            JSONArray array = new JSONArray(response);
+
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+
+                                //getting product object from json array
+                                JSONObject biomatric = array.getJSONObject(i);
+
+                                //adding the product to product list
+                                allFingers.add(new Biomatric(
+                                        biomatric.getString("image_name"),
+                                        biomatric.getString("fingerprint"),
+                                        biomatric.getString("fingerprint2"),
+                                        biomatric.getString("fingerprint3"),
+                                        biomatric.getString("fingerprint4"),
+                                        biomatric.getString("fingerprint5"),
+                                        biomatric.getString("fingerprint6"),
+                                        biomatric.getString("fingerprint7"),
+                                        biomatric.getString("fingerprint8"),
+                                        biomatric.getString("fingerprint9"),
+                                        biomatric.getString("fingerprint10")
+                                ));
+                            }
+
+                            Log.i("TAG", "onResponse: " + allFingers.size());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                      //  matchAndMark();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        //adding our stringrequest to queue
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+//    private void matchAndMark() {
+//        //StartSyncCapture(fingerprints, 0);
+//        //String inputFinger = FINGERSTRING.getText();
+//        for (int i = 0; i < allFingers.size(); i++) {
+//            Biomatric biomatric = allFingers.get(i);
+//            for (int j = 0; j < 10; j++) {
+//                boolean isMatched = VerifyFinger(fingerprints[0], (Biomatric.getFingerprints()[j]));
+//                if (isMatched) {
+//                    UserLoginFunction(FINGERSTRINGHolder,Biomatric.getImage_name(),latitude, longitude);
+//                }
+//
+//            }
+//        }
+//    }
+
+
+
+    public void UserLoginFunction(final String Fg, final String lat, final String longi) {
+
+        class UserLoginClass extends AsyncTask<String, Void, String> {
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(mark_attendance.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(mark_attendance.this, "Loading Data", null, true, true);
             }
 
             @Override
@@ -253,36 +346,36 @@ public class mark_attendance extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                if(httpResponseMsg.equalsIgnoreCase("Data Matched new"))
-                {
+                if (httpResponseMsg.equalsIgnoreCase("Data Matched new")) {
 
                     finish();
-
-                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
                     List<Biomatric> allFingers = new ArrayList<>();
                     loadfingers();
 
+                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+
+
                     //intent.putExtra(UserEmail,email);
-                    intent.putExtra(userFinger,Fg);
+                    intent.putExtra(userFinger, Fg);
                     startActivity(intent);
 
                 }
-                if(httpResponseMsg.equalsIgnoreCase("Data updated"))
-                {
+                if (httpResponseMsg.equalsIgnoreCase("Data updated")) {
 
                     finish();
+                    List<Biomatric> allFingers = new ArrayList<>();
+                    loadfingers();
 
                     Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
 
+
                     //intent.putExtra(UserEmail,email);
-                    intent.putExtra(userFinger,Fg);
+                    intent.putExtra(userFinger, Fg);
                     startActivity(intent);
 
-                }
+                } else {
 
-                else{
-
-                    Toast.makeText(mark_attendance.this,httpResponseMsg,Toast.LENGTH_LONG).show();
+                    Toast.makeText(mark_attendance.this, httpResponseMsg, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -290,13 +383,14 @@ public class mark_attendance extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-              //  hashMap.put("email",params[0]);
+                //  hashMap.put("email",params[0]);
 
 //                hashMap.put("password",params[1]);
 
-                hashMap.put("Fg",params[0]);
-                hashMap.put("lat",params[1]);
-                hashMap.put("longi",params[2]);
+                hashMap.put("Fg", params[0]);
+                hashMap.put("lat", params[1]);
+                hashMap.put("longi", params[2]);
+
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
@@ -305,50 +399,196 @@ public class mark_attendance extends AppCompatActivity {
 
         UserLoginClass userLoginClass = new UserLoginClass();
 
-        userLoginClass.execute(Fg,lat,longi);
+        userLoginClass.execute(Fg, lat, longi);
     }
 
+    @Override
+        protected void onStart() {
+            try {
+                if (mfs100 == null) {
+                    mfs100 = new MFS100((MFS100Event) this);
+                    mfs100.SetApplicationContext(mark_attendance.this);
+                } else {
+                    InitScanner();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            super.onStart();
 
-    private void loadfingers() {
+        }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
+        @Override
+        public void OnDeviceAttached(int vid, int pid, boolean hasPermission) {
 
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting the string to json array object
-                            JSONArray array = new JSONArray(response);
-
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
-
-                                //getting product object from json array
-                                JSONObject finger = array.getJSONObject(i);
-
-                                //adding the product to product list
-                                allFingers.add(new Biomatric(
-                                        finger.getString("image_name"),
-                                        finger.getString("fingerprint")
-                                ));
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            if (SystemClock.elapsedRealtime() - mLastAttTime < Threshold) {
+                return;
+            }
+            mLastAttTime = SystemClock.elapsedRealtime();
+            int ret;
+            if (!hasPermission) {
+                SetTextOnUIThread("Permission denied");
+                return;
+            }
+            try {
+                if (vid == 1204 || vid == 11279) {
+                    if (pid == 34323) {
+                        ret = mfs100.LoadFirmware();
+                        if (ret != 0) {
+                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                        } else {
+                            SetTextOnUIThread("Load firmware success");
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    } else if (pid == 4101) {
+                        String key = "Without Key";
+                        ret = mfs100.Init();
+                        if (ret == 0) {
+                            showSuccessLog(key);
+                        } else {
+                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                        }
 
                     }
-                });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-        //adding our stringrequest to queue
-        Volley.newRequestQueue(this).add(stringRequest);
-    }
+        private void SetTextOnUIThread(final String str) {
+            Log.i("TAG", "SetTextOnUIThread: " + str);
+        }
+
+        private void SetLogOnUIThread(final String str) {
+
+            Log.i("TAG", "SetLogOnUIThread: " + str);
+        }
+
+        private void showSuccessLog(String key) {
+            try {
+                Log.i("TAG", "showSuccessLog: Scanner Initialized");
+                String info = "\nKey: " + key + "\nSerial: "
+                        + mfs100.GetDeviceInfo().SerialNo() + " Make: "
+                        + mfs100.GetDeviceInfo().Make() + " Model: "
+                        + mfs100.GetDeviceInfo().Model()
+                        + "\nCertificate: " + mfs100.GetCertification();
+            } catch (Exception e) {
+            }
+        }
+
+        long mLastDttTime = 0l;
+
+        @Override
+        public void OnDeviceDetached() {
+            try {
+
+                if (SystemClock.elapsedRealtime() - mLastDttTime < Threshold) {
+                    return;
+                }
+                mLastDttTime = SystemClock.elapsedRealtime();
+                UnInitScanner();
+
+                SetTextOnUIThread("Device removed");
+            } catch (Exception e) {
+            }
+        }
+
+        private void UnInitScanner() {
+            try {
+                int ret = mfs100.UnInit();
+                if (ret != 0) {
+                    SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                } else {
+                    SetLogOnUIThread("Uninit Success");
+                    SetTextOnUIThread("Uninit Success");
+                    lastCapFingerData = null;
+                }
+            } catch (Exception e) {
+                Log.e("UnInitScanner.EX", e.toString());
+            }
+        }
+
+        @Override
+        public void OnHostCheckFailed(String err) {
+            try {
+                SetLogOnUIThread(err);
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
+            } catch (Exception ignored) {
+            }
+        }
+
+        private void InitScanner() {
+            try {
+                int ret = mfs100.Init();
+                if (ret != 0) {
+                    SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                } else {
+                    SetTextOnUIThread("Init success");
+                    String info = "Serial: " + mfs100.GetDeviceInfo().SerialNo()
+                            + " Make: " + mfs100.GetDeviceInfo().Make()
+                            + " Model: " + mfs100.GetDeviceInfo().Model()
+                            + "\nCertificate: " + mfs100.GetCertification();
+                    SetLogOnUIThread(info);
+                }
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), "Init failed, unhandled exception",
+                        Toast.LENGTH_LONG).show();
+                SetTextOnUIThread("Init failed, unhandled exception");
+            }
+        }
+
+        private void StartSyncCapture(String[] fingerprints, int index) {
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    SetTextOnUIThread("");
+                    isCaptureRunning = true;
+                    try {
+                        FingerData fingerData = new FingerData();
+                        int ret = mfs100.AutoCapture(fingerData, 10000, true);
+                        Log.e("StartSyncCapture.RET", "" + ret);
+                        if (ret != 0) {
+                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                        } else {
+                            lastCapFingerData = fingerData;
+                            fingerprints[index] = new String(fingerData.ISOTemplate());
+                            final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
+                                    fingerData.FingerImage().length);
+                            mark_attendance.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //imgFinger.setImageBitmap(bitmap);
+                                }
+                            });
+
+//                        Log.e("RawImage", Base64.encodeToString(fingerData.RawData(), Base64.DEFAULT));
+//                        Log.e("FingerISOTemplate", Base64.encodeToString(fingerData.ISOTemplate(), Base64.DEFAULT));
+                            SetTextOnUIThread("Capture Success");
+                            String log = "\nQuality: " + fingerData.Quality()
+                                    + "\nNFIQ: " + fingerData.Nfiq()
+                                    + "\nWSQ Compress Ratio: "
+                                    + fingerData.WSQCompressRatio()
+                                    + "\nImage Dimensions (inch): "
+                                    + fingerData.InWidth() + "\" X "
+                                    + fingerData.InHeight() + "\""
+                                    + "\nImage Area (inch): " + fingerData.InArea()
+                                    + "\"" + "\nResolution (dpi/ppi): "
+                                    + fingerData.Resolution() + "\nGray Scale: "
+                                    + fingerData.GrayScale() + "\nBits Per Pixal: "
+                                    + fingerData.Bpp() + "\nWSQ Info: "
+                                    + fingerData.WSQInfo();
+                            SetLogOnUIThread(log);
+                            //SetData2(fingerData);
+                        }
+                    } catch (Exception ex) {
+                        SetTextOnUIThread("Error");
+                    } finally {
+                        isCaptureRunning = false;
+                    }
+                }
+            }).start();
+        }
 
 
 

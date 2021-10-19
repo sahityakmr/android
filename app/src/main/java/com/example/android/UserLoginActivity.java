@@ -97,7 +97,10 @@ public class UserLoginActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(UserLoginActivity.this, MainActivity2.class);
 
-                    intent.putExtra(UserEmail,email);
+                    //intent.putExtra(UserEmail,email);
+                    intent.putExtra("message_key",EmailHolder);
+
+                   //intent.putExtra("message_key",EmailHolder);
 
                     startActivity(intent);
 
