@@ -1,6 +1,8 @@
 package com.example.android;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,15 +37,19 @@ import com.mantra.mfs100.MFS100;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
- 
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.io.IOException;
  
 public class MainActivity4 extends FragmentActivity {
 
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
-    private static final String URL_PRODUCTS = "http://192.168.29.218:80/Android/Api.php";
+    private static final String URL_PRODUCTS = "http://192.168.1.106:80/Android/Api.php";
 
     //a list to store all the products
     List<Product> productList;
@@ -52,10 +59,15 @@ public class MainActivity4 extends FragmentActivity {
 
     ListView SubjectListView;
     ProgressBar progressBarSubject;
-    String ServerURL = "http://192.168.29.218:80/Android/Subjects.php";
+    String ServerURL = "http://192.168.1.106:80/Android/Subjects.php";
     EditText editText ;
     List<String> listString = new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter ;
+    private String filename = "demoFile.txt";
+    TextView fileContent;
+    HashMap<String,String> hashMap = new HashMap<>();
+    String finalResult ;
+    HttpParse httpParse = new HttpParse();
 
 
 
@@ -72,13 +84,17 @@ public class MainActivity4 extends FragmentActivity {
         recyclerView = findViewById(R.id.recylcerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        fileContent = findViewById(R.id.content);
 
         //initializing the productlist
         productList = new ArrayList<>();
 
         //this method will fetch and parse json
         //to display it in recyclerview
+
         loadProducts();
+        readData();
+
 
 
 
@@ -110,6 +126,78 @@ public class MainActivity4 extends FragmentActivity {
         });
 
     }
+
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            fileContent.setText(temp.toString());
+            fin.close();
+            UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename + " completed..");
+    }
+
+
+
+    public void UserLoginFunction(final TextView file){
+
+        class UserLoginClass extends AsyncTask<String,Void,String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+             //   progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data",null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String httpResponseMsg) {
+
+                super.onPostExecute(httpResponseMsg);
+
+                if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
+
+                    finish();
+
+                }
+                else{
+
+                    Toast.makeText(MainActivity4.this,httpResponseMsg,Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                hashMap.put("file",params[0]);
+
+                finalResult = httpParse.postRequest(hashMap, URL_PRODUCTS);
+
+                return finalResult;
+            }
+        }
+
+        UserLoginClass userLoginClass = new UserLoginClass();
+
+        userLoginClass.execute(file.getText().toString());
+    }
+
+
+
 
 
 
@@ -148,6 +236,8 @@ public class MainActivity4 extends FragmentActivity {
                                         product.getString("image_name"),
                                         product.getString("lastname"),
                                         product.getString("photo")
+
+
                                 ));
                             }
  

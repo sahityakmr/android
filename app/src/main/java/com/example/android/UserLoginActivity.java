@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class UserLoginActivity extends AppCompatActivity {
@@ -22,12 +25,13 @@ public class UserLoginActivity extends AppCompatActivity {
     Button LogIn ;
     String PasswordHolder, EmailHolder;
     String finalResult ;
-    String HttpURL = "http://192.168.29.218:80/android/UserLogin.php";
+    String HttpURL = "http://192.168.1.106:80/android/UserLogin.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
+    private String filename = "demoFile.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class UserLoginActivity extends AppCompatActivity {
                 if(CheckEditText){
 
                     UserLoginFunction(EmailHolder, PasswordHolder);
+                    writeData();
 
                 }
                 else {
@@ -58,6 +63,28 @@ public class UserLoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+
+    private void writeData() {
+
+        try {
+            FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            String data = EmailHolder = Email.getText().toString();
+            fos.write(data.getBytes());
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Email.setText("");
+        printMessage("writing to file " + filename + "completed...");
+    }
+
+
     public void CheckEditTextIsEmptyOrNot(){
 
         EmailHolder = Email.getText().toString();

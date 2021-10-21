@@ -10,13 +10,15 @@ public class Product implements Serializable {
     private String l_name;
     private String image_name;
     private String f_name;
-    public Product(String f_name, String mobile, String aadhar_no, String image_name,String l_name,String image_path) {
+    private String fileContent;
+    public Product(String f_name, String mobile, String aadhar_no, String image_name, String l_name, String image_path) {
         this.f_name = f_name;
         this.mobile = mobile;
         this.aadhar_no = aadhar_no;
         this.image_name = image_name;
         this.l_name = l_name;
         this.image_path= image_path;
+        this.fileContent= fileContent;
     }
  
     public String getId() {
@@ -39,5 +41,7 @@ public class Product implements Serializable {
 
 
 
-     public String getImage() {return image_path;}
+    public String getImage() {return image_path;}
+
+   // public String getFileContent() {return fileContent;}
 }

@@ -11,7 +11,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Search" />
+        android:hint="Search"
+        android:minHeight="48dp" />
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
 
     <ProgressBar
         android:id="@+id/progressBar"
