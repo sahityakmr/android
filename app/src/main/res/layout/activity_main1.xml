@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="HardcodedText"
-    tools:context="com.example.android.MainActivity5">
+    tools:context="com.example.android.MainActivity1">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -49,7 +49,8 @@
         android:layout_marginEnd="8dp"
         android:text="Add Alarm"
         tools:layout_constraintBottom_toBottomOf="@+id/add_alarm_fab"
-        tools:layout_constraintEnd_toStartOf="@+id/add_alarm_fab" tools:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
+        tools:layout_constraintEnd_toStartOf="@+id/add_alarm_fab"
+        tools:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
 
 
 

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.R;
 
 import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class MainActivity1 extends AppCompatActivity {
 
@@ -24,14 +27,68 @@ public class MainActivity1 extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<RecyclerData> recyclerDataArrayList;
+    FloatingActionButton mAddFab, mAddAlarmFab, mAddPersonFab;
+    TextView addAlarmActionText, addPersonActionText;
+    Boolean isAllFabsVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
         recyclerView = findViewById(R.id.idCourseRV);
+        mAddFab = findViewById(R.id.add_fab);
+        mAddAlarmFab = findViewById(R.id.add_alarm_fab);
+        mAddPersonFab = findViewById(R.id.add_person_fab);
 
-        // created new array list..
+        addAlarmActionText = findViewById(R.id.add_alarm_action_text);
+        addPersonActionText = findViewById(R.id.add_person_action_text);
+
+        mAddAlarmFab.setVisibility(View.GONE);
+        mAddPersonFab.setVisibility(View.GONE);
+        addAlarmActionText.setVisibility(View.GONE);
+        addPersonActionText.setVisibility(View.GONE);
+
+        isAllFabsVisible = false;
+
+        mAddFab.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!isAllFabsVisible) {
+                            mAddAlarmFab.show();
+                            mAddPersonFab.show();
+                            addAlarmActionText.setVisibility(View.VISIBLE);
+                            addPersonActionText.setVisibility(View.VISIBLE);
+                            isAllFabsVisible = true;
+                        } else
+                            mAddAlarmFab.hide();
+                            mAddPersonFab.hide();
+                            addAlarmActionText.setVisibility(View.GONE);
+                            addPersonActionText.setVisibility(View.GONE);
+
+                        isAllFabsVisible = false;
+                    }
+                });
+
+
+        mAddPersonFab.setOnClickListener(
+                new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(MainActivity1.this, "Person Added", Toast.LENGTH_SHORT).show();
+        }
+    });
+
+        mAddAlarmFab.setOnClickListener(
+                new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(MainActivity1.this, "Alarm Added", Toast.LENGTH_SHORT).show();
+        }
+    });
+
+
+                        // created new array list..
         recyclerDataArrayList = new ArrayList<>();
 
         // added data to array list
