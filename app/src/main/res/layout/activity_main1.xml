@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:ignore="HardcodedText"
     tools:context="com.example.android.MainActivity5">
 
 
@@ -14,9 +15,65 @@
         android:layout_height="match_parent"
         tools:ignore="NotSibling"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="117dp"
+        tools:layoutz_editor_absoluteY="117dp"
         android:background="@drawable/splash_screenbackground" />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_blur_circular_24"
+        tools:fabSize="normal"
+        tools:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_alarm_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        tools:fabSize="normal"
+        tools:layout_constraintBottom_toTopOf="@+id/add_fab"
+        tools:layout_constraintEnd_toEndOf="@+id/add_fab"
+        tools:layout_constraintStart_toStartOf="@+id/add_fab"
+        tools:srcCompat="@drawable/ic_baseline_ac_unit_24" />
+
+    <TextView
+        android:id="@+id/add_alarm_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Add Alarm"
+        tools:layout_constraintBottom_toBottomOf="@+id/add_alarm_fab"
+        tools:layout_constraintEnd_toStartOf="@+id/add_alarm_fab" tools:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_person_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        tools:fabSize="normal"
+        tools:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
+        tools:layout_constraintEnd_toEndOf="@+id/add_alarm_fab"
+        tools:layout_constraintStart_toStartOf="@+id/add_alarm_fab"
+        tools:srcCompat="@drawable/ic_baseline_brightness_5_24" />
+
+
+    <TextView
+        android:id="@+id/add_person_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Add Person"
+        tools:layout_constraintBottom_toBottomOf="@+id/add_person_fab"
+        tools:layout_constraintEnd_toStartOf="@+id/add_person_fab"
+        tools:layout_constraintTop_toTopOf="@+id/add_person_fab" />
 <!--    <EditText-->
 <!--        android:id="@+id/edittext15"-->
 <!--        android:layout_width="fill_parent"-->

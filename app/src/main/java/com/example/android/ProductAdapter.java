@@ -64,8 +64,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                     employee_bottomsheet bottomSheet = new employee_bottomsheet();
                     //bottomSheet.setEmployeeName(list.get(position).getEmployeeName());
-
-                   // bottomSheet.setEmployeeName(list.get(position).getEmployeeName())
                     bottomSheet.show(((MainActivity4)mCtx).getSupportFragmentManager(),
                             "ModalBottomSheet");
 
