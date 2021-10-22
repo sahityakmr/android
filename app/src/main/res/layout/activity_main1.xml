@@ -2,6 +2,7 @@
 <!--XMl Layout for RecyclerView-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,6 +28,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_baseline_blur_circular_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
         tools:layout_constraintBottom_toBottomOf="parent"
         tools:layout_constraintEnd_toEndOf="parent" />
@@ -35,7 +38,10 @@
         android:id="@+id/add_alarm_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_fab"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
         tools:layout_constraintBottom_toTopOf="@+id/add_fab"
         tools:layout_constraintEnd_toEndOf="@+id/add_fab"
@@ -53,18 +59,19 @@
         tools:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_person_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
         tools:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
         tools:layout_constraintEnd_toEndOf="@+id/add_alarm_fab"
         tools:layout_constraintStart_toStartOf="@+id/add_alarm_fab"
         tools:srcCompat="@drawable/ic_baseline_brightness_5_24" />
-
 
     <TextView
         android:id="@+id/add_person_action_text"
