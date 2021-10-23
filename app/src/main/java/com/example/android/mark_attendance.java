@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -32,6 +34,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.android.http.AsyncResponse;
+import com.example.android.http.HttpCall;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,6 +43,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 import com.mantra.mfs100.FingerData;
 import com.mantra.mfs100.MFS100;
 import com.mantra.mfs100.MFS100Event;
@@ -48,18 +53,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
     EditText Email, Password;
     Button FINGERSTRING;
+    EditText idBox;
     Button LogIn;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
-    private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
+    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
+    private static final String URL_PRODUCTS = "http://192.168.29.218:80/android/get_all.php";
     Boolean CheckEditText;
     ProgressDialog progressDialog;
     HashMap<String, String> hashMap = new HashMap<>();
@@ -70,7 +78,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
     String latitude, longitude;
-    List<Biomatric> allFingers = new ArrayList<>();
+    List<Biometric> allFingers = new ArrayList<>();
     private String[] fingerprints;
     MFS100 mfs100 = null;
     boolean isCaptureRunning = true;
@@ -78,7 +86,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     private FingerData lastCapFingerData = null;
     Context context;
     private static long Threshold = 1500;
-
+    Biometric biometric;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
         FINGERSTRING = findViewById(R.id.fingerstring);
         LogIn = findViewById(R.id.Login5);
+        idBox = findViewById(R.id.idBox);
 
 
         latitudeTextView = findViewById(R.id.received_value_id);
@@ -101,41 +110,81 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         latitude = latitudeTextView.getText().toString();
         longitude = longitTextView.getText().toString();
         fingerprints = new String[10];
-        fingerprints[0] = "default";
+
+
+        LogIn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                StartSyncCapture();
+                while (lastCapFingerData == null){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (String fingerprint : biometric.getFingerprints()) {
+                    String cleanedFp = cleanFP(fingerprint);
+                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
+                        markAttendance(biometric.getId());
+                        break;
+                    }
+                }
+                lastCapFingerData = null;
+            }
+
+        });
 
 
         FINGERSTRING.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StartSyncCapture(fingerprints, 0);
+                Map<String, String> reqMap = new HashMap<>();
+                reqMap.put("empId", idBox.getText().toString());
+                HttpCall.makeFormRequest(mark_attendance.this, URL_PRODUCTS, reqMap, new AsyncResponse() {
+                    @Override
+                    public void postExecute(String response) {
+                        biometric = new Gson().fromJson(response, Biometric.class);
+                        biometric.updateArray();
+                        Log.i("TAG", "postExecute: ");
+                    }
 
+                    @Override
+                    public void postError(VolleyError error) {
 
-            }
-
-        });
-
-
-        LogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CheckEditTextIsEmptyOrNot();
-
-                if (CheckEditText) {
-
-                    UserLoginFunction(fingerprints[0], latitude, longitude);
-                    loadfingers();
-
-                } else {
-
-                    Toast.makeText(mark_attendance.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
-                }
-
+                    }
+                });
             }
         });
 
     }
+
+    private String cleanFP(String fingerprint) {
+        int sInd = fingerprint.indexOf('#');
+        int eInd = fingerprint.lastIndexOf('#');
+
+        return fingerprint.substring(sInd + 1, eInd).replaceAll("\n", "");
+    }
+
+    private void markAttendance(String id) {
+        Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("id", id);
+        requestMap.put("lat", latitude);
+        requestMap.put("longi", longitude);
+       HttpCall.makeFormRequest(this, HttpURL, requestMap, new AsyncResponse() {
+           @Override
+           public void postExecute(String response) {
+               Log.i("TAG", "postExecute: " + response);
+           }
+
+           @Override
+           public void postError(VolleyError error) {
+
+           }
+       });
+    }
+
 
 
     @SuppressLint("MissingPermission")
@@ -276,7 +325,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                                 JSONObject biomatric = array.getJSONObject(i);
 
                                 //adding the product to product list
-                                allFingers.add(new Biomatric(
+                                allFingers.add(new Biometric(
                                         biomatric.getString("image_name"),
                                         biomatric.getString("fingerprint"),
                                         biomatric.getString("fingerprint2"),
@@ -296,7 +345,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                             e.printStackTrace();
                         }
 
-                      //  matchAndMark();
+                        //  matchAndMark();
                     }
                 },
                 new Response.ErrorListener() {
@@ -327,7 +376,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
 //    }
 
 
-
     public void UserLoginFunction(final String Fg, final String lat, final String longi) {
 
         class UserLoginClass extends AsyncTask<String, Void, String> {
@@ -349,7 +397,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                 if (httpResponseMsg.equalsIgnoreCase("Data Matched new")) {
 
                     finish();
-                    List<Biomatric> allFingers = new ArrayList<>();
+                    List<Biometric> allFingers = new ArrayList<>();
                     loadfingers();
 
                     Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
@@ -363,7 +411,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                 if (httpResponseMsg.equalsIgnoreCase("Data updated")) {
 
                     finish();
-                    List<Biomatric> allFingers = new ArrayList<>();
+                    List<Biometric> allFingers = new ArrayList<>();
                     loadfingers();
 
                     Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
@@ -403,193 +451,191 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     }
 
     @Override
-        protected void onStart() {
-            try {
-                if (mfs100 == null) {
-                    mfs100 = new MFS100((MFS100Event) this);
-                    mfs100.SetApplicationContext(mark_attendance.this);
-                } else {
-                    InitScanner();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    protected void onStart() {
+        try {
+            if (mfs100 == null) {
+                mfs100 = new MFS100((MFS100Event) this);
+                mfs100.SetApplicationContext(mark_attendance.this);
+            } else {
+                InitScanner();
             }
-            super.onStart();
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        super.onStart();
 
-        @Override
-        public void OnDeviceAttached(int vid, int pid, boolean hasPermission) {
+    }
 
-            if (SystemClock.elapsedRealtime() - mLastAttTime < Threshold) {
-                return;
-            }
-            mLastAttTime = SystemClock.elapsedRealtime();
-            int ret;
-            if (!hasPermission) {
-                SetTextOnUIThread("Permission denied");
-                return;
-            }
-            try {
-                if (vid == 1204 || vid == 11279) {
-                    if (pid == 34323) {
-                        ret = mfs100.LoadFirmware();
-                        if (ret != 0) {
-                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
-                        } else {
-                            SetTextOnUIThread("Load firmware success");
-                        }
-                    } else if (pid == 4101) {
-                        String key = "Without Key";
-                        ret = mfs100.Init();
-                        if (ret == 0) {
-                            showSuccessLog(key);
-                        } else {
-                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
-                        }
+    @Override
+    public void OnDeviceAttached(int vid, int pid, boolean hasPermission) {
 
+        if (SystemClock.elapsedRealtime() - mLastAttTime < Threshold) {
+            return;
+        }
+        mLastAttTime = SystemClock.elapsedRealtime();
+        int ret;
+        if (!hasPermission) {
+            SetTextOnUIThread("Permission denied");
+            return;
+        }
+        try {
+            if (vid == 1204 || vid == 11279) {
+                if (pid == 34323) {
+                    ret = mfs100.LoadFirmware();
+                    if (ret != 0) {
+                        SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                    } else {
+                        SetTextOnUIThread("Load firmware success");
                     }
+                } else if (pid == 4101) {
+                    String key = "Without Key";
+                    ret = mfs100.Init();
+                    if (ret == 0) {
+                        showSuccessLog(key);
+                    } else {
+                        SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                    }
+
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        private void SetTextOnUIThread(final String str) {
-            Log.i("TAG", "SetTextOnUIThread: " + str);
+    private void SetTextOnUIThread(final String str) {
+        Log.i("TAG", "SetTextOnUIThread: " + str);
+    }
+
+    private void SetLogOnUIThread(final String str) {
+
+        Log.i("TAG", "SetLogOnUIThread: " + str);
+    }
+
+    private void showSuccessLog(String key) {
+        try {
+            Log.i("TAG", "showSuccessLog: Scanner Initialized");
+            String info = "\nKey: " + key + "\nSerial: "
+                    + mfs100.GetDeviceInfo().SerialNo() + " Make: "
+                    + mfs100.GetDeviceInfo().Make() + " Model: "
+                    + mfs100.GetDeviceInfo().Model()
+                    + "\nCertificate: " + mfs100.GetCertification();
+        } catch (Exception e) {
         }
+    }
 
-        private void SetLogOnUIThread(final String str) {
+    long mLastDttTime = 0l;
 
-            Log.i("TAG", "SetLogOnUIThread: " + str);
+    @Override
+    public void OnDeviceDetached() {
+        try {
+
+            if (SystemClock.elapsedRealtime() - mLastDttTime < Threshold) {
+                return;
+            }
+            mLastDttTime = SystemClock.elapsedRealtime();
+            UnInitScanner();
+
+            SetTextOnUIThread("Device removed");
+        } catch (Exception e) {
         }
+    }
 
-        private void showSuccessLog(String key) {
-            try {
-                Log.i("TAG", "showSuccessLog: Scanner Initialized");
-                String info = "\nKey: " + key + "\nSerial: "
-                        + mfs100.GetDeviceInfo().SerialNo() + " Make: "
-                        + mfs100.GetDeviceInfo().Make() + " Model: "
-                        + mfs100.GetDeviceInfo().Model()
+    private void UnInitScanner() {
+        try {
+            int ret = mfs100.UnInit();
+            if (ret != 0) {
+                SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+            } else {
+                SetLogOnUIThread("Uninit Success");
+                SetTextOnUIThread("Uninit Success");
+                lastCapFingerData = null;
+            }
+        } catch (Exception e) {
+            Log.e("UnInitScanner.EX", e.toString());
+        }
+    }
+
+    @Override
+    public void OnHostCheckFailed(String err) {
+        try {
+            SetLogOnUIThread(err);
+            Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void InitScanner() {
+        try {
+            int ret = mfs100.Init();
+            if (ret != 0) {
+                SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+            } else {
+                SetTextOnUIThread("Init success");
+                String info = "Serial: " + mfs100.GetDeviceInfo().SerialNo()
+                        + " Make: " + mfs100.GetDeviceInfo().Make()
+                        + " Model: " + mfs100.GetDeviceInfo().Model()
                         + "\nCertificate: " + mfs100.GetCertification();
-            } catch (Exception e) {
+                SetLogOnUIThread(info);
             }
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Init failed, unhandled exception",
+                    Toast.LENGTH_LONG).show();
+            SetTextOnUIThread("Init failed, unhandled exception");
         }
+    }
 
-        long mLastDttTime = 0l;
+    private void StartSyncCapture() {
+        new Thread(new Runnable() {
 
-        @Override
-        public void OnDeviceDetached() {
-            try {
-
-                if (SystemClock.elapsedRealtime() - mLastDttTime < Threshold) {
-                    return;
-                }
-                mLastDttTime = SystemClock.elapsedRealtime();
-                UnInitScanner();
-
-                SetTextOnUIThread("Device removed");
-            } catch (Exception e) {
-            }
-        }
-
-        private void UnInitScanner() {
-            try {
-                int ret = mfs100.UnInit();
-                if (ret != 0) {
-                    SetTextOnUIThread(mfs100.GetErrorMsg(ret));
-                } else {
-                    SetLogOnUIThread("Uninit Success");
-                    SetTextOnUIThread("Uninit Success");
-                    lastCapFingerData = null;
-                }
-            } catch (Exception e) {
-                Log.e("UnInitScanner.EX", e.toString());
-            }
-        }
-
-        @Override
-        public void OnHostCheckFailed(String err) {
-            try {
-                SetLogOnUIThread(err);
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
-            } catch (Exception ignored) {
-            }
-        }
-
-        private void InitScanner() {
-            try {
-                int ret = mfs100.Init();
-                if (ret != 0) {
-                    SetTextOnUIThread(mfs100.GetErrorMsg(ret));
-                } else {
-                    SetTextOnUIThread("Init success");
-                    String info = "Serial: " + mfs100.GetDeviceInfo().SerialNo()
-                            + " Make: " + mfs100.GetDeviceInfo().Make()
-                            + " Model: " + mfs100.GetDeviceInfo().Model()
-                            + "\nCertificate: " + mfs100.GetCertification();
-                    SetLogOnUIThread(info);
-                }
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), "Init failed, unhandled exception",
-                        Toast.LENGTH_LONG).show();
-                SetTextOnUIThread("Init failed, unhandled exception");
-            }
-        }
-
-        private void StartSyncCapture(String[] fingerprints, int index) {
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    SetTextOnUIThread("");
-                    isCaptureRunning = true;
-                    try {
-                        FingerData fingerData = new FingerData();
-                        int ret = mfs100.AutoCapture(fingerData, 10000, true);
-                        Log.e("StartSyncCapture.RET", "" + ret);
-                        if (ret != 0) {
-                            SetTextOnUIThread(mfs100.GetErrorMsg(ret));
-                        } else {
-                            lastCapFingerData = fingerData;
-                            fingerprints[index] = new String(fingerData.ISOTemplate());
-                            final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
-                                    fingerData.FingerImage().length);
-                            mark_attendance.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //imgFinger.setImageBitmap(bitmap);
-                                }
-                            });
+            @Override
+            public void run() {
+                SetTextOnUIThread("");
+                isCaptureRunning = true;
+                try {
+                    FingerData fingerData = new FingerData();
+                    int ret = mfs100.AutoCapture(fingerData, 10000, true);
+                    Log.e("StartSyncCapture.RET", "" + ret);
+                    if (ret != 0) {
+                        SetTextOnUIThread(mfs100.GetErrorMsg(ret));
+                    } else {
+                        lastCapFingerData = fingerData;
+                        final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
+                                fingerData.FingerImage().length);
+                        mark_attendance.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //imgFinger.setImageBitmap(bitmap);
+                            }
+                        });
 
 //                        Log.e("RawImage", Base64.encodeToString(fingerData.RawData(), Base64.DEFAULT));
 //                        Log.e("FingerISOTemplate", Base64.encodeToString(fingerData.ISOTemplate(), Base64.DEFAULT));
-                            SetTextOnUIThread("Capture Success");
-                            String log = "\nQuality: " + fingerData.Quality()
-                                    + "\nNFIQ: " + fingerData.Nfiq()
-                                    + "\nWSQ Compress Ratio: "
-                                    + fingerData.WSQCompressRatio()
-                                    + "\nImage Dimensions (inch): "
-                                    + fingerData.InWidth() + "\" X "
-                                    + fingerData.InHeight() + "\""
-                                    + "\nImage Area (inch): " + fingerData.InArea()
-                                    + "\"" + "\nResolution (dpi/ppi): "
-                                    + fingerData.Resolution() + "\nGray Scale: "
-                                    + fingerData.GrayScale() + "\nBits Per Pixal: "
-                                    + fingerData.Bpp() + "\nWSQ Info: "
-                                    + fingerData.WSQInfo();
-                            SetLogOnUIThread(log);
-                            //SetData2(fingerData);
-                        }
-                    } catch (Exception ex) {
-                        SetTextOnUIThread("Error");
-                    } finally {
-                        isCaptureRunning = false;
+                        SetTextOnUIThread("Capture Success");
+                        String log = "\nQuality: " + fingerData.Quality()
+                                + "\nNFIQ: " + fingerData.Nfiq()
+                                + "\nWSQ Compress Ratio: "
+                                + fingerData.WSQCompressRatio()
+                                + "\nImage Dimensions (inch): "
+                                + fingerData.InWidth() + "\" X "
+                                + fingerData.InHeight() + "\""
+                                + "\nImage Area (inch): " + fingerData.InArea()
+                                + "\"" + "\nResolution (dpi/ppi): "
+                                + fingerData.Resolution() + "\nGray Scale: "
+                                + fingerData.GrayScale() + "\nBits Per Pixal: "
+                                + fingerData.Bpp() + "\nWSQ Info: "
+                                + fingerData.WSQInfo();
+                        SetLogOnUIThread(log);
+                        //SetData2(fingerData);
                     }
+                } catch (Exception ex) {
+                    SetTextOnUIThread("Error");
+                } finally {
+                    isCaptureRunning = false;
                 }
-            }).start();
-        }
-
+            }
+        }).start();
+    }
 
 
     @Override

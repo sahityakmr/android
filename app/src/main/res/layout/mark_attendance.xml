@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.android.mark_attendance"
     android:background="#006400"
     android:padding="20dp">
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/idBox"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Attendace PLACE YOUR FINGER HERE"
@@ -39,20 +41,28 @@
         android:textSize="40dp"
         android:textStyle="bold" />
 
+    <EditText
+        android:id="@+id/idBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="12"
+        android:textColor="#fff"
+        android:textSize="20dp" />
 
 
     <Button
+        android:id="@+id/fingerstring"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#fbfefd"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:layout_below="@+id/received_value_id2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/fingerstring"
-        android:text="Place your finger here"
-        android:gravity="center"/>
+        android:background="#fbfefd"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="Place your finger here" />
 
 
     <Button
@@ -64,4 +74,4 @@
         android:layout_marginTop="20dp"
         android:id="@+id/Login5" />
 
-</RelativeLayout>
+</LinearLayout>

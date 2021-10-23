@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +19,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +54,7 @@ import java.util.List;
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
     private static long Threshold = 1500;
-    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
+    String ServerURL = "http://192.168.29.218:80/Android/fingerprint_store.php";
     Button button;
     Button button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14;
     DatePickerDialog picker;
@@ -70,7 +68,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
     private FingerData lastCapFingerData = null;
     private String latitude;
     private String longitude;
-    private String imageId;
+    private String id;
+    private String guid;
     private String[] fingerprints;
 
 
@@ -92,7 +91,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
 
         Intent intent = getIntent();
-        imageId = intent.getStringExtra("message_key");
+        id = intent.getStringExtra("id");
+        guid = intent.getStringExtra("guid");
         button4 = (Button) findViewById(R.id.button4);
         button5 = (Button) findViewById(R.id.button5);
         button6 = (Button) findViewById(R.id.button6);
@@ -115,7 +115,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertData(latitude, longitude, fingerprints[0], fingerprints[1], fingerprints[2], fingerprints[3], fingerprints[4], fingerprints[5], fingerprints[6], fingerprints[7], fingerprints[8], fingerprints[9], imageId);
+                InsertData(latitude, longitude, fingerprints[0], fingerprints[1], fingerprints[2], fingerprints[3], fingerprints[4], fingerprints[5], fingerprints[6], fingerprints[7], fingerprints[8], fingerprints[9], id);
             }
         });
 
@@ -380,6 +380,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
+                nameValuePairs.add(new BasicNameValuePair("id", id));
                 nameValuePairs.add(new BasicNameValuePair("lat", lat));
                 nameValuePairs.add(new BasicNameValuePair("longi", longi));
                 nameValuePairs.add(new BasicNameValuePair("file", file));
