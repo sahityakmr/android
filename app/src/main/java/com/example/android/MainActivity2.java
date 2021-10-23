@@ -12,8 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
+import com.android.volley.toolbox.StringRequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,17 +28,28 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+//import com.example.android.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity  {
 
-    String ServerURL = "http://192.168.1.106:80/Android/get_data.php" ;
+    String ServerURL = "http://192.168.1.106:80/Android/register_employee.php" ;
+    String url = "http://192.168.1.106:80/Android/register_employee.php";
     EditText fname, lname,mobile,aadhar,pan,dob, imageid, address ;
     TextView supervisorid;
     Button button;
     private String UserEmail;
+    private TextView ids;
     String TempName, Temp2,Temp3,Temp4,Temp5,Temp6,Temp7,Temp8,Temp9;
     DatePickerDialog picker;
     //  @RequiresApi(api = Build.VERSION_CODES.N)
@@ -56,6 +70,7 @@ public class MainActivity2 extends AppCompatActivity  {
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
         supervisorid.setText(str);
+        ids = findViewById(R.id.ids);
 
         button = (Button) findViewById(R.id.button);
 
@@ -116,6 +131,56 @@ public class MainActivity2 extends AppCompatActivity  {
 
     }
 
+    private void loadid() {
+
+//        RequestQueue queue = Volley.newRequestQueue(MainActivity2.this);
+
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            // on below line passing our response to json object.
+                            JSONObject jsonObject = new JSONObject(response);
+                            // on below line we are checking if the response is null or not.
+                            if (jsonObject.getString("id") == null) {
+                                // displaying a toast message if we get error
+                                Toast.makeText(MainActivity.this, "Please enter valid id.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // if we get the data then we are setting it in our text views in below line.
+                                ids.setText(jsonObject.getString("id"));
+                                // ids.setVisibility(View.VISIBLE);
+
+                                // on below line we are displaying
+                                // a success toast message.
+                            }
+                            } catch(JSONException e){
+                                e.printStackTrace();
+                            }
+                            //get your response and parse it with Gson
+                        }
+                    },new Response.ErrorListener()
+
+                    {
+                        @Override
+                        public void onErrorResponse (VolleyError error){
+                        Toast.makeText(MainActivity.this, "Fail to get id" + error, Toast.LENGTH_SHORT).show();
+
+                    }
+                        // Something went wrong
+
+                });
+
+// Add the request to the RequestQueue.
+       // queue.add(stringRequest);
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+
+
+
     public void InsertData(final String fname, final String lname,final String mobile,final String aadhar,final String pan,final String dob,final String imageid,final String address,final String supervisor){
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
@@ -175,6 +240,7 @@ public class MainActivity2 extends AppCompatActivity  {
                 Intent intent = new Intent(getApplicationContext(), FingerPrintStoreActivity.class);
                 intent.putExtra("message_key",Temp7);
                 startActivity(intent);
+                loadid();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                 finish();

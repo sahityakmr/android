@@ -2,6 +2,8 @@ package com.example.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -60,13 +62,14 @@ public class MainActivity1 extends AppCompatActivity {
                             addAlarmActionText.setVisibility(View.VISIBLE);
                             addPersonActionText.setVisibility(View.VISIBLE);
                             isAllFabsVisible = true;
-                        } else
+                        } else {
                             mAddAlarmFab.hide();
                             mAddPersonFab.hide();
                             addAlarmActionText.setVisibility(View.GONE);
                             addPersonActionText.setVisibility(View.GONE);
 
-                        isAllFabsVisible = false;
+                            isAllFabsVisible = false;
+                        }
                     }
                 });
 
@@ -112,22 +115,27 @@ public class MainActivity1 extends AppCompatActivity {
         // at last set adapter to recycler view.
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
 
 
-//        imgClick = (ImageView)R.drawable.cherry;
-//
-//        imgClick.setOnClickListener(new View.OnClickListener() {
-//       // ListView lv = adapter();
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-////Here put the code for each item. You now the position in the array because is the same as item.
-//            }
-//        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-        //  https://findnerd.com/list/view/How-to-go-next-Activity-click-On-CardView-Item-in-android/18736/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
