@@ -58,7 +58,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/shareLayout"
         android:layout_width="fill_parent"
         android:layout_height="54dp"
         android:layout_below="@+id/statusLayout"

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ public class MainActivity1 extends AppCompatActivity {
     FloatingActionButton mAddFab, mAddAlarmFab, mAddPersonFab;
     TextView addAlarmActionText, addPersonActionText;
     Boolean isAllFabsVisible;
+    WebView simpleWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity1 extends AppCompatActivity {
         mAddFab = findViewById(R.id.add_fab);
         mAddAlarmFab = findViewById(R.id.add_alarm_fab);
         mAddPersonFab = findViewById(R.id.add_person_fab);
+        simpleWebView = (WebView) findViewById(R.id.simpleWebView);
 
         addAlarmActionText = findViewById(R.id.add_alarm_action_text);
         addPersonActionText = findViewById(R.id.add_person_action_text);
@@ -78,7 +82,21 @@ public class MainActivity1 extends AppCompatActivity {
                 new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(MainActivity1.this, "Person Added", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.leave_form);
+            simpleWebView.setWebViewClient(new MyWebViewClient());
+            String url = "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAb1i_O9URTJYQjJNVU0xV0E5MEpXNjQzV0hPR1RQTS4u";
+            simpleWebView.getSettings().setJavaScriptEnabled(true);
+            simpleWebView.loadUrl(url);
+
+            Toast.makeText(MainActivity1.this, "Leave Form", Toast.LENGTH_SHORT).show();
+        }
+
+        public class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+            }
         }
     });
 
@@ -86,7 +104,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(MainActivity1.this, "Alarm Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity1.this, "Project Details", Toast.LENGTH_SHORT).show();
         }
     });
 

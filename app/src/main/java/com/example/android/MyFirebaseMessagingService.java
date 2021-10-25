@@ -53,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 	private Button buttonRegister;
 	private EditText editTextEmail;
 	private ProgressDialog progressDialog;
-	private static final String URL_REGISTER_DEVICE = "http://192.168.29.218:80/Android/RegisterDevice.php";
+	private static final String URL_REGISTER_DEVICE = "http://192.168.1.106:80/Android/RegisterDevice.php";
 
 
 	@RequiresApi(api = Build.VERSION_CODES.M)

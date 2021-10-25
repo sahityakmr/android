@@ -54,7 +54,7 @@ import java.util.List;
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
     private static long Threshold = 1500;
-    String ServerURL = "http://192.168.29.218:80/Android/fingerprint_store.php";
+    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
     Button button;
     Button button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14;
     DatePickerDialog picker;
@@ -543,11 +543,11 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
             mLastDttTime = SystemClock.elapsedRealtime();
             UnInitScanner();
 
+
             SetTextOnUIThread("Device removed");
         } catch (Exception e) {
         }
     }
-
     private void UnInitScanner() {
         try {
             int ret = mfs100.UnInit();
@@ -592,8 +592,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         }
     }
 
-    private void StartSyncCapture(String[] fingerprints, int index) {
-        new Thread(new Runnable() {
+            private void StartSyncCapture(String[] fingerprints, int index) {
+                new Thread(new Runnable() {
 
             @Override
             public void run() {

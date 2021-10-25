@@ -16,14 +16,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/prodTitle"
         android:text="employee detail"
         android:textSize="25sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/prodDesc"
         android:text="employee detail"
         android:textSize="25sp" />
 

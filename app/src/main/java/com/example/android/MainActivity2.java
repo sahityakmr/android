@@ -27,8 +27,8 @@ import java.util.Map;
 
 public class MainActivity2 extends AppCompatActivity {
     private static final String TAG = "MainActivity2";
-    String ServerURL = "http://192.168.29.218:80/Android/register_employee.php";
-    String url = "http://192.168.29.218:80/Android/register_employee.php";
+    String ServerURL = "http://192.168.1.106:80/Android/register_employee.php";
+    String url = "http://192.168.1.106:80/Android/register_employee.php";
     EditText fname, lname, mobile, aadhar, pan, dob, imageid, address;
     TextView supervisorid;
     Button button;

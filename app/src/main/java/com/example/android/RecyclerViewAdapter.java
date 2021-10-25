@@ -104,7 +104,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
 
                 if (position == 5) {
-                    Intent intent = new Intent(v.getContext(), gps_s.class);
+                    Intent intent = new Intent(v.getContext(), Ocr.class);
                     mcontext.startActivity(intent);
 
                     Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();

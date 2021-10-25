@@ -5,10 +5,14 @@
       <map>
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main2.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_employee_detail.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_card_view.xml" value="0.19067028985507245" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_details_bottomsheet.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/finger_string.xml" value="0.1" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/fingerprint_store.xml" value="0.18" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.21354166666666666" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leave_form.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/ocr.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/menu_main.xml" value="0.22604166666666667" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/activity_main1.xml" value="0.23097826086956522" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/activity_user_login.xml" value="0.12708333333333333" />

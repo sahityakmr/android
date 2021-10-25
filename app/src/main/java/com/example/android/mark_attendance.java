@@ -18,7 +18,9 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
@@ -66,8 +69,8 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     Button LogIn;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult;
-    String HttpURL = "http://192.168.29.218:80/android/finger_check.php";
-    private static final String URL_PRODUCTS = "http://192.168.29.218:80/android/get_all.php";
+    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
     Boolean CheckEditText;
     ProgressDialog progressDialog;
     HashMap<String, String> hashMap = new HashMap<>();
@@ -75,7 +78,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     //public static final String UserEmail = "";
     public static final String userFinger = "";
     FusedLocationProviderClient mFusedLocationClient;
-    TextView latitudeTextView, longitTextView;
+    TextView latitudeTextView, longitTextView, text_card,text_card_contact;
     int PERMISSION_ID = 44;
     String latitude, longitude;
     List<Biometric> allFingers = new ArrayList<>();
@@ -87,16 +90,25 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     Context context;
     private static long Threshold = 1500;
     Biometric biometric;
+    private String e_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mark_attendance);
+        Intent intent = getIntent();
+        e_id = intent.getStringExtra("id");
+
 
 
         FINGERSTRING = findViewById(R.id.fingerstring);
         LogIn = findViewById(R.id.Login5);
         idBox = findViewById(R.id.idBox);
+        idBox.setText(e_id);
+        CardView cardView = (CardView) findViewById(R.id.card_view99);
+        cardView.setRadius(20F);
+        text_card = findViewById(R.id.text_card);
+        text_card_contact = findViewById(R.id.text_card2);
 
 
         latitudeTextView = findViewById(R.id.received_value_id);
@@ -112,7 +124,11 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         fingerprints = new String[10];
 
 
+
         LogIn.setOnClickListener(new View.OnClickListener() {
+
+
+
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
@@ -134,6 +150,8 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                 lastCapFingerData = null;
             }
 
+
+
         });
 
 
@@ -147,6 +165,12 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
                     public void postExecute(String response) {
                         biometric = new Gson().fromJson(response, Biometric.class);
                         biometric.updateArray();
+                       // loadfingers();
+                        idBox.setClickable(false);
+                        idBox.setFocusable(false);
+                        text_card.setText(biometric.getFirstname());
+                        text_card_contact.setText(biometric.getContact_info());
+                        cardView.setVisibility(View.VISIBLE);
                         Log.i("TAG", "postExecute: ");
                     }
 
@@ -306,59 +330,66 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     }
 
 
-    private void loadfingers() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PRODUCTS,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting the string to json array object
-                            //JSONObject obj = new JSONObject(response);
-                            JSONArray array = new JSONArray(response);
-
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
-
-                                //getting product object from json array
-                                JSONObject biomatric = array.getJSONObject(i);
-
-                                //adding the product to product list
-                                allFingers.add(new Biometric(
-                                        biomatric.getString("image_name"),
-                                        biomatric.getString("fingerprint"),
-                                        biomatric.getString("fingerprint2"),
-                                        biomatric.getString("fingerprint3"),
-                                        biomatric.getString("fingerprint4"),
-                                        biomatric.getString("fingerprint5"),
-                                        biomatric.getString("fingerprint6"),
-                                        biomatric.getString("fingerprint7"),
-                                        biomatric.getString("fingerprint8"),
-                                        biomatric.getString("fingerprint9"),
-                                        biomatric.getString("fingerprint10")
-                                ));
-                            }
-
-                            Log.i("TAG", "onResponse: " + allFingers.size());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //  matchAndMark();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-        //adding our stringrequest to queue
-        Volley.newRequestQueue(this).add(stringRequest);
-    }
+//    private void loadfingers() {
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PRODUCTS,
+//                new Response.Listener<String>() {
+//
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            //converting the string to json array object
+//                            //JSONObject obj = new JSONObject(response);
+//                            JSONArray array = new JSONArray(response);
+//
+//                            //traversing through all the object
+//                            for (int i = 0; i < array.length(); i++) {
+//
+//                                //getting product object from json array
+//                                JSONObject biomatric = array.getJSONObject(i);
+//
+//                                //adding the product to product list
+//                                allFingers.add(new Biometric(
+//                                        biomatric.getString("image_name"),
+//                                        biomatric.getString("fingerprint"),
+//                                        biomatric.getString("fingerprint2"),
+//                                        biomatric.getString("fingerprint3"),
+//                                        biomatric.getString("fingerprint4"),
+//                                        biomatric.getString("fingerprint5"),
+//                                        biomatric.getString("fingerprint6"),
+//                                        biomatric.getString("fingerprint7"),
+//                                        biomatric.getString("fingerprint8"),
+//                                        biomatric.getString("fingerprint9"),
+//                                        biomatric.getString("fingerprint10"),
+//                                        biomatric.getString("firstname"),
+//                                        biomatric.getString("lname"),
+//                                        biomatric.getString("address"),
+//                                        biomatric.getString("aadhar"),
+//                                        biomatric.getString("birth"),
+//                                        biomatric.getString("contact")
+//
+//                                ));
+//                            }
+//
+//                            Log.i("TAG", "onResponse: " + allFingers.size());
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        //  matchAndMark();
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+//
+//        //adding our stringrequest to queue
+//        Volley.newRequestQueue(this).add(stringRequest);
+//    }
 
 //    private void matchAndMark() {
 //        //StartSyncCapture(fingerprints, 0);
@@ -376,79 +407,79 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
 //    }
 
 
-    public void UserLoginFunction(final String Fg, final String lat, final String longi) {
-
-        class UserLoginClass extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(mark_attendance.this, "Loading Data", null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                if (httpResponseMsg.equalsIgnoreCase("Data Matched new")) {
-
-                    finish();
-                    List<Biometric> allFingers = new ArrayList<>();
-                    loadfingers();
-
-                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
-
-
-                    //intent.putExtra(UserEmail,email);
-                    intent.putExtra(userFinger, Fg);
-                    startActivity(intent);
-
-                }
-                if (httpResponseMsg.equalsIgnoreCase("Data updated")) {
-
-                    finish();
-                    List<Biometric> allFingers = new ArrayList<>();
-                    loadfingers();
-
-                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
-
-
-                    //intent.putExtra(UserEmail,email);
-                    intent.putExtra(userFinger, Fg);
-                    startActivity(intent);
-
-                } else {
-
-                    Toast.makeText(mark_attendance.this, httpResponseMsg, Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                //  hashMap.put("email",params[0]);
-
-//                hashMap.put("password",params[1]);
-
-                hashMap.put("Fg", params[0]);
-                hashMap.put("lat", params[1]);
-                hashMap.put("longi", params[2]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-        }
-
-        UserLoginClass userLoginClass = new UserLoginClass();
-
-        userLoginClass.execute(Fg, lat, longi);
-    }
+//    public void UserLoginFunction(final String Fg, final String lat, final String longi) {
+//
+//        class UserLoginClass extends AsyncTask<String, Void, String> {
+//
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//
+//                progressDialog = ProgressDialog.show(mark_attendance.this, "Loading Data", null, true, true);
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String httpResponseMsg) {
+//
+//                super.onPostExecute(httpResponseMsg);
+//
+//                progressDialog.dismiss();
+//
+//                if (httpResponseMsg.equalsIgnoreCase("Data Matched new")) {
+//
+//                    finish();
+//                    List<Biometric> allFingers = new ArrayList<>();
+//                    loadfingers();
+//
+//                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+//
+//
+//                    //intent.putExtra(UserEmail,email);
+//                    intent.putExtra(userFinger, Fg);
+//                    startActivity(intent);
+//
+//                }
+//                if (httpResponseMsg.equalsIgnoreCase("Data updated")) {
+//
+//                    finish();
+//                    List<Biometric> allFingers = new ArrayList<>();
+//                    loadfingers();
+//
+//                    Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+//
+//
+//                    //intent.putExtra(UserEmail,email);
+//                    intent.putExtra(userFinger, Fg);
+//                    startActivity(intent);
+//
+//                } else {
+//
+//                    Toast.makeText(mark_attendance.this, httpResponseMsg, Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            protected String doInBackground(String... params) {
+//
+//                //  hashMap.put("email",params[0]);
+//
+////                hashMap.put("password",params[1]);
+//
+//                hashMap.put("Fg", params[0]);
+//                hashMap.put("lat", params[1]);
+//                hashMap.put("longi", params[2]);
+//
+//                finalResult = httpParse.postRequest(hashMap, HttpURL);
+//
+//                return finalResult;
+//            }
+//        }
+//
+//        UserLoginClass userLoginClass = new UserLoginClass();
+//
+//        userLoginClass.execute(Fg, lat, longi);
+//    }
 
     @Override
     protected void onStart() {
