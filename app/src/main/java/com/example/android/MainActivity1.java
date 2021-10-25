@@ -44,7 +44,7 @@ public class MainActivity1 extends AppCompatActivity {
         mAddFab = findViewById(R.id.add_fab);
         mAddAlarmFab = findViewById(R.id.add_alarm_fab);
         mAddPersonFab = findViewById(R.id.add_person_fab);
-        simpleWebView = (WebView) findViewById(R.id.simpleWebView);
+
 
         addAlarmActionText = findViewById(R.id.add_alarm_action_text);
         addPersonActionText = findViewById(R.id.add_person_action_text);
@@ -80,18 +80,17 @@ public class MainActivity1 extends AppCompatActivity {
 
         mAddPersonFab.setOnClickListener(
                 new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+       public void onClick(View view) {
             setContentView(R.layout.leave_form);
-            simpleWebView.setWebViewClient(new MyWebViewClient());
+            simpleWebView = (WebView) findViewById(R.id.webView);
             String url = "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAb1i_O9URTJYQjJNVU0xV0E5MEpXNjQzV0hPR1RQTS4u";
             simpleWebView.getSettings().setJavaScriptEnabled(true);
             simpleWebView.loadUrl(url);
+            simpleWebView.setWebViewClient(new MyWebViewClient());
 
             Toast.makeText(MainActivity1.this, "Leave Form", Toast.LENGTH_SHORT).show();
         }
-
-        public class MyWebViewClient extends WebViewClient {
+        class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);

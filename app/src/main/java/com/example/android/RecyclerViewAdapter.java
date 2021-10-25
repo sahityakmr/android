@@ -96,6 +96,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
                 }
 
+
+                if (position == 4) {
+                    Intent intent = new Intent(v.getContext(), gps_s.class);
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
+                }
+
+
                 if (position == 2) {
                     Intent intent = new Intent(v.getContext(), gps_s.class);
                     mcontext.startActivity(intent);

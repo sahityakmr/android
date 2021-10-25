@@ -140,7 +140,7 @@ public class Ocr extends AppCompatActivity {
                                 }
                                 mTextView.setText(stringBuilder.toString());
                                 Intent intent = new Intent(Ocr.this, mark_attendance.class);
-                                intent.putExtra("id",mTextView);
+                                intent.putExtra("id",mTextView.getText().toString());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(intent);
                                 finish();
