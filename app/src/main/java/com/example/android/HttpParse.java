@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class HttpParse {
 
             bufferedWriter = new BufferedWriter(
 
-                    new OutputStreamWriter(outputStream, "UTF-8"));
+                    new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 
             bufferedWriter.write(FinalDataParse(Data));
 

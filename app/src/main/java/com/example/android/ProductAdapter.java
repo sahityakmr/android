@@ -22,8 +22,8 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
 
-    private Context mCtx;
-    private List<Product> productList;
+    private final Context mCtx;
+    private final List<Product> productList;
 
     public ProductAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
@@ -52,7 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewShortDesc.setText(product.getShortdesc());
         holder.textViewRating.setText(String.valueOf(product.getRating()));
         holder.textViewPrice.setText(String.valueOf(product.getPrice()));
-        //holder.imageView.setImageResource(product.getImage());
+       // holder.imageView.setImageResource(product.getImage());
         holder.textViewRating.setTag(position);
         holder.textViewRating.setOnClickListener(new View.OnClickListener() {
             @Override

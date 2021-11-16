@@ -25,6 +25,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -47,14 +49,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FingerPrintStoreActivity extends AppCompatActivity implements MFS100Event {
     private static final String TAG = "FingerPrintStore";
-    private static long Threshold = 1500;
-    String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
+    private static final long Threshold = 1500;
+    //String ServerURL = "http://192.168.1.106:80/Android/fingerprint_store.php";
     Button button;
     Button button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14;
     DatePickerDialog picker;
@@ -71,12 +74,27 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
     private String id;
     private String guid;
     private String[] fingerprints;
+    private long pressedTime;
+    private final String filename2 = "address.txt";
+    String filess;
+    private RecyclerView recyclerView;
+    private ArrayList<FruitModel> imageModelArrayList;
+    private FruitAdapter adapter;
+    private final int[] myImageList = new int[]{R.drawable.ic_baseline_fingerprint_24, R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24, R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24,R.drawable.ic_baseline_fingerprint_24};
+    private final String[] myImageNameList = new String[]{"Fingure1","Fingure2" ,"Fingure3","Fingure4","Fingure5","Fingure6","Fingure7","Fingure8","Fingure9","Fingure10"};
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fingerprint_store);
+        setContentView(R.layout.horizontal);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        imageModelArrayList = eatFruits();
+        adapter = new FruitAdapter(this, imageModelArrayList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         fingerprints = new String[10];
         fingerprints[0] = "default";
         fingerprints[1] = "default";
@@ -93,16 +111,19 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         guid = intent.getStringExtra("guid");
-        button4 = (Button) findViewById(R.id.button4);
-        button5 = (Button) findViewById(R.id.button5);
-        button6 = (Button) findViewById(R.id.button6);
-        button7 = (Button) findViewById(R.id.button7);
-        button8 = (Button) findViewById(R.id.button9);
-        button9 = (Button) findViewById(R.id.button10);
-        button10 = (Button) findViewById(R.id.button11);
-        button11 = (Button) findViewById(R.id.button12);
-        button12 = (Button) findViewById(R.id.button13);
-        button13 = (Button) findViewById(R.id.button14);
+        readData();
+
+
+//        button4 = (Button) findViewById(R.id.button4);
+//        button5 = (Button) findViewById(R.id.button5);
+//        button6 = (Button) findViewById(R.id.button6);
+//        button7 = (Button) findViewById(R.id.button7);
+//        button8 = (Button) findViewById(R.id.button9);
+//        button9 = (Button) findViewById(R.id.button10);
+//        button10 = (Button) findViewById(R.id.button11);
+//        button11 = (Button) findViewById(R.id.button12);
+//        button12 = (Button) findViewById(R.id.button13);
+//        button13 = (Button) findViewById(R.id.button14);
 
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -111,7 +132,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         getLastLocation();
 
 
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button33);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,104 +141,119 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         });
 
 
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin1();
-
-            }
-        });
-
-
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin2();
-
-            }
-        });
-
-        button6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin3();
-
-            }
-        });
-
-        button7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin4();
-
-            }
-        });
-
-        button8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin5();
-
-            }
-        });
-
-        button9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin6();
-
-            }
-        });
-
-        button10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin7();
-
-            }
-        });
-
-        button11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin8();
-
-            }
-        });
-
-        button12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin9();
-
-            }
-        });
-
-        button13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fin10();
-
-            }
-
-
-        });
+//        button4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin1();
+//
+//            }
+//        });
+//
+//
+//        button5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin2();
+//
+//            }
+//        });
+//
+//        button6.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin3();
+//
+//            }
+//        });
+//
+//        button7.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin4();
+//
+//            }
+//        });
+//
+//        button8.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin5();
+//
+//            }
+//        });
+//
+//        button9.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin6();
+//
+//            }
+//        });
+//
+//        button10.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin7();
+//
+//            }
+//        });
+//
+//        button11.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin8();
+//
+//            }
+//        });
+//
+//        button12.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin9();
+//
+//            }
+//        });
+//
+//        button13.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                fin10();
+//
+//            }
+//
+//
+//        });
 
 
     }
 
+    private ArrayList<FruitModel> eatFruits(){
+
+        ArrayList<FruitModel> list = new ArrayList<>();
+
+        for(int i = 0; i < 10; i++){
+            FruitModel fruitModel = new FruitModel();
+            fruitModel.setName(myImageNameList[i]);
+            fruitModel.setImage_drawable(myImageList[i]);
+            list.add(fruitModel);
+        }
+
+        return list;
+    }
+
     public void fin1() {
         StartSyncCapture(fingerprints, 0);
+
         Toast.makeText(FingerPrintStoreActivity.this, "You Clicked : 1", Toast.LENGTH_SHORT).show();
     }
 
@@ -399,7 +435,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
 
-                    HttpPost httpPost = new HttpPost(ServerURL);
+                    HttpPost httpPost = new HttpPost(filess+"/Android/fingerprint_store.php");
 
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -424,9 +460,11 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
                 Toast.makeText(FingerPrintStoreActivity.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity3.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra("message_key", imageid);
+
                 startActivity(intent);
-                intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+
 
                 finish();
 
@@ -448,14 +486,6 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (checkPermissions()) {
-            getLastLocation();
-        }
-
-    }
 
     @Override
     protected void onStart() {
@@ -543,11 +573,11 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
             mLastDttTime = SystemClock.elapsedRealtime();
             UnInitScanner();
 
-
             SetTextOnUIThread("Device removed");
         } catch (Exception e) {
         }
     }
+
     private void UnInitScanner() {
         try {
             int ret = mfs100.UnInit();
@@ -592,8 +622,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         }
     }
 
-            private void StartSyncCapture(String[] fingerprints, int index) {
-                new Thread(new Runnable() {
+    private void StartSyncCapture(String[] fingerprints, int index) {
+        new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -644,5 +674,58 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
             }
         }).start();
     }
+
+
+
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            filess = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            if (checkPermissions()) {
+                getLastLocation();
+
+                Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity1.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                finish();
+            }
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity2.class);
+           // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
+
+
 }
 

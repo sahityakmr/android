@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gps_s">
+    tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:gravity="center"
+        android:background="@android:color/holo_blue_dark"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:popupTheme="@style/ThemeOverlay.AppCompat"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/statusLayout"
-        android:layout_width="fill_parent"
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="8dp"
+            android:layout_width="330dp"
+            android:layout_height="450dp"
+             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <Button
+                    android:id="@+id/getlocationbtn"
+                    android:elevation="10dp"
+                    android:textColor="@android:color/white"
+                    android:textAllCaps="false"
+                    android:text="Get Location"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+
+                <TextView
+                    android:id="@+id/letitude"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginStart="50dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_marginBottom="18dp"
+                    android:id="@+id/longtitude"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginStart="50dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/b"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="104dp"
 
-        <TextView
-            android:id="@+id/detailsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:visibility="gone" />
+        android:onClick="buttonShareText"
+        android:text="@string/share_text"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints,OnClick" />
 
-        <TextView
-            android:id="@+id/progressTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/getting_location"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:visibility="visible" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="visible" />
-
-        <Button
-            android:id="@+id/gpsButton"
-            android:layout_width="fill_parent"
-            android:layout_height="54dp"
-            android:onClick="openLocationSettings"
-            android:text="@string/turn_on_GPS"
-            android:visibility="gone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="54dp"
-        android:layout_below="@+id/statusLayout"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <Button
-            android:id="@+id/shareButton"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:onClick="shareLocation"
-            android:text="@string/share_location" />
-
-        <Button
-            android:id="@+id/copyButton"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:onClick="copyLocation"
-            android:text="@string/copy_location" />
-
-        <Button
-            android:id="@+id/viewButton"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:onClick="viewLocation"
-            android:text="@string/view_location" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -52,7 +54,10 @@ public class MainActivity3 extends AppCompatActivity {
 
     String ImagePath = "image_path" ;
 
-    String ServerUploadPath ="http://192.168.1.106:80/android/img_upload_to_server.php" ;
+   // String ServerUploadPath ="http://192.168.1.106:80/android/img_upload_to_server.php" ;
+    private long pressedTime;
+    private final String filename2 = "address.txt";
+    String file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,7 @@ public class MainActivity3 extends AppCompatActivity {
         SelectImageGallery = (Button)findViewById(R.id.buttonSelect);
 
         UploadImageServer = (Button)findViewById(R.id.buttonUpload);
+        readData();
 
         SelectImageGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,12 +159,12 @@ public class MainActivity3 extends AppCompatActivity {
                 // Printing uploading success message coming from server on android app.
                 Toast.makeText(MainActivity3.this,string1,Toast.LENGTH_LONG).show();
 
-                // Setting image as transparent after done uploading.
+                // SettingNavigation image as transparent after done uploading.
                 imageView.setImageResource(android.R.color.transparent);
               //  Intent intent = new Intent(MainActivity3.this,MainActivity1.class);
                 Intent intent = new Intent(MainActivity3.this,MainActivity1.class);
                 startActivity(intent);
-                intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
 
 
@@ -176,7 +182,7 @@ public class MainActivity3 extends AppCompatActivity {
 
                 HashMapParams.put(ImagePath, ConvertImage);
 
-                String FinalData = imageProcessClass.ImageHttpRequest(ServerUploadPath, HashMapParams);
+                String FinalData = imageProcessClass.ImageHttpRequest(file+"/android/img_upload_to_server.php", HashMapParams);
 
                 return FinalData;
             }
@@ -219,7 +225,7 @@ public class MainActivity3 extends AppCompatActivity {
 
                 bufferedWriterObject = new BufferedWriter(
 
-                        new OutputStreamWriter(OutPutStream, "UTF-8"));
+                        new OutputStreamWriter(OutPutStream, StandardCharsets.UTF_8));
 
                 bufferedWriterObject.write(bufferedWriterDataFN(PData));
 
@@ -276,4 +282,49 @@ public class MainActivity3 extends AppCompatActivity {
         }
 
     }
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            Intent intent = new Intent(MainActivity3.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(MainActivity3.this, MainActivity2.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
+
+
+
 }

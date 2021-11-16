@@ -1,11 +1,16 @@
 package com.example.android;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,11 +20,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     ArrayList<String> id = new ArrayList<>();
     ArrayList<String> title = new ArrayList<>();
     ArrayList<String> description = new ArrayList<>();
-    Context context;
+    private final Context mcontext;
 
-    public RecyclerAdapter(Context applicationContext, ArrayList<String> id, ArrayList<String> title, ArrayList<String> description) {
+    public RecyclerAdapter(Context mcontext, ArrayList<String> id, ArrayList<String> title, ArrayList<String> description) {
 
-        this.context = applicationContext;
+        this.mcontext = mcontext;
         this.id = id;
         this.title = title;
         this.description = description;
@@ -58,10 +63,67 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.titleTextView.setText(title.get(position));
         holder.descriptionTextView.setText(description.get(position));
 
+
+        holder.descriptionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (position == 0) {
+                    Intent intent = new Intent(v.getContext(), Credential.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
+                }
+
+                if (position == 1) {
+                    Intent intent = new Intent(v.getContext(), UserLoginActivity1.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    mcontext.startActivity(intent);
+
+                    Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
+
     }
 
     @Override
     public int getItemCount() {
         return id.size();
     }
+
+
+//    public class ViewHolder extends RecyclerView.ViewHolder{
+//        public TextView courseTV;
+//        private int position;
+//        private ImageView courseIV;
+//        public CardView cardView;
+//        public ClipData.Item currentItem;
+//        public View view;
+//
+//        public ViewHolder(View itemView) {
+//            super(itemView);
+//            courseTV = itemView.findViewById(R.id.description);
+//            courseIV = itemView.findViewById(R.id.title);
+//            cardView = itemView.findViewById(R.id.cv_id2);
+//
+//
+//
+//
+//        }
+//
+//
+//
+//
+//
+//    }
+
+
 }

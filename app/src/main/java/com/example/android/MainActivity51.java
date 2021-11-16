@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,7 +47,7 @@ import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TA
 //import static com.example.fcm.R.id.txt;
 
 public class MainActivity51 extends AppCompatActivity implements View.OnClickListener{
-	private static final String AUTH_KEY = "key=YOUR-SERVER-KEY";
+	private static final String AUTH_KEY = "AAAAGkrTNoc:APA91bHTltMD-r8eHLTynDse5bWKIfeyYJ2OCa1Jt7CJ4IVsSyO2_D9XDUYiVdjGBS_gJxYUMzTPK5dU5XlH1CV7eIzPMvTqFruRcg5fLDM25iSxIpm-JMVEIlRGPV_Baqp_gFSLfEqG";
 	private TextView mTextView;
 	private String token;
 	private Button buttonRegister;
@@ -53,6 +55,9 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 	private EditText editTextEmail;
 	private static final String URL_REGISTER_DEVICE = "http://192.168.1.106:80/Android/RegisterDevice.php";
 
+	private long pressedTime;
+	private final String filename2 = "address.txt";
+	String file;
 
 
 	@Override
@@ -63,7 +68,7 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 		buttonRegister = (Button) findViewById(R.id.buttonRegister);
 		editTextEmail = (EditText) findViewById(R.id.editTextEmail);
 		buttonRegister.setOnClickListener(this);
-
+		readData();
 
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null) {
@@ -146,7 +151,7 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 			switch (type) {
 				case "tokens":
 					JSONArray ja = new JSONArray();
-					ja.put("c5pBXXsuCN0:APA91bH8nLMt084KpzMrmSWRS2SnKZudyNjtFVxLRG7VFEFk_RgOm-Q5EQr_oOcLbVcCjFH6vIXIyWhST1jdhR8WMatujccY5uy1TE0hkppW_TSnSBiUsH_tRReutEgsmIMmq8fexTmL");
+					ja.put("AAAAGkrTNoc:APA91bHTltMD-r8eHLTynDse5bWKIfeyYJ2OCa1Jt7CJ4IVsSyO2_D9XDUYiVdjGBS_gJxYUMzTPK5dU5XlH1CV7eIzPMvTqFruRcg5fLDM25iSxIpm-JMVEIlRGPV_Baqp_gFSLfEqG");
 					ja.put(token);
 					jPayload.put("registration_ids", ja);
 					break;
@@ -220,7 +225,7 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 			return;
 		}
 
-		StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER_DEVICE,
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, file+"/Android/RegisterDevice.php",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -254,5 +259,45 @@ public class MainActivity51 extends AppCompatActivity implements View.OnClickLis
 		requestQueue.add(stringRequest);
 	}
 
+	public void printMessage(String m) {
+		Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+	}
+
+	private void readData() {
+		try {
+			FileInputStream fin = openFileInput(filename2);
+			int a;
+			StringBuilder temp = new StringBuilder();
+			while ((a = fin.read()) != -1) {
+				temp.append((char) a);
+			}
+
+			// setting text from the file.
+			file = temp.toString();
+			fin.close();
+			// UserLoginFunction(fileContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		printMessage("reading to file " + filename2 + " completed..");
+	}
+
+
+
+	@Override
+	public void onBackPressed() {
+
+		if (pressedTime + 2000 > System.currentTimeMillis()) {
+			super.onBackPressed();
+			finish();
+		} else {
+			Intent intent = new Intent(MainActivity51.this, MainActivity1.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			startActivity(intent);
+			finish();
+			Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+		}
+		pressedTime = System.currentTimeMillis();
+	}
 
 }

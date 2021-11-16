@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_menu_home"
+            android:title="Employees" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@mipmap/ic_menu_notifications"
+            android:title="Mark Attendance" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_baseline_perm_device_information_24"
+            android:title="Register Device" />
+        <item
+            android:id="@+id/nav_leave"
+            android:icon="@mipmap/ic_menu_settings"
+            android:title="Leave Form" />
+        <item
+            android:id="@+id/nav_scanner"
+            android:icon="@drawable/ic_baseline_blur_circular_24"
+            android:title="Our Protsduct" />
+
+
+
+        <item
+        android:id="@+id/nav_salary"
+        android:icon="@drawable/ic_baseline_attach_money_24"
+        android:title="Scan ID Card" />
+    </group>
+</menu>

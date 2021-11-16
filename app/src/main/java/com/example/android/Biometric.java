@@ -1,25 +1,23 @@
 package com.example.android;
 
-import java.io.File;
-
 public class Biometric {
-    private String id;
-    private String fingerprint;
-    private String fingerprint2;
-    private String fingerprint3;
-    private String fingerprint4;
-    private String fingerprint5;
-    private String fingerprint6;
-    private String fingerprint7;
-    private String fingerprint8;
-    private String fingerprint9;
-    private String fingerprint10;
-    private String firstname;
-    private String lastname;
-    private String address;
-    private String aadhar;
-    private String birthdate;
-    private String contact_info;
+    private final String id;
+    private final String fingerprint;
+    private final String fingerprint2;
+    private final String fingerprint3;
+    private final String fingerprint4;
+    private final String fingerprint5;
+    private final String fingerprint6;
+    private final String fingerprint7;
+    private final String fingerprint8;
+    private final String fingerprint9;
+    private final String fingerprint10;
+    private final String firstname;
+    private final String lastname;
+    private final String address;
+    private final String aadhar;
+    private final String birthdate;
+    private final String contact_info;
 
     private String[] fingerprints;
 
@@ -116,7 +114,7 @@ public class Biometric {
         return fingerprints;
     }
 
-    public void updateArray() {
+    public String[] updateArray() {
         fingerprints = new String[10];
 
         fingerprints[0] = this.fingerprint;
@@ -129,6 +127,7 @@ public class Biometric {
         fingerprints[7] = this.fingerprint8;
         fingerprints[8] = this.fingerprint9;
         fingerprints[9] = this.fingerprint10;
+        return new String[0];
     }
 
 }

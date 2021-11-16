@@ -8,12 +8,15 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class UserLoginActivity1 extends AppCompatActivity {
@@ -21,13 +24,15 @@ public class UserLoginActivity1 extends AppCompatActivity {
     EditText Email, Password;
     Button LogIn ;
     String PasswordHolder, EmailHolder;
-    String finalResult ;
-    String HttpURL = "http://192.168.1.106:80/android/UserLogin1.php";
+    String finalResult, file ;
+  //  String HttpURL = "http://192.168.1.106:80/android/UserLogin1.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
+    private final String filename2 = "address.txt";
+    private long pressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class UserLoginActivity1 extends AppCompatActivity {
         Email = (EditText)findViewById(R.id.email);
         Password = (EditText)findViewById(R.id.password);
         LogIn = (Button)findViewById(R.id.Login);
+        readData();
 
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +69,7 @@ public class UserLoginActivity1 extends AppCompatActivity {
         EmailHolder = Email.getText().toString();
         PasswordHolder = Password.getText().toString();
 
-        if(TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
-        {
-            CheckEditText = false;
-        }
-        else {
-
-            CheckEditText = true ;
-        }
+        CheckEditText = !TextUtils.isEmpty(EmailHolder) && !TextUtils.isEmpty(PasswordHolder);
     }
 
     public void UserLoginFunction(final String email, final String password){
@@ -116,7 +115,7 @@ public class UserLoginActivity1 extends AppCompatActivity {
 
                 hashMap.put("password",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
+                finalResult = httpParse.postRequest(hashMap, file+"/android/UserLogin1.php");
 
                 return finalResult;
             }
@@ -125,6 +124,47 @@ public class UserLoginActivity1 extends AppCompatActivity {
         UserLoginClass userLoginClass = new UserLoginClass();
 
         userLoginClass.execute(email,password);
+    }
+
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+        } else {
+            Intent intent = new Intent(UserLoginActivity1.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
     }
 
 }

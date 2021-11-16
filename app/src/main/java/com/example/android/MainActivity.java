@@ -14,19 +14,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //import com.example.myapplication.R;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     Button register, log_in;
     EditText First_Name, Last_Name, Email, Password ;
-    String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder;
+    String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder,file;
     String finalResult ;
-    String HttpURL = "http://192.168.1.106:80/android/UserRegistration.php";
+   // String HttpURL = "http://192.168.1.106:80/android/UserRegistration.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
+    private final String filename2 = "address.txt";
+    private long pressedTime;
 
 
     @Override
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         register = (Button)findViewById(R.id.Submit);
         log_in = (Button)findViewById(R.id.Login);
-
+        readData();
         //Adding Click Listener on button.
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,16 +93,7 @@ public class MainActivity extends AppCompatActivity {
         PasswordHolder = Password.getText().toString();
 
 
-        if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
-        {
-
-            CheckEditText = false;
-
-        }
-        else {
-
-            CheckEditText = true ;
-        }
+        CheckEditText = !TextUtils.isEmpty(F_Name_Holder) && !TextUtils.isEmpty(L_Name_Holder) && !TextUtils.isEmpty(EmailHolder) && !TextUtils.isEmpty(PasswordHolder);
 
     }
 
@@ -120,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                Toast.makeText(MainActivity.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, httpResponseMsg, Toast.LENGTH_LONG).show();
 
             }
 
@@ -135,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                 hashMap.put("password",params[3]);
 
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
+                finalResult = httpParse.postRequest(hashMap, file+"/android/UserRegistration.php");
 
                 return finalResult;
             }
@@ -146,4 +141,48 @@ public class MainActivity extends AppCompatActivity {
         userRegisterFunctionClass.execute(F_Name,L_Name,email,password);
     }
 
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            Intent intent = new Intent(MainActivity.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(MainActivity.this, UserLoginActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
 }

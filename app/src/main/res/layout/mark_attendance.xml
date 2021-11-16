@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.android.mark_attendance"
-    android:background="#006400"
+    android:background="@drawable/dashboard_ui"
     android:padding="20dp">
 
 
@@ -68,13 +68,13 @@
         app:cardUseCompatPadding="true"
         android:id="@+id/card_view99"
         >
-<!--        <ImageView-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:id="@+id/img"-->
-<!--            android:contentDescription="@string/app_name" />-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="200dp"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:id="@+id/img"-->
+        <!--            android:contentDescription="@string/app_name" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,6 +107,7 @@
 
 
     <Button
+
         android:id="@+id/fingerstring"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -117,7 +118,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="Place your finger here" />
+        app:srcCompat="@drawable/ic_baseline_fingerprint_24" />
 
 
     <Button

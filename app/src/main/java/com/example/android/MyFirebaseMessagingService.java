@@ -36,6 +36,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -53,8 +54,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 	private Button buttonRegister;
 	private EditText editTextEmail;
 	private ProgressDialog progressDialog;
-	private static final String URL_REGISTER_DEVICE = "http://192.168.1.106:80/Android/RegisterDevice.php";
-
+	//	private static final String URL_REGISTER_DEVICE = "http://192.168.1.106:80/Android/RegisterDevice.php";
+	private final String filename2 = "address.txt";
+	String file;
 
 	@RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -67,9 +69,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		// manage this apps subscriptions on the server side, send the
 		// FCM registration token to your app server.
 		sendRegistrationToServer(token);
+		read();
 	}
-
-
 
 
 	@RequiresApi(api = Build.VERSION_CODES.M)
@@ -141,7 +142,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		assert notificationManager != null;
 		notificationManager.notify(0, notificationBuilder.build());
 	}
+	private void read() {
+		try {
+			FileInputStream fin = openFileInput(filename2);
+			int a;
+			StringBuilder temp = new StringBuilder();
+			while ((a = fin.read()) != -1) {
+				temp.append((char) a);
+			}
 
+			// setting text from the file.
+			file = temp.toString();
+			fin.close();
+			// UserLoginFunction(fileContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void sendRegistrationToServer(String token) {
 		progressDialog = new ProgressDialog(this);
@@ -158,7 +175,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		}
 
 		String finalToken = token;
-		StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER_DEVICE,
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, file + "/Android/RegisterDevice.php",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -190,6 +207,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		RequestQueue requestQueue = Volley.newRequestQueue(this);
 		requestQueue.add(stringRequest);
 	}
+
+
+
 
 
 

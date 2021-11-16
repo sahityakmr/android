@@ -1,352 +1,167 @@
 package com.example.android;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.ResultReceiver;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
-import java.text.MessageFormat;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog.Builder;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import java.io.File;
 
 
 public class gps_s extends AppCompatActivity {
+    Button getbtn, share;
+    ListView listView;
+    String[] names;
+    public static final int RClP = 100;
+    private long pressedTime;
 
-    private final static int PERMISSION_REQUEST = 1;
-    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Button gpsButton;
-    private TextView progressTitle;
-    private ProgressBar progressBar;
-    private TextView detailsText;
-
-    private Button shareButton;
-    private Button copyButton;
-    private Button viewButton;
-
-    private LocationManager locManager;
-    private Location lastLocation;
-
-    private final LocationListener locListener = new LocationListener() {
-        public void onLocationChanged(Location loc) {
-            updateLocation(loc);
-        }
-
-        public void onProviderEnabled(String provider) {
-            updateLocation();
-        }
-
-        public void onProviderDisabled(String provider) {
-            updateLocation();
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-
-    // ----------------------------------------------------
-    // Android Lifecycle
-    // ----------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gps_s);
-        setSupportActionBar(findViewById(R.id.toolbar));
-        setTitle(R.string.app_name);
 
-        // Display area
-        gpsButton = findViewById(R.id.gpsButton);
-        progressTitle = findViewById(R.id.progressTitle);
-        progressBar = findViewById(R.id.progressBar);
-        detailsText = findViewById(R.id.detailsText);
+        listView = findViewById(R.id.listview);
 
-        // Button area
-        shareButton = findViewById(R.id.shareButton);
-        copyButton = findViewById(R.id.copyButton);
-        viewButton = findViewById(R.id.viewButton);
+        getbtn = findViewById(R.id.getlocationbtn);
+        share = findViewById(R.id.b);
+        getbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(gps_s.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, RClP);
+                } else {
+                    getCurentLocation();
+                    share.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
-        // Set default values for preferences
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            locManager.removeUpdates(locListener);
-        } catch (SecurityException e) {
-            Log.e(TAG, "Failed to stop listening for location updates", e);
-        }
-    }
+
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        startRequestingLocation();
-        updateLocation();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST &&
-                grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startRequestingLocation();
-        } else {
-            Toast.makeText(getApplicationContext(), R.string.permission_denied, Toast.LENGTH_SHORT).show();
+        if (requestCode == RClP && grantResults.length > 0) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                getCurentLocation();
+
+            } else {
+
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getCurentLocation() {
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationServices.getFusedLocationProviderClient(gps_s.this).requestLocationUpdates(locationRequest, new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                LocationServices.getFusedLocationProviderClient(gps_s.this).removeLocationUpdates(this);
+                if (locationResult != null && locationResult.getLocations().size() > 0) {
+                    int latestLocationIndex = locationResult.getLocations().size() - 1;
+                    double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
+                    double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
+                    Geocoder geocoder = new Geocoder(gps_s.this, Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        setUpdata(addresses);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    TextView latitudetxt = findViewById(R.id.letitude);
+                    latitudetxt.setText("Latitude" + latitude);
+                    TextView longitudetxt = findViewById(R.id.longtitude);
+                    longitudetxt.setText("Longitude" + longitude);
+
+                    Location location = new Location("providerNA");
+                    location.setLatitude(latitude);
+                    location.setLongitude(longitude);
+                    //FetchAddressFromLatLong(location);
+
+                }
+
+            }
+        }, Looper.getMainLooper());
+
+    }
+
+    public void setUpdata(List<Address> addresses) {
+        String add = addresses.get(0).getAddressLine(0);
+        String city = addresses.get(0).getLocality();
+        String state = addresses.get(0).getAdminArea();
+        String zip = addresses.get(0).getPostalCode();
+        names = new String[] {"City.:-" + city, "State.:-" + state, "Address:-" + add, "Zip:-" + zip};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(gps_s.this, android.R.layout.simple_list_item_1, names);
+        listView.setAdapter(adapter);
+
+    }
+
+    public void buttonShareText(View view){
+        Intent intentShare = new Intent(Intent.ACTION_SEND);
+        intentShare.setType("text/plain");
+        intentShare.putExtra(Intent.EXTRA_TEXT, Arrays.toString(names));
+
+        startActivity(Intent.createChooser(intentShare, "Shared the text ..."));
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
             finish();
-        }
-    }
-
-    // ----------------------------------------------------
-    // UI
-    // ----------------------------------------------------
-    private void updateLocation() {
-        // Trigger a UI update without changing the location
-        updateLocation(lastLocation);
-    }
-
-    private void updateLocation(Location location) {
-        boolean locationEnabled = locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean waitingForLocation = locationEnabled && !validLocation(location);
-        boolean haveLocation = locationEnabled && !waitingForLocation;
-
-        // Update display area
-        gpsButton.setVisibility(locationEnabled ? View.GONE : View.VISIBLE);
-        progressTitle.setVisibility(waitingForLocation ? View.VISIBLE : View.GONE);
-        progressBar.setVisibility(waitingForLocation ? View.VISIBLE : View.GONE);
-        detailsText.setVisibility(haveLocation ? View.VISIBLE : View.GONE);
-
-        // Update buttons
-        shareButton.setEnabled(haveLocation);
-        copyButton.setEnabled(haveLocation);
-        viewButton.setEnabled(haveLocation);
-
-        if (haveLocation) {
-            String newline = System.getProperty("line.separator");
-            detailsText.setText(String.format("%s: %s%s%s: %s (%s)%s%s: %s (%s)",
-                    getString(R.string.accuracy), getAccuracy(location), newline,
-                    getString(R.string.latitude), getLatitude(location), getDMSLatitude(location), newline,
-                    getString(R.string.longitude), getLongitude(location), getDMSLongitude(location)));
-
-            lastLocation = location;
-        }
-    }
-
-    // ----------------------------------------------------
-    // DialogInterface Listeners
-    // ----------------------------------------------------
-    private class onClickShareListener implements OnClickListener {
-        @Override
-        public void onClick(DialogInterface dialog, int i) {
-            shareLocationText(formatLocation(lastLocation, getResources().getStringArray(R.array.link_options)[i]));
-        }
-    }
-
-    private class onClickCopyListener implements OnClickListener {
-        @Override
-        public void onClick(DialogInterface dialog, int i) {
-            copyLocationText(formatLocation(lastLocation, getResources().getStringArray(R.array.link_options)[i]));
-        }
-    }
-
-    //-----------------------------------------------------
-    // Menu related methods
-    //-----------------------------------------------------
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            Intent intentSettingsActivity = new Intent(this, SettingsActivity.class);
-            this.startActivity(intentSettingsActivity);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    // ----------------------------------------------------
-    // Actions
-    // ----------------------------------------------------
-    public void shareLocation(View view) {
-        if (!validLocation(lastLocation)) {
-            return;
-        }
-
-        String linkChoice = PreferenceManager.getDefaultSharedPreferences(this).getString("prefLinkType", "");
-
-        if (linkChoice.equals(getResources().getString(R.string.always_ask))) {
-            new Builder(this).setTitle(R.string.choose_link)
-                    .setCancelable(true)
-                    .setItems(R.array.link_names, new onClickShareListener())
-                    .create()
-                    .show();
         } else {
-            shareLocationText(formatLocation(lastLocation, linkChoice));
+            Intent intent = new Intent(gps_s.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         }
+        pressedTime = System.currentTimeMillis();
     }
 
-    public void copyLocation(View view) {
-        if (!validLocation(lastLocation)) {
-            return;
-        }
-
-        String linkChoice = PreferenceManager.getDefaultSharedPreferences(this).getString("prefLinkType", "");
-
-        if (linkChoice.equals(getResources().getString(R.string.always_ask))) {
-            new Builder(this).setTitle(R.string.choose_link)
-                    .setCancelable(true)
-                    .setItems(R.array.link_names, new onClickCopyListener())
-                    .create()
-                    .show();
-        } else {
-            copyLocationText(formatLocation(lastLocation, linkChoice));
-        }
-    }
-
-    public void viewLocation(View view) {
-        if (!validLocation(lastLocation)) {
-            return;
-        }
-
-        String uri = formatLocation(lastLocation, "geo:{0},{1}?q={0},{1}");
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(Intent.createChooser(intent, getString(R.string.view_location_via)));
-    }
-
-    public void openLocationSettings(View view) {
-        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-        }
-    }
-
-    // ----------------------------------------------------
-    // Helper functions
-    // ----------------------------------------------------
-    public void shareLocationText(String string) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, string);
-        intent.setType("text/plain");
-        startActivity(Intent.createChooser(intent, getString(R.string.share_location_via)));
-    }
-
-    public void copyLocationText(String string) {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        if (clipboard != null) {
-            ClipData clip = ClipData.newPlainText(getString(R.string.app_name), string);
-            clipboard.setPrimaryClip(clip);
-            Toast.makeText(getApplicationContext(), R.string.copied, Toast.LENGTH_SHORT).show();
-        } else {
-            Log.e(TAG, "Failed to get the clipboard service");
-            Toast.makeText(getApplicationContext(), R.string.clipboard_error, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void startRequestingLocation() {
-        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            return;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST);
-            return;
-        }
-
-        // GPS enabled and have permission - start requesting location updates
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
-    }
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean validLocation(Location location) {
-        if (location == null) {
-            return false;
-        }
-
-        // Location must be from less than 30 seconds ago to be considered valid
-        if (Build.VERSION.SDK_INT < 17) {
-            return System.currentTimeMillis() - location.getTime() < 30e3;
-        } else {
-            return SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos() < 30e9;
-        }
-    }
-
-    private String getAccuracy(Location location) {
-        float accuracy = location.getAccuracy();
-        if (accuracy < 0.01) {
-            return "?";
-        } else if (accuracy > 99) {
-            return "99+";
-        } else {
-            return String.format(Locale.US, "%2.0fm", accuracy);
-        }
-    }
-
-    private String getLatitude(Location location) {
-        return String.format(Locale.US, "%2.5f", location.getLatitude());
-    }
-
-    private String getDMSLatitude(Location location) {
-        double val = location.getLatitude();
-        return String.format(Locale.US, "%.0f° %2.0f′ %2.3f″ %s",
-                Math.floor(Math.abs(val)),
-                Math.floor(Math.abs(val * 60) % 60),
-                (Math.abs(val) * 3600) % 60,
-                val > 0 ? "N" : "S"
-        );
-    }
-
-    private String getDMSLongitude(Location location) {
-        double val = location.getLongitude();
-        return String.format(Locale.US, "%.0f° %2.0f′ %2.3f″ %s",
-                Math.floor(Math.abs(val)),
-                Math.floor(Math.abs(val * 60) % 60),
-                (Math.abs(val) * 3600) % 60,
-                val > 0 ? "E" : "W"
-        );
-    }
-
-    private String getLongitude(Location location) {
-        return String.format(Locale.US, "%3.5f", location.getLongitude());
-    }
-
-    private String formatLocation(Location location, String format) {
-        return MessageFormat.format(format,
-                getLatitude(location), getLongitude(location));
-    }
 }

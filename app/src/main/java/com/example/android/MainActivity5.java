@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -149,11 +150,11 @@ public class MainActivity5 extends AppCompatActivity {
                 // Printing uploading success message coming from server on android app.
                 Toast.makeText(MainActivity5.this,string1,Toast.LENGTH_LONG).show();
 
-                // Setting image as transparent after done uploading.
+                // SettingNavigation image as transparent after done uploading.
                 imageView.setImageResource(android.R.color.transparent);
                 Intent intent = new Intent(MainActivity5.this,MainActivity1.class);
                 startActivity(intent);
-                intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
 
 
@@ -214,7 +215,7 @@ public class MainActivity5 extends AppCompatActivity {
 
                 bufferedWriterObject = new BufferedWriter(
 
-                        new OutputStreamWriter(OutPutStream, "UTF-8"));
+                        new OutputStreamWriter(OutPutStream, StandardCharsets.UTF_8));
 
                 bufferedWriterObject.write(bufferedWriterDataFN(PData));
 

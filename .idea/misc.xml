@@ -3,17 +3,47 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_dashboard.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_easy_use.xml" value="0.12" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_list_view.xml" value="0.1140625" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_login.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main2.xml" value="0.11145833333333334" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_employee_detail.xml" value="0.18478260869565216" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_card_view.xml" value="0.19067028985507245" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main6.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_mainc.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_user_login.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_layout.xml" value="0.33" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_view.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/check_attendance.xml" value="0.21331521739130435" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/credential.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/custom_actionbar.xml" value="0.18" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/drwaer.xml" value="0.14" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_details_bottomsheet.xml" value="0.22604166666666667" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/finger_string.xml" value="0.1" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/fingerprint_store.xml" value="0.18" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leave_form.xml" value="0.18478260869565216" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.1" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/ocr.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_login.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/finger_string.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/fingerprint_store.xml" value="0.22" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/gps_s.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/horizontal.xml" value="0.11354166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/idcard.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/item.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/layout_login.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/layout_register.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leave_status.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leaveemployee.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.21354166666666666" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/navigation_header.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/recycler_item.xml" value="0.21" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/scanner.xml" value="0.13677536231884058" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/setting.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/sms.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/toolbar.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/main.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/menu_main.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/menu_toolbar.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/navigation_view_menu.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/zxingCaptureActivity/src/main/res/layout/network.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.11354166666666667" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/activity_main1.xml" value="0.23097826086956522" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/activity_user_login.xml" value="0.12708333333333333" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/fingerprint_store.xml" value="0.23550724637681159" />

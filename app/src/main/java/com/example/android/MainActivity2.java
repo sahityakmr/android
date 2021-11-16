@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,15 +30,20 @@ import java.util.Map;
 
 public class MainActivity2 extends AppCompatActivity {
     private static final String TAG = "MainActivity2";
-    String ServerURL = "http://192.168.1.106:80/Android/register_employee.php";
-    String url = "http://192.168.1.106:80/Android/register_employee.php";
+    //String ServerURL = "http://192.168.1.106:80/Android/register_employee.php";
+   // String url = "http://192.168.1.106:80/Android/register_employee.php";
     EditText fname, lname, mobile, aadhar, pan, dob, imageid, address;
     TextView supervisorid;
     Button button;
     private String UserEmail;
     private TextView ids;
-    String TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7, Temp8, Temp9;
+    String TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7, Temp8, Temp9,file;
+    String firstname, lastname, contact, aadharno, panno, image_id, addressno,supervisor_id;
     DatePickerDialog picker;
+    private long pressedTime;
+    private final String filename2 = "address.txt";
+
+
 
     //  @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -56,13 +64,14 @@ public class MainActivity2 extends AppCompatActivity {
         String str = intent.getStringExtra("message_key");
         supervisorid.setText(str);
         ids = findViewById(R.id.ids);
-
         button = (Button) findViewById(R.id.button);
-
+        readData();
 
         button.setOnClickListener(view -> {
             readFromUI();
+
             insertData(TempName, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7, Temp8, Temp9);
+
         });
 
 
@@ -122,7 +131,7 @@ public class MainActivity2 extends AppCompatActivity {
         requestBodyMap.put("imageid", imageid);
         requestBodyMap.put("supervisor", supervisor);
 
-        HttpCall.makeFormRequest(this, ServerURL, requestBodyMap, new AsyncResponse() {
+        HttpCall.makeFormRequest(this, file+"/Android/register_employee.php", requestBodyMap, new AsyncResponse() {
             @Override
             public void postExecute(String response) {
                 try {
@@ -150,4 +159,73 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore UI state from the savedInstanceState.
+        // This bundle has also been passed to onCreate.
+        //String myStrin = savedInstanceState.getString("MyString");
+        String lastname =savedInstanceState.getString("lname");
+        String aadharno =savedInstanceState.getString("aadhar", aadhar.toString());
+        String image_id =savedInstanceState.getString("image", imageid.toString());
+        String panno =savedInstanceState.getString("pan", pan.toString());
+        String addressno =savedInstanceState.getString("address", address.toString());
+        String firstname =savedInstanceState.getString("fname", fname.toString());
+        String supervisor_id =savedInstanceState.getString("supervisor", supervisorid.toString());
+      //  String myString =savedInstanceState.getString("MyString", "Welcome back to Android");
+        lname.setText(lastname);
+    }
+
+    @Override
+     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("fname", TempName);
+        outState.putString("lname", Temp2);
+        outState.putString("aadhar", Temp4);
+        outState.putString("image", Temp7);
+        outState.putString("pan", Temp5);
+        outState.putString("address", Temp8);
+        outState.putString("supervisor", Temp9);
+
+    }
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+        } else {
+            Intent intent = new Intent(MainActivity2.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
 }

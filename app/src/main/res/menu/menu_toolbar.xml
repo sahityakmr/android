@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+        android:title="@string/settings"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_menu_home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_leave"
+            android:icon="@mipmap/ic_menu_settings"
+            android:title="Leave Form" />
+
+        <item
+            android:id="@+id/nav_salary"
+            android:icon="@drawable/ic_baseline_attach_money_24"
+            android:title="Salary" />
+        <item
+            android:id="@+id/nav_status"
+            android:icon="@drawable/ic_baseline_attach_money_24"
+            android:title="Leave Status" />
+
+        <item
+            android:id="@+id/nav_idcard"
+            android:icon="@drawable/ic_baseline_attach_money_24"
+            android:title="ID Card" />
+    </group>
 </menu>

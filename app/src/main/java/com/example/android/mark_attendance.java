@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -18,9 +17,7 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,11 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.android.http.AsyncResponse;
 import com.example.android.http.HttpCall;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -51,10 +44,8 @@ import com.mantra.mfs100.FingerData;
 import com.mantra.mfs100.MFS100;
 import com.mantra.mfs100.MFS100Event;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -69,8 +60,8 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     Button LogIn;
     String PasswordHolder, EmailHolder, FINGERSTRINGHolder;
     String finalResult;
-    String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
-    private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
+    //String HttpURL = "http://192.168.1.106:80/android/finger_check.php";
+    // private static final String URL_PRODUCTS = "http://192.168.1.106:80/android/get_all.php";
     Boolean CheckEditText;
     ProgressDialog progressDialog;
     HashMap<String, String> hashMap = new HashMap<>();
@@ -78,19 +69,21 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
     //public static final String UserEmail = "";
     public static final String userFinger = "";
     FusedLocationProviderClient mFusedLocationClient;
-    TextView latitudeTextView, longitTextView, text_card,text_card_contact;
+    TextView latitudeTextView, longitTextView, text_card, text_card_contact;
     int PERMISSION_ID = 44;
-    String latitude, longitude;
+    String latitude, longitude, file;
     List<Biometric> allFingers = new ArrayList<>();
     private String[] fingerprints;
     MFS100 mfs100 = null;
+    private long pressedTime;
     boolean isCaptureRunning = true;
     private long mLastAttTime = 0l;
     private FingerData lastCapFingerData = null;
     Context context;
-    private static long Threshold = 1500;
+    private static final long Threshold = 1500;
     Biometric biometric;
     private String e_id;
+    private final String filename2 = "address.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +91,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         setContentView(R.layout.mark_attendance);
         Intent intent = getIntent();
         e_id = intent.getStringExtra("id");
-
+        readData();
 
 
         FINGERSTRING = findViewById(R.id.fingerstring);
@@ -124,16 +117,14 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         fingerprints = new String[10];
 
 
-
         LogIn.setOnClickListener(new View.OnClickListener() {
-
 
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 StartSyncCapture();
-                while (lastCapFingerData == null){
+                while (lastCapFingerData == null) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -151,7 +142,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
             }
 
 
-
         });
 
 
@@ -160,17 +150,19 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
             public void onClick(View view) {
                 Map<String, String> reqMap = new HashMap<>();
                 reqMap.put("empId", idBox.getText().toString());
-                HttpCall.makeFormRequest(mark_attendance.this, URL_PRODUCTS, reqMap, new AsyncResponse() {
+                HttpCall.makeFormRequest(mark_attendance.this, file + "/android/get_all.php", reqMap, new AsyncResponse() {
                     @Override
                     public void postExecute(String response) {
                         biometric = new Gson().fromJson(response, Biometric.class);
+                        String a[] = biometric.updateArray();
                         biometric.updateArray();
-                       // loadfingers();
+                        // loadfingers();
                         idBox.setClickable(false);
                         idBox.setFocusable(false);
                         text_card.setText(biometric.getFirstname());
                         text_card_contact.setText(biometric.getContact_info());
                         cardView.setVisibility(View.VISIBLE);
+                        FINGERSTRING.setVisibility(View.GONE);
                         Log.i("TAG", "postExecute: ");
                     }
 
@@ -191,24 +183,23 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         return fingerprint.substring(sInd + 1, eInd).replaceAll("\n", "");
     }
 
-    private void markAttendance(String id) {
+    private void markAttendance(String ids) {
         Map<String, String> requestMap = new HashMap<>();
-        requestMap.put("id", id);
-        requestMap.put("lat", latitude);
-        requestMap.put("longi", longitude);
-       HttpCall.makeFormRequest(this, HttpURL, requestMap, new AsyncResponse() {
-           @Override
-           public void postExecute(String response) {
-               Log.i("TAG", "postExecute: " + response);
-           }
+        requestMap.put("ids", ids);
+        requestMap.put("lat", latitudeTextView.getText().toString());
+        requestMap.put("longi", longitTextView.getText().toString());
+        HttpCall.makeFormRequest(this, file + "/android/finger_check.php", requestMap, new AsyncResponse() {
+            @Override
+            public void postExecute(String response) {
+                Log.i("TAG", "postExecute: " + response);
+            }
 
-           @Override
-           public void postError(VolleyError error) {
+            @Override
+            public void postError(VolleyError error) {
 
-           }
-       });
+            }
+        });
     }
-
 
 
     @SuppressLint("MissingPermission")
@@ -677,5 +668,53 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
         }
     }
 
+
+    public void printMessage(String m) {
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
+    }
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            if (checkPermissions()) {
+                getLastLocation();
+
+                Intent intent = new Intent(mark_attendance.this, MainActivity1.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                finish();
+            }
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(mark_attendance.this, MainActivity1.class);
+            // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
 
 }

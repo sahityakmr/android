@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--XMl Layout for RecyclerView-->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dashboard_uii"
+    tools:context="com.example.android.MainActivity1"
     tools:ignore="HardcodedText"
-    tools:context="com.example.android.MainActivity1">
+    android:id="@+id/coordLayy">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idCourseRV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="NotSibling"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layoutz_editor_absoluteY="117dp"
-        android:background="@drawable/splash_screenbackground" />
-
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/idCourseRV"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/dashboard_uii"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        tools:ignore="MissingConstraints,NotSibling"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="171dp"-->
+<!--        tools:layoutz_editor_absoluteY="117dp" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
@@ -27,10 +29,12 @@
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="TODO"
         android:src="@drawable/ic_baseline_blur_circular_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
+        tools:ignore="ContentDescription"
         tools:layout_constraintBottom_toBottomOf="parent"
         tools:layout_constraintEnd_toEndOf="parent" />
 
@@ -40,21 +44,24 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/ic_baseline_accessibility_new_24"
         app:layout_constraintBottom_toTopOf="@+id/add_fab"
         app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
+        tools:ignore="ContentDescription"
         tools:layout_constraintBottom_toTopOf="@+id/add_fab"
         tools:layout_constraintEnd_toEndOf="@+id/add_fab"
-        tools:layout_constraintStart_toStartOf="@+id/add_fab"
-        tools:srcCompat="@drawable/ic_baseline_ac_unit_24" />
+        tools:layout_constraintStart_toStartOf="@+id/add_fab" />
 
     <TextView
         android:id="@+id/add_alarm_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Add Alarm"
+        android:text="Apply Leave"
+        app:layout_constraintEnd_toEndOf="@+id/add_fab"
         tools:layout_constraintBottom_toBottomOf="@+id/add_alarm_fab"
         tools:layout_constraintEnd_toStartOf="@+id/add_alarm_fab"
         tools:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
@@ -66,33 +73,63 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/ic_baseline_brightness_5_24"
         app:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
         app:layout_constraintEnd_toEndOf="parent"
         tools:fabSize="normal"
+        tools:ignore="ContentDescription"
         tools:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
         tools:layout_constraintEnd_toEndOf="@+id/add_alarm_fab"
-        tools:layout_constraintStart_toStartOf="@+id/add_alarm_fab"
-        tools:srcCompat="@drawable/ic_baseline_brightness_5_24" />
+        tools:layout_constraintStart_toStartOf="@+id/add_alarm_fab" />
 
     <TextView
         android:id="@+id/add_person_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Add Person"
+        android:layout_gravity="end"
+        android:text="Add Expenses"
         tools:layout_constraintBottom_toBottomOf="@+id/add_person_fab"
         tools:layout_constraintEnd_toStartOf="@+id/add_person_fab"
         tools:layout_constraintTop_toTopOf="@+id/add_person_fab" />
-<!--    <EditText-->
-<!--        android:id="@+id/edittext15"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center"-->
-<!--        android:hint="Search"-->
-<!--        tools:ignore="MissingConstraints"-->
-<!--        tools:layout_editor_absoluteX="0dp"-->
-<!--        tools:layout_editor_absoluteY="245dp" />-->
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idCourseRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dashboard_uii"
+            android:gravity="center"
+            tools:ignore="MissingConstraints,NotSibling"
+            tools:layout_editor_absoluteX="110dp"
+            tools:layout_editor_absoluteY="271dp"
+            tools:layoutz_editor_absoluteY="117dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/navigation_header"
+            app:menu="@menu/navigation_view_menu"
+            android:id="@+id/navigationView"/>
+
+
+
+
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

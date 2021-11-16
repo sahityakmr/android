@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,12 +35,7 @@ public class HttpCall {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        uee.printStackTrace();
-                        return null;
-                    }
+                    return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
                 }
             };
 

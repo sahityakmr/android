@@ -15,31 +15,6 @@
 	<string name="unsubscribed">Unsubscribed from news topic</string>
 
 
-
-
-
-
-
-
-
-
-
-    <string name="share_location">Share</string>
-    <string name="copy_location">Copy</string>
-    <string name="view_location">View</string>
-    <string name="copied">Copied to clipboard</string>
-    <string name="clipboard_error">Failed to copy text to clipboard</string>
-    <string name="getting_location">Getting locationâ€¦</string>
-    <string name="share_location_via">Share location via</string>
-    <string name="view_location_via">View location via</string>
-
-    <string name="turn_on_GPS">Turn on GPS</string>
-    <string name="permission_denied">GPS permission denied</string>
-
-    <string name="accuracy">Accuracy</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-
     <string name="choose_link">Choose a link type</string>
 
     <string name="always_ask">Ask me every time</string>
@@ -53,6 +28,16 @@
 
 
     <string name="txt_message">No Text Available</string>
+
+    <string name="share_text">Share Text</string>
+
+
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+
+
+    <string name="facebook_app_id">1569791583372485</string>
+    <string name="fb_login_protocol_scheme">fb1569791583372485</string>
 
 
 </resources>

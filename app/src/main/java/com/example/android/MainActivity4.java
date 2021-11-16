@@ -49,7 +49,7 @@ public class MainActivity4 extends FragmentActivity {
 
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
-    private static final String URL_PRODUCTS = "http://192.168.1.106:80/Android/Api.php";
+   // private static final String URL_PRODUCTS = "http://192.168.1.106:80/Android/Api.php";
 
     //a list to store all the products
     List<Product> productList;
@@ -59,15 +59,19 @@ public class MainActivity4 extends FragmentActivity {
 
     ListView SubjectListView;
     ProgressBar progressBarSubject;
-    String ServerURL = "http://192.168.1.106:80/Android/Subjects.php";
+   // String ServerURL = "http://192.168.1.106:80/Android/Subjects.php";
     EditText editText ;
     List<String> listString = new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter ;
-    private String filename = "demoFile.txt";
+    private final String filename = "demoFile.txt";
     TextView fileContent;
     HashMap<String,String> hashMap = new HashMap<>();
-    String finalResult ;
+    String finalResult,files;
     HttpParse httpParse = new HttpParse();
+    private long pressedTime;
+    private final String filename2 = "address.txt";
+
+
 
 
 
@@ -92,8 +96,10 @@ public class MainActivity4 extends FragmentActivity {
         //this method will fetch and parse json
         //to display it in recyclerview
 
-        loadProducts();
         readData();
+        read();
+        loadProducts();
+
 
 
 
@@ -160,7 +166,7 @@ public class MainActivity4 extends FragmentActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-             //   progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data",null,true,true);
+               // progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data",null,true,true);
             }
 
             @Override
@@ -185,7 +191,7 @@ public class MainActivity4 extends FragmentActivity {
 
                 hashMap.put("file",params[0]);
 
-                finalResult = httpParse.postRequest(hashMap, URL_PRODUCTS);
+                finalResult = httpParse.postRequest(hashMap, files+"/Android/Api.php");
 
                 return finalResult;
             }
@@ -207,7 +213,7 @@ public class MainActivity4 extends FragmentActivity {
     private void loadProducts() {
  
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, files+"/Android/Api.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -240,6 +246,8 @@ public class MainActivity4 extends FragmentActivity {
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 },
@@ -260,6 +268,7 @@ public class MainActivity4 extends FragmentActivity {
         public Context context;
 
         String ResultHolder;
+        ProgressDialog loading;
 
         public GetHttpResponse(Context context)
         {
@@ -270,12 +279,13 @@ public class MainActivity4 extends FragmentActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
+            loading = ProgressDialog.show(MainActivity4.this, "Loading...", null,true,true);
         }
 
         @Override
         protected Void doInBackground(Void... arg0)
         {
-            HttpServicesClass httpServiceObject = new HttpServicesClass(ServerURL);
+            HttpServicesClass httpServiceObject = new HttpServicesClass(files+"/Android/Subjects.php");
             try
             {
                 httpServiceObject.ExecutePostRequest();
@@ -297,7 +307,7 @@ public class MainActivity4 extends FragmentActivity {
                             {
                                 jsonObject = jsonArray.getJSONObject(i);
 
-                                listString.add(jsonObject.getString("subjects").toString()) ;
+                                listString.add(jsonObject.getString("subjects")) ;
 
                             }
                         }
@@ -325,6 +335,7 @@ public class MainActivity4 extends FragmentActivity {
 
         {
             progressBarSubject.setVisibility(View.GONE);
+            loading.dismiss();
 
          //   SubjectListView.setVisibility(View.VISIBLE);
 
@@ -335,8 +346,40 @@ public class MainActivity4 extends FragmentActivity {
         }
     }
 
+    private void read() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
 
+            // setting text from the file.
+            files = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printMessage("reading to file " + filename2 + " completed..");
+    }
 
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+        } else {
+            Intent intent = new Intent(MainActivity4.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
 
 
 

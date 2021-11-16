@@ -27,7 +27,7 @@ public class MyNotificationManager {
     public static final int ID_BIG_NOTIFICATION = 234;
     public static final int ID_SMALL_NOTIFICATION = 235;
 
-    private Context mCtx;
+    private final Context mCtx;
 
     public MyNotificationManager(Context mCtx) {
         this.mCtx = mCtx;

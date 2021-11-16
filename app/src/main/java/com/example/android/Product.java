@@ -3,13 +3,13 @@ package com.example.android;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private String image_path;
-    private String mobile;
-    private String aadhar_no;
+    private final String image_path;
+    private final String mobile;
+    private final String aadhar_no;
    // private double rating;
-    private String l_name;
-    private String image_name;
-    private String f_name;
+    private final String l_name;
+    private final String image_name;
+    private final String f_name;
     private String fileContent;
     public Product(String f_name, String mobile, String aadhar_no, String image_name, String l_name, String image_path) {
         this.f_name = f_name;
