@@ -16,7 +16,7 @@
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_layout.xml" value="0.33" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/card_view.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/check_attendance.xml" value="0.21331521739130435" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/credential.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/credential.xml" value="0.15" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/custom_actionbar.xml" value="0.18" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/drwaer.xml" value="0.14" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/employee_details_bottomsheet.xml" value="0.22604166666666667" />
@@ -33,6 +33,7 @@
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leaveemployee.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/navigation_header.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/ocr.xml" value="0.1331521739130435" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/recycler_item.xml" value="0.21" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/scanner.xml" value="0.13677536231884058" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/setting.xml" value="0.22604166666666667" />

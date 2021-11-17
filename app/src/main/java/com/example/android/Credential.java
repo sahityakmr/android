@@ -9,22 +9,48 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.FileOutputStream;
 import androidx.appcompat.app.AppCompatActivity;
+import java.io.File;
 
+import com.android.volley.VolleyError;
+import com.example.android.http.AsyncResponse;
+import com.example.android.http.HttpCall;
 import com.google.android.material.navigation.NavigationView;
 import com.nightonke.boommenu.BoomMenuButton;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
+
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import androidx.annotation.Nullable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class Credential extends AppCompatActivity {
 
     Button connect;
     EditText credential;
+    ImageView imageView;
     String Temp;
     Boolean CheckEditText ;
     private final String filename = "address.txt";
@@ -33,6 +59,7 @@ public class Credential extends AppCompatActivity {
     private long pressedTime;
     String finalResult ;
     TextView conn;
+    CallbackManager callbackManager;
     HashMap<String,String> hashMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +68,37 @@ public class Credential extends AppCompatActivity {
         connect = (Button)findViewById(R.id.connect);
         credential = findViewById(R.id.email1_connect);
         conn = (TextView)findViewById(R.id.connection);
+        callbackManager = CallbackManager.Factory.create();
+        imageView = (ImageView) findViewById(R.id.imageView);
+        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email","public_profile");
+
+//        File address = new File(getApplicationContext().deleteFile("address.txt"));
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                        File address = new File(getApplicationContext().getFilesDir(),"address.txt");
+                        address.delete();
+                        Intent intent = new Intent(Credential.this, MainActivity1.class);
+                        intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        finish();
+
+                }
+
+            @Override
+            public void onCancel() {
+                Intent intent = new Intent(Credential.this, splash.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                finish();
+            }
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
 
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +164,7 @@ public class Credential extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Welcome To MEENA ELECTRICAL AND ENGINEERING WORKS", Toast.LENGTH_SHORT).show();
     }
 
+
     public void CheckEditTextIsEmptyOrNot(){
         Temp = credential.getText().toString();
 
@@ -166,6 +225,71 @@ public class Credential extends AppCompatActivity {
 
         userLoginClass.execute(check);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    AccessTokenTracker tokentracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            if(currentAccessToken==null){
+                Toast.makeText(Credential.this, "User Logged Out", Toast.LENGTH_SHORT).show();
+
+            }else{
+                loadUserProfile(currentAccessToken);
+
+            }
+        }
+    };
+
+    private void loadUserProfile(AccessToken newAccessToken)
+    {
+        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+
+            @Override
+            public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse response) {
+                try {
+                    String first_name = object.getString("first_name");
+                    String last_name = object.getString("last_name");
+                    String email = object.getString("email");
+                    String id = object.getString("id");
+                    String image_url = "https://graph.facebook.com/"+id+ "/picture?type=normal";
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.dontAnimate();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        //  Bundle parameters = new Bundle();
+        String[] names = new String[]{"fields", "first_name", "last_name", "email", "id"};
+        // parameters.putString(Arrays.toString(names));
+        //request.setParameters(parameters);
+        //request.executeAsync();
+    }
+
+    private void checkLoginStatus()
+    {
+        if(AccessToken.getCurrentAccessToken()!=null)
+        {
+            loadUserProfile(AccessToken.getCurrentAccessToken());
+
+
+        }
+    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        AccessTokenTracker.stopTracking();
+//    }
+
     @Override
     public void onBackPressed() {
 

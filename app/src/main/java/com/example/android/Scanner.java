@@ -63,14 +63,19 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
     public void scan(int code) {
-        Intent intentScan = new Intent(Settings.ZXING_SCAN_INTENT);
-        intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+        startActivityForResult(intent, 0);
 
-        startActivityForResult(intentScan, code);
+
+//        Intent intentScan = new Intent(Settings.ZXING_SCAN_INTENT);
+//        intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+//
+//        startActivityForResult(intentScan, code);
     }
 
     @Override

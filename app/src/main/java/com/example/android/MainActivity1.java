@@ -386,7 +386,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         Drawable[] drawables = new Drawable[3];
         int[] drawablesResource = new int[]{
                 R.drawable.ic_baseline_gps_fixed_24,
-                R.drawable.finger,
+                R.drawable.fingerprint1,
                 R.drawable.employee
         };
         for (int i = 0; i < 3; i++)
