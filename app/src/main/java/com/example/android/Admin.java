@@ -46,7 +46,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 
-public class MainActivity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BoomMenuButton.OnSubButtonClickListener {
+public class Admin extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BoomMenuButton.OnSubButtonClickListener {
 
     ImageView imgClick;
     private ListView lv;
@@ -65,7 +65,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
     private Fragment fragment;
     private DrawerLayout drawer;
     private NavigationView navigationView;
-   // private CoordinatorLayout coordLay;
+    // private CoordinatorLayout coordLay;
     private ConstraintLayout coordLay;
     private FragmentManager fm;
     private Context mContext;
@@ -97,7 +97,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         readData();
 
         //supervisorid.setText(str);
-       // ip.setText(file);
+        // ip.setText(file);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.app_name, R.string.app_name);
@@ -183,7 +183,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                         simpleWebView.loadUrl(url);
                         simpleWebView.setWebViewClient(new MyWebViewClient());
 
-                        Toast.makeText(MainActivity1.this, "Expense Form", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Admin.this, "Expense Form", Toast.LENGTH_SHORT).show();
                     }
 
                     class MyWebViewClient extends WebViewClient {
@@ -219,7 +219,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                         simpleWebView.loadUrl(url);
                         simpleWebView.setWebViewClient(new MyWebViewClient());
 
-                        Toast.makeText(MainActivity1.this, "Leave Form", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Admin.this, "Leave Form", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -248,18 +248,18 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         recyclerDataArrayList = new ArrayList<>();
 
         // added data to array list
-        recyclerDataArrayList.add(new RecyclerData("Enroll Employee", R.drawable.employee));
-        recyclerDataArrayList.add(new RecyclerData("Enroll Supervisor ", R.drawable.hierarchy));
-        recyclerDataArrayList.add(new RecyclerData("Employee Login", R.drawable.employee));
-        recyclerDataArrayList.add(new RecyclerData("Control Panel", R.drawable.clipboard));
+        recyclerDataArrayList.add(new RecyclerData("Employee List", R.drawable.employee));
+        recyclerDataArrayList.add(new RecyclerData("Change Company Logo ", R.drawable.hierarchy));
+        recyclerDataArrayList.add(new RecyclerData("Change Signature", R.drawable.employee));
+ //       recyclerDataArrayList.add(new RecyclerData("Control Panel", R.drawable.clipboard));
 //        recyclerDataArrayList.add(new RecyclerData("Attendance Check", R.drawable.search));
 //        recyclerDataArrayList.add(new RecyclerData("Project Details", R.drawable.search));
 //        recyclerDataArrayList.add(new RecyclerData("Mark Attendance", R.drawable.ic_baseline_fingerprint_24));
 //        recyclerDataArrayList.add(new RecyclerData("Upload Data", R.drawable.cloud));
-  //      recyclerDataArrayList.add(new RecyclerData("Submit a Request", R.drawable.request));
+        //      recyclerDataArrayList.add(new RecyclerData("Submit a Request", R.drawable.request));
 
         // added data from arraylist to adapter class.
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList, this);
+        AdminAdapter adapter = new AdminAdapter(recyclerDataArrayList, this);
 
         // setting grid layout manager to implement grid view.
         // in this method '2' represents number of columns to be displayed in grid view.
@@ -283,9 +283,9 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         switch (item.getItemId()){
             case android.R.id.home:
                 Toast.makeText(getBaseContext(), "Press back ", Toast.LENGTH_SHORT).show();
-              //  drawer.isDrawerOpen(GravityCompat.START);
+                //  drawer.isDrawerOpen(GravityCompat.START);
 
-          //       Open Close Drawer Layout
+                //       Open Close Drawer Layout
                 if(drawer.isDrawerOpen(GravityCompat.START)){
                     drawer.closeDrawer(GravityCompat.END);
                 } else {
@@ -301,7 +301,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         int id = menuItem.getItemId();
         switch (id) {
             case R.id.nav_home:
-                Intent intent = new Intent(MainActivity1.this, MainActivity4.class);
+                Intent intent = new Intent(Admin.this, MainActivity4.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 finish();
@@ -309,14 +309,14 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_notification:
-                Intent intent2 = new Intent(MainActivity1.this, mark_attendance.class);
+                Intent intent2 = new Intent(Admin.this, mark_attendance.class);
                 intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent2);
                 finish();
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_settings:
-                Intent intent3 = new Intent(MainActivity1.this, MainActivity51.class);
+                Intent intent3 = new Intent(Admin.this, MainActivity51.class);
                 intent3.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent3);
                 finish();
@@ -333,20 +333,20 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                 simpleWebView.loadUrl(url);
                 simpleWebView.setWebViewClient(new MyWebViewClient());
 
-                Toast.makeText(MainActivity1.this, "Leave Form", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Admin.this, "Leave Form", Toast.LENGTH_SHORT).show();
 
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_salary:
-                Intent intent4 = new Intent(MainActivity1.this, Scanner.class);
-               // intent4.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent intent4 = new Intent(Admin.this, Scanner.class);
+                intent4.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent4);
-               // finish();
+                finish();
                 navigationView.setCheckedItem(id);
                 break;
 
             case R.id.action_settings:
-                Intent intent6 = new Intent(MainActivity1.this, MainActivity6.class);
+                Intent intent6 = new Intent(Admin.this, MainActivity6.class);
                 intent6.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent6);
                 finish();
@@ -354,10 +354,10 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.nav_scanner:
-                Intent intent5 = new Intent(MainActivity1.this, MainActivity5.class);
-               // intent5.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent intent5 = new Intent(Admin.this, Employee_Login.class);
+                intent5.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent5);
-             //   finish();
+                finish();
                 navigationView.setCheckedItem(id);
                 break;
         }
@@ -400,7 +400,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
 
         // Now with Builder, you can init BMB more convenient
         new BoomMenuButton.Builder()
-                .subButtons(drawables, colors, new String[]{"Location Share", "Attendance Check", "Gallery"})
+                .subButtons(drawables, colors, new String[]{"Location Share", "Attendance Check", "View Employees"})
                 .button(ButtonType.HAM)
                 .boom(BoomType.PARABOLA_2)
                 .place(PlaceType.HAM_3_1)
@@ -410,13 +410,13 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                     @Override
                     public void onClick(int buttonIndex) {
                         if (buttonIndex == 0) {
-                            Intent intent = new Intent(MainActivity1.this, gps_s.class);
+                            Intent intent = new Intent(Admin.this, gps_s.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             startActivity(intent);
                             finish();
                             Toast.makeText(mContext, "PRECISE LOCATION", Toast.LENGTH_SHORT).show();
                         } else if (buttonIndex == 1) {
-                            Intent intent = new Intent(MainActivity1.this, Attendance_check.class);
+                            Intent intent = new Intent(Admin.this, Attendance_check.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             startActivity(intent);
                             finish();
@@ -433,7 +433,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                             simpleWebView.loadUrl(url);
                             simpleWebView.setWebViewClient(new MyWebViewClient());
 
-                            Toast.makeText(MainActivity1.this, "View Employee List", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Admin.this, "View Employee List", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -503,7 +503,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                 boomMenuButton.dismiss();
                 boomMenuButtonInActionBar.dismiss();
                 boomInfo.dismiss();
-                Intent intent = new Intent(MainActivity1.this, MainActivity1.class);
+                Intent intent = new Intent(Admin.this, MainActivity1.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 finish();
@@ -516,4 +516,5 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
 
 
 }
+
 

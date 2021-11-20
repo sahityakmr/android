@@ -22,12 +22,12 @@ import java.util.ArrayList;
 
 import static android.os.Build.VERSION_CODES.M;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
+public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.RecyclerViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
     private final ArrayList<RecyclerData> courseDataArrayList;
     private final Context mcontext;
 
-    public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList, Context mcontext) {
+    public AdminAdapter(ArrayList<RecyclerData> recyclerDataArrayList, Context mcontext) {
         this.courseDataArrayList = recyclerDataArrayList;
         this.mcontext = mcontext;
     }
@@ -60,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     mcontext.startActivity(intent);
 
-                    Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Test", Toast.LENGTH_LONG).show();
                 }
 
                 if (position == 1) {
@@ -70,33 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();
                 }
 
-                if (position == 3) {
-                    Intent intent = new Intent(v.getContext(), AdminLogin.class);
-                    mcontext.startActivity(intent);
 
-                    Toast.makeText(v.getContext(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-                }
-
-                if (position == 7) {
-                    Intent intent = new Intent(v.getContext(), Sms.class);
-                    mcontext.startActivity(intent);
-
-                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
-                }
-
-                if (position == 8) {
-                    Intent intent = new Intent(v.getContext(), Sms.class);
-                    mcontext.startActivity(intent);
-
-                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
-                }
-
-                if (position == 6) {
-                    Intent intent = new Intent(v.getContext(), mark_attendance.class);
-                    mcontext.startActivity(intent);
-
-                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
-                }
 
                 if (position == 2) {
                     Intent intent = new Intent(v.getContext(), Employee_Login.class);
@@ -104,17 +78,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
                 }
-
-                if (position == 4) {
-                    Intent intent = new Intent(v.getContext(), gps_s.class);
-                    mcontext.startActivity(intent);
-
-                    Toast.makeText(v.getContext(), "Please Register your device.", Toast.LENGTH_LONG).show();
-                }
             }
         });
 
-        }
+    }
 
 
 
@@ -130,8 +97,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-   // public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-   public class RecyclerViewHolder extends RecyclerView.ViewHolder{
+    // public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder{
         public TextView courseTV;
         private int position;
         private final ImageView courseIV;

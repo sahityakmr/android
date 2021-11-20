@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Forgot_Password extends AppCompatActivity {
+public class AdminForgot extends AppCompatActivity {
     EditText old, newp, renewp;
     Button set;
     private long pressedTime;
@@ -55,7 +55,7 @@ public class Forgot_Password extends AppCompatActivity {
                 }
                 else {
 
-                    Toast.makeText(Forgot_Password.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminForgot.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -108,7 +108,7 @@ public class Forgot_Password extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(Forgot_Password.this,"Loading Data",null,true,false);
+                progressDialog = ProgressDialog.show(AdminForgot.this,"Loading Data",null,true,false);
             }
 
             @Override
@@ -122,11 +122,11 @@ public class Forgot_Password extends AppCompatActivity {
 
                     finish();
 
-                    Intent intent = new Intent(Forgot_Password.this, Employee_Login.class);
+                    Intent intent = new Intent(AdminForgot.this, AdminLogin.class);
 
                     //intent.putExtra(UserEmail,email);
-                   // intent.putExtra("message_key",EmailHolder);
-                    Toast.makeText(Forgot_Password.this, "Leave Form", Toast.LENGTH_SHORT).show();
+                    // intent.putExtra("message_key",EmailHolder);
+                    Toast.makeText(AdminForgot.this, "Leave Form", Toast.LENGTH_SHORT).show();
                     //intent.putExtra("message_key",EmailHolder);
 
                     startActivity(intent);
@@ -134,7 +134,7 @@ public class Forgot_Password extends AppCompatActivity {
                 }
                 else{
 
-                    Toast.makeText(Forgot_Password.this,httpResponseMsg,Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminForgot.this,httpResponseMsg,Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -145,7 +145,7 @@ public class Forgot_Password extends AppCompatActivity {
 
                 hashMap.put("rpassword",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, file+"/android/password_reset.php");
+                finalResult = httpParse.postRequest(hashMap, file+"/android/password_reset_admin.php");
 
                 return finalResult;
             }
@@ -164,7 +164,7 @@ public class Forgot_Password extends AppCompatActivity {
             super.onBackPressed();
             finish();
         } else {
-            Intent intent = new Intent(Forgot_Password.this, Employee_Login.class);
+            Intent intent = new Intent(AdminForgot.this, AdminLogin.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
             finish();

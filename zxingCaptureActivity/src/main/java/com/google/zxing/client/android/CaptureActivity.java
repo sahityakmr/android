@@ -389,17 +389,31 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
           }
           break;
         case NONE:
-          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-          if (prefs.getBoolean(PreferencesActivity.KEY_BULK_MODE, false)) {
-            Toast.makeText(this, R.string.msg_bulk_mode_scanned, Toast.LENGTH_SHORT).show();
-            // Wait a moment or else it will scan the same barcode continuously about 3 times
-            if (handler != null) {
-              handler.sendEmptyMessageDelayed(R.id.restart_preview, BULK_MODE_SCAN_DELAY_MS);
-            }
-            resetStatusView();
-          } else {
-            handleDecodeInternally(rawResult, resultHandler, barcode);
+
+          Intent intent = new Intent(getIntent().getAction());
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+          intent.putExtra(Intents.Scan.RESULT, rawResult.toString());
+          intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult.getBarcodeFormat().toString());
+          byte[] rawBytes = rawResult.getRawBytes();
+          if (rawBytes != null && rawBytes.length > 0) {
+              intent.putExtra(Intents.Scan.RESULT_BYTES, rawBytes);
           }
+          setResult(Activity.RESULT_OK, intent);
+          finish();
+
+
+
+//          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//          if (prefs.getBoolean(PreferencesActivity.KEY_BULK_MODE, false)) {
+//            Toast.makeText(this, R.string.msg_bulk_mode_scanned, Toast.LENGTH_SHORT).show();
+//            // Wait a moment or else it will scan the same barcode continuously about 3 times
+//            if (handler != null) {
+//              handler.sendEmptyMessageDelayed(R.id.restart_preview, BULK_MODE_SCAN_DELAY_MS);
+//            }
+//            resetStatusView();
+//          } else {
+//            handleDecodeInternally(rawResult, resultHandler, barcode);
+//          }
           break;
       }
 

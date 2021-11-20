@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +36,21 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
     Button btnScan;
     JSONObject jObj = null;
     String json = "";
-    String scanResult;
+    String scanResult,file;
     String serverResponse=null;
     ProgressBar loading;
     public ProgressDialog pDialog;
 
     //create JSON parser Object
     JSONParser jParser = new JSONParser();
+    private final String filename2 = "address.txt";
     //server url
     private static String getEmployeeInformationUrl;
     //declare employee JSON variables
     private final String TAG_ID = "id";
     private final String TAG_LASTNAME = "lastname";
     private final String TAG_FIRSTNAME = "firstname";
+   // private final String TAG_contact_info = "contact_info";
 
     //declare JSONArray
     JSONArray employeeInformation = null;
@@ -57,6 +61,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.scanner);
         txtScanResult=(TextView)findViewById(R.id.txtScanResult);
         btnScan=(Button)findViewById(R.id.btnScan);
+        readData();
         btnScan.setOnClickListener(this);
     }
 
@@ -67,15 +72,15 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         return true;
     }
     public void scan(int code) {
-        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
-        startActivityForResult(intent, 0);
+//        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+//        intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+//        startActivityForResult(intent, 0);
 
 
-//        Intent intentScan = new Intent(Settings.ZXING_SCAN_INTENT);
-//        intentScan.addCategory(Intent.CATEGORY_DEFAULT);
-//
-//        startActivityForResult(intentScan, code);
+        Intent intentScan = new Intent(Settings.ZXING_SCAN_INTENT);
+        intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+
+        startActivityForResult(intentScan, code);
     }
 
     @Override
@@ -150,7 +155,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... args) {
-            getEmployeeInformationUrl="http://192.168.1.106:80/Android/test.php";
+            getEmployeeInformationUrl=file+"/Android/test.php";
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("id", scanResult));
             JSONObject json = jParser.makeHttpRequest(getEmployeeInformationUrl, "GET", params);
@@ -168,6 +173,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                             String id = c.getString(TAG_ID);
                             String lastname = c.getString(TAG_LASTNAME);
                             String firstname = c.getString(TAG_FIRSTNAME);
+                            //String contact_info = c.getString(TAG_FIRSTNAME);
                             serverResponse=id+"\n"+lastname+"\n"+firstname;
                         }
                     }
@@ -185,6 +191,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                 public void run() {
                     if(serverResponse!=null){
                         txtScanResult.setText(serverResponse);
+                        btnScan.setVisibility(View.INVISIBLE);
                     }else{
                         txtScanResult.setText("this employee ID does not exist!!!");
                     }
@@ -195,4 +202,24 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
+
+
+    private void readData() {
+        try {
+            FileInputStream fin = openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

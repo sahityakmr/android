@@ -63,7 +63,7 @@ public class splash extends AppCompatActivity {
                   if(address.exists()==false)
                   {
                       Intent i=new Intent(splash.this,
-                            MainActivity1.class);
+                            Credential.class);
 
 
                     startActivity(i);

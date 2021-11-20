@@ -68,6 +68,9 @@
         <activity android:name=".Salary"/>
         <activity android:name=".Scanner"/>
         <activity android:name=".Forgot_Password"/>
+        <activity android:name=".Admin"/>
+        <activity android:name=".AdminLogin"/>
+        <activity android:name=".AdminForgot"/>
 
         <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
