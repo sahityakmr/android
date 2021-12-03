@@ -1,11 +1,14 @@
 package com.example.android;
+
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +20,7 @@ import java.util.HashMap;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,17 +29,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.net.Uri;
 import android.provider.MediaStore;
+
 import java.io.BufferedReader;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+
 import javax.net.ssl.HttpsURLConnection;
+
 import java.io.UnsupportedEncodingException;
+
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+
 import java.util.List;
 import java.io.File;
 import java.util.Objects;
@@ -51,6 +60,10 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -59,7 +72,7 @@ import com.example.android.R;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 public class MainActivity5 extends AppCompatActivity {
- //   private static final String TAG = MainActivity5.class.getSimpleName();
+    //   private static final String TAG = MainActivity5.class.getSimpleName();
 
     Bitmap bitmap, photo;
 
@@ -72,18 +85,18 @@ public class MainActivity5 extends AppCompatActivity {
     EditText imageName;
     private final String filename = "cache.txt";
 
-    ProgressDialog progressDialog ;
+    ProgressDialog progressDialog;
 
     String GetImageNameEditText;
 
-    String ImageName = "image_name" ;
+    String ImageName = "image_name";
     String Temp;
     String filePath;
     String a;
     String currentPhotoPath;
     File photoFile;
-
-    String ImagePath = "image_path" ;
+    ActivityResultLauncher<Intent> cameraActivityResultLauncher;
+    String ImagePath = "image_path";
 
     private static final int pic_id = 1;
     String fileName;
@@ -98,18 +111,18 @@ public class MainActivity5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5);
 
-        imageView = (ImageView)findViewById(R.id.imageView0);
+        imageView = (ImageView) findViewById(R.id.imageView0);
 
         imageName = (EditText) findViewById(R.id.editTextImageName0);
 
 
+        SelectImageGallery = (Button) findViewById(R.id.buttonSelect0);
+        cam = (Button) findViewById(R.id.buttonSelect20);
 
-        SelectImageGallery = (Button)findViewById(R.id.buttonSelect0);
-        cam = (Button)findViewById(R.id.buttonSelect20);
-
-        UploadImageServer = (Button)findViewById(R.id.buttonUpload0);
+        UploadImageServer = (Button) findViewById(R.id.buttonUpload0);
 
         readData();
+        registerForPicture();
 
         SelectImageGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,136 +148,62 @@ public class MainActivity5 extends AppCompatActivity {
 
                 GetImageNameEditText = imageName.getText().toString();
 
-                        ImageUploadToServerFunction();
+                ImageUploadToServerFunction();
 
             }
         });
 
 
-        cam.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v)
-            {
-                takeCameraImage();
-
-                // Create the camera_intent ACTION_IMAGE_CAPTURE
-                // it will open the camera for capture the image
-//                Intent camera_intent
-//                        = new Intent(MediaStore
-//                        .ACTION_IMAGE_CAPTURE);
-//
-//                // Start the activity with camera_intent,
-//                // and request pic id
-//                startActivityForResult(camera_intent, pic_id);
-            }
+        cam.setOnClickListener(v -> {
+            openCameraAndTakePicture();
         });
 
 
     }
 
+    private void openCameraAndTakePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        photoFile = createImageFile();
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", photoFile));
+        cameraActivityResultLauncher.launch(takePictureIntent);
+    }
+
+    private void registerForPicture() {
+        cameraActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                        Toast.makeText(this, "Saved Image with Name : " + photoFile.getName(), Toast.LENGTH_SHORT).show();
+                        imageView.setImageBitmap(myBitmap);
+                    }
+                }
+        );
+    }
 
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+            currentPhotoPath = image.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
 
-
-    private void takeCameraImage() {
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            // Ensure that there's a camera activity to handle the intent
-                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                // Create the File where the photo should go
-                            //    fileName = System.currentTimeMillis() + ".jpg";
-
-                              //  filePath = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES) + "/" + fileName;
-
-                                photoFile = null;
-                                try {
-                                    photoFile = createImageFile();
-                                } catch (IOException ex) {
-                                    // Error occurred while creating the File
-
-                                }
-                                // Continue only if the File was successfully created
-                                if (photoFile != null) {
-                                    Uri photoURI = FileProvider.getUriForFile(MainActivity5.this,
-                                            "com.example.android.fileprovider",
-                                            photoFile);
-                                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                        startActivityForResult(takePictureIntent, pic_id);
-                                    }
-                                }
-                            }
-
-
-
-
-
-
-//
-//                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                            fileName = System.currentTimeMillis() + ".jpg";
-//
-//                         //   String fileName = createFileName();
-//                            filePath = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES) + "/" + fileName;
-//                            File cameraFile = new File(filePath);
-////                            Uri fileURI = FileProvider.getUriForFile(MainActivity5.this,
-////                                    "edu.usna.mobileos.cameraexamples.fileprovider",
-////                                    cameraFile);
-//
-//                            Uri fileURI = FileProvider.getUriForFile(MainActivity5.this,
-//                                    BuildConfig.APPLICATION_ID + ".provider", cameraFile);
-//
-//
-//
-//                            //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName));
-//                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,fileURI);
-//
-//                            try {
-//                                startActivityForResult(takePictureIntent, pic_id);
-//                            } catch (ActivityNotFoundException e) {
-//                                Toast.makeText(MainActivity5.this, "Nothing Happen", Toast.LENGTH_LONG).show();
-//                                e.printStackTrace();
-//                                // display error state to the user
-//                            }
-
-
-
-                           // startActivityForResult(takePictureIntent, pic_id);
-//                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                                startActivityForResult(takePictureIntent, pic_id);
-//                            }
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-    }
 
 
     @Override
@@ -287,120 +226,32 @@ public class MainActivity5 extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        if (RC == pic_id && RQC == RESULT_OK) {
-
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "JPEG_" + timeStamp + "_";
-            File storageDir = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES);
-            File image = null;
-            try {
-                image = File.createTempFile(
-                        imageFileName,  /* prefix */
-                        ".jpg",         /* suffix */
-                        storageDir      /* directory */
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = image.getAbsolutePath();
-
-            File file = new File(currentPhotoPath);
-            photo = null;
-            photo = photo = (Bitmap)I.getExtras().get("data");
-            /*try {
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
-            if (photo != null) {
-                imageView.setImageBitmap(photo);
-            }
-
-
-            // BitMap is data structure of image file
-                // which store the image in memory
-
-            // Create an image file name
-
-
-
-              /*  photo = BitmapFactory.decodeFile(currentPhotoPath);
-                imageView.setImageBitmap(photo);
-
-                //photo = (Bitmap)I.getExtras()
-//                    .get("data");
-
-
-
-
-                // Set the image in imageview for display*/
-
-
-        }else{
-            Toast.makeText(MainActivity5.this, "Nothing Received", Toast.LENGTH_LONG).show();
-        }
-
+        Log.d("TAG", "onActivityResult: Nothing Received" );
     }
 
-//    private Uri getCacheImagePath(String fileName) {
-//        File path = new File(Temp);
-//        if (!path.exists()) path.mkdirs();
-//        File image = new File(path, fileName);
-//        return getUriForFile(MainActivity5.this, getPackageName() + ".provider", image);
-//    }
 
+    public void ImageUploadToServerFunction() {
 
-
-
-
-
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//
-//        // Match the request 'pic id with requestCode
-//        if (requestCode == pic_id) {
-//
-//            // BitMap is data structure of image file
-//            // which stor the image in memory
-//            Bitmap photo = (Bitmap)data.getExtras()
-//                    .get("data");
-//
-//            // Set the image in imageview for display
-//            imageView.setImageBitmap(photo);
-//        }
-//    }
-
-
-
-
-
-
-    public void ImageUploadToServerFunction(){
-
-        ByteArrayOutputStream byteArrayOutputStreamObject ;
+        ByteArrayOutputStream byteArrayOutputStreamObject;
 
         byteArrayOutputStreamObject = new ByteArrayOutputStream();
         //bitmap.compress(Bitmap.CompressFormat.JPEG,50, byteArrayOutputStreamObject);
 
-        photo.compress(Bitmap.CompressFormat.JPEG,60, byteArrayOutputStreamObject);
-
-
+        photo.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStreamObject);
 
 
         byte[] byteArrayVar = byteArrayOutputStreamObject.toByteArray();
 
         final String ConvertImage = Base64.encodeToString(byteArrayVar, Base64.DEFAULT);
 
-        class AsyncTaskUploadClass extends AsyncTask<Void,Void,String> {
+        class AsyncTaskUploadClass extends AsyncTask<Void, Void, String> {
 
             @Override
             protected void onPreExecute() {
 
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(MainActivity5.this,"Image is Uploading","Please Wait",false,false);
+                progressDialog = ProgressDialog.show(MainActivity5.this, "Image is Uploading", "Please Wait", false, false);
             }
 
             @Override
@@ -412,16 +263,14 @@ public class MainActivity5 extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 // Printing uploading success message coming from server on android app.
-                Toast.makeText(MainActivity5.this,string1,Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity5.this, string1, Toast.LENGTH_LONG).show();
 
                 // SettingNavigation image as transparent after done uploading.
                 imageView.setImageResource(android.R.color.transparent);
                 //  Intent intent = new Intent(MainActivity3.this,MainActivity1.class);
-                Intent intent = new Intent(MainActivity5.this,MainActivity1.class);
+                Intent intent = new Intent(MainActivity5.this, MainActivity1.class);
                 startActivity(intent);
-               // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-
+                // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
 
             }
@@ -431,13 +280,13 @@ public class MainActivity5 extends AppCompatActivity {
 
                 ImageProcessClass imageProcessClass = new ImageProcessClass();
 
-                HashMap<String,String> HashMapParams = new HashMap<String,String>();
+                HashMap<String, String> HashMapParams = new HashMap<String, String>();
 
                 HashMapParams.put(ImageName, GetImageNameEditText);
 
                 HashMapParams.put(ImagePath, ConvertImage);
 
-                String FinalData = imageProcessClass.ImageHttpRequest(file+"/Android/Payroll_and_Attendance_system/image-gallery/photos/Documents/img_upload_to_server.php", HashMapParams);
+                String FinalData = imageProcessClass.ImageHttpRequest(file + "/Android/Payroll_and_Attendance_system/image-gallery/photos/Documents/img_upload_to_server.php", HashMapParams);
 
                 return FinalData;
             }
@@ -447,20 +296,20 @@ public class MainActivity5 extends AppCompatActivity {
         AsyncTaskUploadClassOBJ.execute();
     }
 
-    public class ImageProcessClass{
+    public class ImageProcessClass {
 
-        public String ImageHttpRequest(String requestURL,HashMap<String, String> PData) {
+        public String ImageHttpRequest(String requestURL, HashMap<String, String> PData) {
 
             StringBuilder stringBuilder = new StringBuilder();
 
             try {
 
                 URL url;
-                HttpURLConnection httpURLConnectionObject ;
+                HttpURLConnection httpURLConnectionObject;
                 OutputStream OutPutStream;
-                BufferedWriter bufferedWriterObject ;
-                BufferedReader bufferedReaderObject ;
-                int RC ;
+                BufferedWriter bufferedWriterObject;
+                BufferedReader bufferedReaderObject;
+                int RC;
 
                 url = new URL(requestURL);
 
@@ -500,7 +349,7 @@ public class MainActivity5 extends AppCompatActivity {
 
                     String RC2;
 
-                    while ((RC2 = bufferedReaderObject.readLine()) != null){
+                    while ((RC2 = bufferedReaderObject.readLine()) != null) {
 
                         stringBuilder.append(RC2);
                     }
@@ -537,6 +386,7 @@ public class MainActivity5 extends AppCompatActivity {
         }
 
     }
+
     public void printMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_LONG).show();
     }
@@ -557,7 +407,7 @@ public class MainActivity5 extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       // printMessage("reading to file " + filename2 + " completed..");
+        // printMessage("reading to file " + filename2 + " completed..");
     }
 
     @Override
@@ -579,7 +429,6 @@ public class MainActivity5 extends AppCompatActivity {
         }
         pressedTime = System.currentTimeMillis();
     }
-
 
 
 }

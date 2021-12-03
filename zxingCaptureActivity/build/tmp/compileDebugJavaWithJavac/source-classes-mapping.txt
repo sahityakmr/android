@@ -1,7 +1,8 @@
-com/google/zxing/client/android/AndroidHttpClient.java
- com.google.zxing.client.android.AndroidHttpClient
- com.google.zxing.client.android.AndroidHttpClient$1
- com.google.zxing.client.android.AndroidHttpClient$DelegateHttpClient
+com/google/zxing/client/android/CaptureActivity.java
+ com.google.zxing.client.android.CaptureActivity
+ com.google.zxing.client.android.CaptureActivity$1
+ com.google.zxing.client.android.CaptureActivity$2
+ com.google.zxing.client.android.CaptureActivity$Source
 com/google/zxing/LuminanceSource.java
  com.google.zxing.LuminanceSource
 com/google/zxing/client/result/AddressBookParsedResult.java
@@ -178,8 +179,8 @@ com/google/zxing/common/detector/MonochromeRectangleDetector.java
  com.google.zxing.common.detector.MonochromeRectangleDetector
 com/google/zxing/client/android/result/supplement/ProductResultInfoRetriever.java
  com.google.zxing.client.android.result.supplement.ProductResultInfoRetriever
-com/google/zxing/client/result/ProductParsedResult.java
- com.google.zxing.client.result.ProductParsedResult
+com/google/zxing/client/android/DecodeThread.java
+ com.google.zxing.client.android.DecodeThread
 com/google/zxing/client/result/ResultParser.java
  com.google.zxing.client.result.ResultParser
 com/google/zxing/client/android/history/DBHelper.java
@@ -190,8 +191,8 @@ com/google/zxing/client/result/ExpandedProductResultParser.java
  com.google.zxing.client.result.ExpandedProductResultParser
 com/google/zxing/client/result/AddressBookDoCoMoResultParser.java
  com.google.zxing.client.result.AddressBookDoCoMoResultParser
-com/google/zxing/oned/rss/expanded/decoders/CurrentParsingState.java
- com.google.zxing.oned.rss.expanded.decoders.CurrentParsingState
+com/google/zxing/client/android/history/HistoryManager.java
+ com.google.zxing.client.android.history.HistoryManager
 com/google/zxing/client/result/SMSMMSResultParser.java
  com.google.zxing.client.result.SMSMMSResultParser
 com/google/zxing/datamatrix/decoder/Version.java
@@ -463,13 +464,13 @@ com/google/zxing/client/result/CalendarParsedResult.java
  com.google.zxing.client.result.CalendarParsedResult
 com/google/zxing/client/android/share/BookmarkAdapter.java
  com.google.zxing.client.android.share.BookmarkAdapter
-com/google/zxing/client/android/Contents.java
- com.google.zxing.client.android.Contents
- com.google.zxing.client.android.Contents$Type
+com/google/zxing/client/android/history/HistoryClickListener.java
+ com.google.zxing.client.android.history.HistoryClickListener
 com/google/zxing/client/result/ISBNResultParser.java
  com.google.zxing.client.result.ISBNResultParser
-com/google/zxing/oned/UPCEANReader.java
- com.google.zxing.oned.UPCEANReader
+com/google/zxing/client/android/CaptureActivityHandler.java
+ com.google.zxing.client.android.CaptureActivityHandler
+ com.google.zxing.client.android.CaptureActivityHandler$State
 com/google/zxing/common/GridSampler.java
  com.google.zxing.common.GridSampler
 com/google/zxing/qrcode/encoder/MatrixUtil.java
@@ -508,8 +509,8 @@ com/google/zxing/oned/Code128Reader.java
  com.google.zxing.oned.Code128Reader
 com/google/zxing/qrcode/QRCodeWriter.java
  com.google.zxing.qrcode.QRCodeWriter
-com/google/zxing/common/BitArray.java
- com.google.zxing.common.BitArray
+com/google/zxing/client/android/DecodeHandler.java
+ com.google.zxing.client.android.DecodeHandler
 com/google/zxing/client/android/book/SearchBookContentsAdapter.java
  com.google.zxing.client.android.book.SearchBookContentsAdapter
 com/google/zxing/qrcode/detector/FinderPattern.java
@@ -524,19 +525,18 @@ com/google/zxing/qrcode/encoder/QRCode.java
  com.google.zxing.qrcode.encoder.QRCode
 com/google/zxing/client/android/result/GeoResultHandler.java
  com.google.zxing.client.android.result.GeoResultHandler
-com/google/zxing/client/android/CaptureActivityHandler.java
- com.google.zxing.client.android.CaptureActivityHandler
- com.google.zxing.client.android.CaptureActivityHandler$State
-com/google/zxing/client/android/DecodeThread.java
- com.google.zxing.client.android.DecodeThread
-com/google/zxing/client/android/DecodeHandler.java
- com.google.zxing.client.android.DecodeHandler
-com/google/zxing/client/android/CaptureActivity.java
- com.google.zxing.client.android.CaptureActivity
- com.google.zxing.client.android.CaptureActivity$1
- com.google.zxing.client.android.CaptureActivity$2
- com.google.zxing.client.android.CaptureActivity$Source
-com/google/zxing/client/android/history/HistoryClickListener.java
- com.google.zxing.client.android.history.HistoryClickListener
-com/google/zxing/client/android/history/HistoryManager.java
- com.google.zxing.client.android.history.HistoryManager
+com/google/zxing/oned/rss/expanded/decoders/CurrentParsingState.java
+ com.google.zxing.oned.rss.expanded.decoders.CurrentParsingState
+com/google/zxing/client/android/Contents.java
+ com.google.zxing.client.android.Contents
+ com.google.zxing.client.android.Contents$Type
+com/google/zxing/client/android/AndroidHttpClient.java
+ com.google.zxing.client.android.AndroidHttpClient
+ com.google.zxing.client.android.AndroidHttpClient$1
+ com.google.zxing.client.android.AndroidHttpClient$DelegateHttpClient
+com/google/zxing/common/BitArray.java
+ com.google.zxing.common.BitArray
+com/google/zxing/client/result/ProductParsedResult.java
+ com.google.zxing.client.result.ProductParsedResult
+com/google/zxing/oned/UPCEANReader.java
+ com.google.zxing.oned.UPCEANReader
