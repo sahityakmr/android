@@ -363,7 +363,7 @@ public class Custom_Action extends AppCompatActivity
                  } catch (IOException e) {
                      e.printStackTrace();
                  }
-                 printMessage("reading to file " + filename2 + " completed..");
+              //   printMessage("reading to file " + filename2 + " completed..");
              }
 
 
@@ -396,7 +396,7 @@ public class Custom_Action extends AppCompatActivity
                  } catch (IOException e) {
                      e.printStackTrace();
                  }
-                 printMessage("reading to file " + filename2 + " completed..");
+              //   printMessage("reading to file " + filename2 + " completed..");
              }
 
 

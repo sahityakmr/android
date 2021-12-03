@@ -8,16 +8,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.FileInputStream;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.os.Build.VERSION_CODES.M;
@@ -26,6 +29,10 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.RecyclerView
     private static final String TAG = "RecyclerViewAdapter";
     private final ArrayList<RecyclerData> courseDataArrayList;
     private final Context mcontext;
+    WebView simpleWebView;
+    ProgressBar progressBar;
+    private final String filename2 = "address.txt";
+    String filess;
 
     public AdminAdapter(ArrayList<RecyclerData> recyclerDataArrayList, Context mcontext) {
         this.courseDataArrayList = recyclerDataArrayList;
@@ -56,11 +63,12 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.RecyclerView
 
 
                 if (position == 0) {
-                    Intent intent = new Intent(v.getContext(), UserLoginActivity.class);
-
+                    readData();
+                    Intent intent = new Intent(v.getContext(), DashBoard.class);
+                    intent.putExtra("filess",filess);
                     mcontext.startActivity(intent);
 
-                    Toast.makeText(v.getContext(), "Test", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Welcome To Admin Session", Toast.LENGTH_LONG).show();
                 }
 
                 if (position == 1) {
@@ -93,6 +101,26 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.RecyclerView
     }
 
 
+
+
+    private void readData() {
+        try {
+            FileInputStream fin = mcontext.openFileInput(filename2);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            filess = temp.toString();
+//            ip.setText(temp.toString());
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

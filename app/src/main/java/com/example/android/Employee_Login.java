@@ -94,7 +94,7 @@ public class Employee_Login extends AppCompatActivity{
             e.printStackTrace();
         }
         Email.setText("");
-        printMessage("writing to file " + filename + "completed...");
+     //   printMessage("writing to file " + filename + "completed...");
     }
 
 
@@ -114,7 +114,7 @@ public class Employee_Login extends AppCompatActivity{
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(Employee_Login.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(Employee_Login.this,"Loading Data",null,true,false);
             }
 
             @Override
@@ -151,7 +151,7 @@ public class Employee_Login extends AppCompatActivity{
 
                 hashMap.put("password",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/android/employee_login.php");
+                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/Android/employee_login.php");
 
                 return finalResult;
             }
@@ -178,7 +178,7 @@ public class Employee_Login extends AppCompatActivity{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+     //   printMessage("reading to file " + filename2 + " completed..");
     }
 
     @Override

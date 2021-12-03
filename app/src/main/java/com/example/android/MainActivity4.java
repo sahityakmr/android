@@ -59,6 +59,7 @@ public class MainActivity4 extends FragmentActivity {
 
     ListView SubjectListView;
     ProgressBar progressBarSubject;
+    ProgressDialog progressDialog ;
    // String ServerURL = "http://192.168.1.106:80/Android/Subjects.php";
     EditText editText ;
     List<String> listString = new ArrayList<String>();
@@ -153,7 +154,7 @@ public class MainActivity4 extends FragmentActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename + " completed..");
+        //printMessage("reading to file " + filename + " completed..");
     }
 
 
@@ -166,13 +167,14 @@ public class MainActivity4 extends FragmentActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-               // progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(MainActivity4.this,"Loading Data","Please wait a Moment",true,false);
             }
 
             @Override
             protected void onPostExecute(String httpResponseMsg) {
 
                 super.onPostExecute(httpResponseMsg);
+                progressDialog.dismiss();
 
                 if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
 
@@ -279,7 +281,7 @@ public class MainActivity4 extends FragmentActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
-            loading = ProgressDialog.show(MainActivity4.this, "Loading...", null,true,true);
+            loading = ProgressDialog.show(MainActivity4.this, "Loading...", null,true,false);
         }
 
         @Override
@@ -362,7 +364,7 @@ public class MainActivity4 extends FragmentActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+      //  printMessage("reading to file " + filename2 + " completed..");
     }
 
     @Override

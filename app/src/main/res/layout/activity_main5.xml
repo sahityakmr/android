@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="CLICK HERE TO SELECT IMAGE FROM GALLERY"
-        android:id="@+id/buttonSelect"
+        android:id="@+id/buttonSelect0"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Capture"
-        android:id="@+id/buttonSelect2"
+        android:id="@+id/buttonSelect20"
         android:layout_alignParentTop="false"
-        android:layout_below="@+id/buttonSelect"
+        android:layout_below="@+id/buttonSelect0"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false" />
 
@@ -33,27 +33,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="CLICK HERE TO UPLOAD SELECTED IMAGE ON SERVER "
-        android:id="@+id/buttonUpload"
+        android:id="@+id/buttonUpload0"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/editTextImageName"
+    <EditText
+        android:id="@+id/editTextImageName0"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonUpload"
+        android:layout_above="@+id/buttonUpload0"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:hint="Enter Image Name Here"/>
+        android:hint="Enter Image Name Here"
+        android:minHeight="48sp" />
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="270dp"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/buttonSelect2"
+        android:id="@+id/imageView0"
+        android:layout_below="@+id/buttonSelect20"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/editTextImageName" />
+        android:layout_above="@+id/editTextImageName0"/>
 
 </RelativeLayout>

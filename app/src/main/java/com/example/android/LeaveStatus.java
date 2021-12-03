@@ -58,7 +58,7 @@ public class LeaveStatus extends AppCompatActivity {
             public void onClick(View view) {
                 Map<String, String> reqMap = new HashMap<>();
                 reqMap.put("empId", etx.getText().toString());
-                HttpCall.makeFormRequest(LeaveStatus.this, file+"/android/leave_status.php", reqMap, new AsyncResponse() {
+                HttpCall.makeFormRequest(LeaveStatus.this, file+"/Android/leave_status.php", reqMap, new AsyncResponse() {
                     @Override
                     public void postExecute(String response) {
                         leaveconstructor = new Gson().fromJson(response, LeaveConstructor.class);
@@ -115,7 +115,7 @@ public class LeaveStatus extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+       // printMessage("reading to file " + filename2 + " completed..");
     }
 
 

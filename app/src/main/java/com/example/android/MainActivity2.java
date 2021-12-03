@@ -148,12 +148,15 @@ public class MainActivity2 extends AppCompatActivity {
                     finish();
 
                 } catch (JSONException e) {
+                    Toast.makeText(getBaseContext(), "Something Went Wrong,Please Restart The App", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void postError(VolleyError error) {
+                Toast.makeText(getBaseContext(), "Press back again to exit2", Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -209,7 +212,7 @@ public class MainActivity2 extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+     //   printMessage("reading to file " + filename2 + " completed..");
     }
 
 

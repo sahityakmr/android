@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class IdCard extends AppCompatActivity {
-    TextView e,d,t;
+    TextView e,d,t,f;
     CircleImageView circle;
    private final String filename = "employeeid.txt";
     private final String filename2 = "address.txt";
@@ -68,6 +68,7 @@ public class IdCard extends AppCompatActivity {
         e = (TextView) findViewById(R.id.emailname);
         d = (TextView) findViewById(R.id.emailcontact);
         t = (TextView) findViewById(R.id.emailid);
+        f = (TextView) findViewById(R.id.emailid211);
         st = findViewById(R.id.stamp);
         circle = (CircleImageView) findViewById(R.id.circle);
         im = (ImageView) findViewById(R.id.idIVQrcode);
@@ -102,7 +103,7 @@ public class IdCard extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+     //   printMessage("reading to file " + filename2 + " completed..");
     }
 
 
@@ -122,7 +123,7 @@ public class IdCard extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+     //   printMessage("reading to file " + filename2 + " completed..");
     }
 
 
@@ -137,8 +138,10 @@ public class IdCard extends AppCompatActivity {
                     JSONObject bodyObject = jsonObject.getJSONObject("body");
                     String id = bodyObject.getString("id");
                     String guid = bodyObject.getString("guid");
+                    String gui = bodyObject.getString("des");
                     e.setText("Name : "+id);
                     d.setText("Contact : "+guid);
+                    f.setText("Designation : "+gui);
                     qr(id,guid,employeeid);
 
                 } catch (JSONException e) {
@@ -220,7 +223,7 @@ public class IdCard extends AppCompatActivity {
             super.onBackPressed();
             finish();
         } else {
-            Intent intent = new Intent(IdCard.this, MainActivity1.class);
+            Intent intent = new Intent(IdCard.this, Custom_Action.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
             finish();

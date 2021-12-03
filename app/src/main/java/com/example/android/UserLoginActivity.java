@@ -104,7 +104,7 @@ public class UserLoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Email.setText("");
-        printMessage("writing to file " + filename + "completed...");
+      //  printMessage("writing to file " + filename + "completed...");
     }
 
 
@@ -124,7 +124,7 @@ public class UserLoginActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(UserLoginActivity.this,"Loading Data","Please Wait",true,false);
             }
 
             @Override
@@ -161,7 +161,7 @@ public class UserLoginActivity extends AppCompatActivity {
 
                 hashMap.put("password",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/android/UserLogin.php");
+                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/Android/UserLogin.php");
 
                 return finalResult;
             }

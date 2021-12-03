@@ -136,7 +136,7 @@ public class Leave extends AppCompatActivity {
         requestBodyMap.put("reason", reason);
         requestBodyMap.put("status", status);
 
-        HttpCall.makeFormRequest(this, file+"/android/Leave.php", requestBodyMap, new AsyncResponse() {
+        HttpCall.makeFormRequest(this, file+"/Android/Leave.php", requestBodyMap, new AsyncResponse() {
             @Override
             public void postExecute(String response) {
                 try {
@@ -186,7 +186,7 @@ public class Leave extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+      //  printMessage("reading to file " + filename2 + " completed..");
     }
 
 

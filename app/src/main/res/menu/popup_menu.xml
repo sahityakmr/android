@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/search_item"
+        android:title="FingerPrint" />
+    <item android:id="@+id/upload_item"
+        android:title="Face ID" />
+    <item android:id="@+id/copy_item"
+        android:title="ID Scan" />
+</menu>

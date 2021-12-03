@@ -26,7 +26,7 @@ public class splash extends AppCompatActivity {
     String file;
     String Temp;
     EditText ss;
-    String a ="";
+    //String a ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class splash extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+       // printMessage("reading to file " + filename2 + " completed..");
     }
 
 

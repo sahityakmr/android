@@ -132,7 +132,7 @@ public class Salary extends AppCompatActivity {
                 Map<String, String> reqMap = new HashMap<>();
                 reqMap.put("empId", idBox.getText().toString());
                 reqMap.put("iddate", iddate.getText().toString());
-                HttpCall.makeFormRequest(Salary.this, file+"/android/attendance_check.php", reqMap, new AsyncResponse() {
+                HttpCall.makeFormRequest(Salary.this, file+"/Android/attendance_check.php", reqMap, new AsyncResponse() {
                     @Override
                     public void postExecute(String response) {
                         if (response != null) {
@@ -224,7 +224,7 @@ public class Salary extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+     //   printMessage("reading to file " + filename2 + " completed..");
     }
 
 
@@ -238,7 +238,7 @@ public class Salary extends AppCompatActivity {
             super.onBackPressed();
             finish();
         } else {
-            Intent intent = new Intent(Salary.this, Salary.class);
+            Intent intent = new Intent(Salary.this, Custom_Action.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
             finish();

@@ -37,6 +37,5 @@
         android:layout_marginBottom="10dp"
         android:hint="SERVER IP"
         android:gravity="end"
-        tools:ignore="SmallSp"
-        android:onClick="clickEvent"/>
+        tools:ignore="SmallSp"/>
 </RelativeLayout>

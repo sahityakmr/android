@@ -143,11 +143,11 @@ public class Credential extends AppCompatActivity {
             fos.flush();
             fos.close();
         } catch (IOException e) {
-            Toast.makeText(Credential.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+            Toast.makeText(Credential.this, "Please select the image.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
-        printMessage("writing to file " + filename + "completed...");
+      //  printMessage("writing to file " + filename + "completed...");
 
 
 
@@ -181,7 +181,7 @@ public class Credential extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(Credential.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(Credential.this,"Loading Data",null,true,false);
             }
 
             @Override
@@ -215,7 +215,7 @@ public class Credential extends AppCompatActivity {
 
 
 
-                finalResult = httpParse.postRequest(hashMap, credential.getText().toString()+"/android/check_connection.php");
+                finalResult = httpParse.postRequest(hashMap, credential.getText().toString()+"/Android/check_connection.php");
 
                 return finalResult;
             }

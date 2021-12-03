@@ -8,8 +8,10 @@
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_list_view.xml" value="0.1140625" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_login.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main.xml" value="0.22604166666666667" />
-        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main1.xml" value="0.1" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main2.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main3.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main5.xml" value="0.1" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_main6.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_mainc.xml" value="0.1" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/activity_user_login.xml" value="0.22604166666666667" />
@@ -29,6 +31,7 @@
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/item.xml" value="0.1" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/layout_login.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/layout_register.xml" value="0.1" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leave_form.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leave_status.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/leaveemployee.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/layout/mark_attendance.xml" value="0.21354166666666666" />
@@ -43,6 +46,7 @@
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/menu_main.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/menu_toolbar.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/menu/navigation_view_menu.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/app/src/main/res/xml/file_paths.xml" value="0.2140625" />
         <entry key="..\:/Users/singh/AndroidStudioProjects/s_android/zxingCaptureActivity/src/main/res/layout/network.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/singh/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.11354166666666667" />
         <entry key="..\:/Workspace/AndroidStudioProjects/Android2/android/android/app/src/main/res/layout/activity_main1.xml" value="0.23097826086956522" />

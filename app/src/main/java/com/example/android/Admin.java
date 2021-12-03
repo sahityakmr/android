@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -95,6 +96,8 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
         coordLay = (ConstraintLayout) findViewById(R.id.coordLayy);
         //coordLay = (CoordinatorLayout) findViewById(R.id.coordLayy);
         readData();
+        CardView cardView = (CardView) findViewById(R.id.card_view990);
+        cardView.setVisibility(View.INVISIBLE);
 
         //supervisorid.setText(str);
         // ip.setText(file);
@@ -248,8 +251,8 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
         recyclerDataArrayList = new ArrayList<>();
 
         // added data to array list
-        recyclerDataArrayList.add(new RecyclerData("Employee List", R.drawable.employee));
-        recyclerDataArrayList.add(new RecyclerData("Change Company Logo ", R.drawable.hierarchy));
+        recyclerDataArrayList.add(new RecyclerData("Dash Boad", R.drawable.employee));
+        recyclerDataArrayList.add(new RecyclerData("Web Layout ", R.drawable.hierarchy));
         recyclerDataArrayList.add(new RecyclerData("Change Signature", R.drawable.employee));
  //       recyclerDataArrayList.add(new RecyclerData("Control Panel", R.drawable.clipboard));
 //        recyclerDataArrayList.add(new RecyclerData("Attendance Check", R.drawable.search));

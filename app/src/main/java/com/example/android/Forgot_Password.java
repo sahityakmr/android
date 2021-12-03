@@ -119,6 +119,7 @@ public class Forgot_Password extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
+                    Toast.makeText(Forgot_Password.this, "Password Reset Succesfully", Toast.LENGTH_SHORT).show();
 
                     finish();
 
@@ -126,7 +127,6 @@ public class Forgot_Password extends AppCompatActivity {
 
                     //intent.putExtra(UserEmail,email);
                    // intent.putExtra("message_key",EmailHolder);
-                    Toast.makeText(Forgot_Password.this, "Leave Form", Toast.LENGTH_SHORT).show();
                     //intent.putExtra("message_key",EmailHolder);
 
                     startActivity(intent);
@@ -145,7 +145,7 @@ public class Forgot_Password extends AppCompatActivity {
 
                 hashMap.put("rpassword",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, file+"/android/password_reset.php");
+                finalResult = httpParse.postRequest(hashMap, file+"/Android/password_reset.php");
 
                 return finalResult;
             }

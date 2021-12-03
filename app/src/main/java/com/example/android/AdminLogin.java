@@ -126,7 +126,7 @@ public class AdminLogin extends AppCompatActivity{
 
                 if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
 
-                    finish();
+                    //finish();
 
                     Intent intent = new Intent(AdminLogin.this, Admin.class);
 
@@ -136,7 +136,7 @@ public class AdminLogin extends AppCompatActivity{
                     //intent.putExtra("message_key",EmailHolder);
 
                     startActivity(intent);
-
+                    Toast.makeText(AdminLogin.this,httpResponseMsg,Toast.LENGTH_LONG).show();
                 }
                 else{
 
@@ -151,7 +151,7 @@ public class AdminLogin extends AppCompatActivity{
 
                 hashMap.put("password",params[1]);
 
-                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/android/adminlogin.php");
+                finalResult = httpParse.postRequest(hashMap, fileContent1.getText().toString()+"/Android/adminlogin.php");
 
                 return finalResult;
             }
@@ -178,7 +178,7 @@ public class AdminLogin extends AppCompatActivity{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filename2 + " completed..");
+       // printMessage("reading to file " + filename2 + " completed..");
     }
 
     @Override

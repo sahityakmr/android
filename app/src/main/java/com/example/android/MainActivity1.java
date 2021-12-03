@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -85,6 +86,9 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         mAddFab = findViewById(R.id.add_fab);
         mAddAlarmFab = findViewById(R.id.add_alarm_fab);
         mAddPersonFab = findViewById(R.id.add_person_fab);
+        CardView cardView = (CardView) findViewById(R.id.card_view990);
+        cardView.setRadius(20F);
+
 
         addAlarmActionText = findViewById(R.id.add_alarm_action_text);
         addPersonActionText = findViewById(R.id.add_person_action_text);
@@ -97,7 +101,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         readData();
 
         //supervisorid.setText(str);
-       // ip.setText(file);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.app_name, R.string.app_name);
@@ -111,8 +115,9 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         toolbar.setHomeButtonEnabled(true);
         navigationView.setCheckedItem(R.id.nav_home);
         ip = findViewById(R.id.textView211);
+        //ip.setText(filess);
 
-
+        LoadCard();
 
 
         mContext = this;
@@ -426,7 +431,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                             setContentView(R.layout.leave_form);
                             simpleWebView = (WebView) findViewById(R.id.webView);
                             progressBar = (ProgressBar) findViewById(R.id.progress);
-                            String url = "http://192.168.1.106:80/Android/Payroll_and_Attendance_system/admin/crud/index.php";
+                            String url = filess+"/Android/Payroll_and_Attendance_system/admin/crud/index.php";
                             simpleWebView.getSettings().setJavaScriptEnabled(true);
                             simpleWebView.getSettings().setLoadsImagesAutomatically(true);
                             simpleWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -479,14 +484,25 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printMessage("reading to file " + filess + " completed..");
+       // printMessage("reading to file " + filess + " completed..");
         //ip.setText(filess.toString());
     }
 
 
 
 
-
+    private void LoadCard() {
+       // setContentView(R.layout.leave_form);
+        simpleWebView = (WebView) findViewById(R.id.webView);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        String url = filess+"/Android/Payroll_and_Attendance_system/android_index.php";
+        //String url = "www.google.com";
+        simpleWebView.getSettings().setJavaScriptEnabled(true);
+        simpleWebView.getSettings().setLoadsImagesAutomatically(true);
+        simpleWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        simpleWebView.loadUrl(url);
+        simpleWebView.setWebViewClient(new MyWebViewClient());
+    }
 
     @Override
     public void onBackPressed() {
