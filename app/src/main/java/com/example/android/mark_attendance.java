@@ -54,8 +54,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//public class mark_attendance extends AppCompatActivity implements MFS100Event,PopupMenu.OnMenuItemClickListener {
-public class mark_attendance extends AppCompatActivity implements MFS100Event {
+public class mark_attendance extends AppCompatActivity implements MFS100Event,PopupMenu.OnMenuItemClickListener {
+//public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
     EditText Email, Password;
     Button FINGERSTRING;
@@ -121,51 +121,51 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
 
 
-//        LogIn.setOnClickListener(new View.OnClickListener() {
-//
-//
-//            @RequiresApi(api = Build.VERSION_CODES.O)
-//            @Override
-//            public void onClick(View view) {
-//                PopupMenu popup = new PopupMenu(mark_attendance.this, view);
-//                popup.setOnMenuItemClickListener(mark_attendance.this);
-//                popup.inflate(R.menu.popup_menu);
-//                popup.show();
-//            }
-//
-//
-//        });
-
-
-
-
-
         LogIn.setOnClickListener(new View.OnClickListener() {
 
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                StartSyncCapture();
-                while (lastCapFingerData == null) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                for (String fingerprint : biometric.getFingerprints()) {
-                    String cleanedFp = cleanFP(fingerprint);
-                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
-                        markAttendance(biometric.getId());
-                        break;
-                    }
-                }
-                lastCapFingerData = null;
+                PopupMenu popup = new PopupMenu(mark_attendance.this, view);
+                popup.setOnMenuItemClickListener(mark_attendance.this);
+                popup.inflate(R.menu.popup_menu);
+                popup.show();
             }
 
 
         });
+
+
+
+
+
+//        LogIn.setOnClickListener(new View.OnClickListener() {
+//
+//
+//            @RequiresApi(api = Build.VERSION_CODES.O)
+//            @Override
+//            public void onClick(View view) {
+//                StartSyncCapture();
+//                while (lastCapFingerData == null) {
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                for (String fingerprint : biometric.getFingerprints()) {
+//                    String cleanedFp = cleanFP(fingerprint);
+//                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
+//                        markAttendance(biometric.getId());
+//                        break;
+//                    }
+//                }
+//                lastCapFingerData = null;
+//            }
+//
+//
+//        });
 
 
         FINGERSTRING.setOnClickListener(new View.OnClickListener() {
@@ -715,40 +715,40 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event {
        // printMessage("reading to file " + filename2 + " completed..");
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-//        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
-//        switch (item.getItemId()) {
-//            case R.id.search_item:
-//                StartSyncCapture();
-//                while (lastCapFingerData == null) {
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                for (String fingerprint : biometric.getFingerprints()) {
-//                    String cleanedFp = cleanFP(fingerprint);
-//                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
-//                        markAttendance(biometric.getId());
-//                        break;
-//                    }
-//                }
-//                lastCapFingerData = null;
-//
-//                //return true;
-//            case R.id.upload_item:
-//                // do your code
-//                return true;
-//            case R.id.copy_item:
-//                // do your code
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.search_item:
+                StartSyncCapture();
+                while (lastCapFingerData == null) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (String fingerprint : biometric.getFingerprints()) {
+                    String cleanedFp = cleanFP(fingerprint);
+                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
+                        markAttendance(biometric.getId());
+                        break;
+                    }
+                }
+                lastCapFingerData = null;
+
+                //return true;
+            case R.id.upload_item:
+                // do your code
+                return true;
+            case R.id.copy_item:
+                // do your code
+                return true;
+            default:
+                return false;
+        }
+    }
 
 
 
