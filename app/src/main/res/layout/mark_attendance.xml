@@ -130,4 +130,14 @@
         android:layout_marginTop="20dp"
         android:id="@+id/Login5" />
 
+    <Button
+        android:text="Validate ID Card"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Login5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/Login56"
+        android:visibility="gone"/>
+
 </LinearLayout>

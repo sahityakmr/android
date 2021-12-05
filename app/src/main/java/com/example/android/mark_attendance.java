@@ -738,12 +738,13 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
                 }
                 lastCapFingerData = null;
 
-                //return true;
+                return true;
             case R.id.upload_item:
                 // do your code
                 return true;
             case R.id.copy_item:
-                // do your code
+                Intent intent = new Intent(mark_attendance.this, Nfc.class);
+                startActivity(intent);
                 return true;
             default:
                 return false;

@@ -18,10 +18,30 @@
         android:id="@+id/button33"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="72sp"
         android:text="Submit Data"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler"
         android:layout_gravity="bottom"/>
+
+    <TextView
+        android:id="@+id/marqueeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="10dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Welcome To MEENA ELECTRIC !!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        android:fadingEdge = "horizontal"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="413dp"
+        android:gravity = "center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

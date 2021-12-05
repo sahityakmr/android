@@ -39,9 +39,29 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
+import android.os.Environment;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import android.app.ActionBar;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.provider.MediaStore;
+import android.widget.LinearLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,8 +77,12 @@ public class IdCard extends AppCompatActivity {
     ProgressBar progressBarSubject;
     ListView SubjectListView;
     ArrayAdapter<String> arrayAdapter ;
-    ImageView im;
+    ImageView im, ims, pdf;
     private ImageView qrCodeIV;
+    int pageHeight = 1120;
+    int pagewidth = 792;
+    Bitmap bmp, scaledbmp, bitmap;
+    Canvas canvas;
 
     String file;
     @Override
@@ -72,11 +96,47 @@ public class IdCard extends AppCompatActivity {
         st = findViewById(R.id.stamp);
         circle = (CircleImageView) findViewById(R.id.circle);
         im = (ImageView) findViewById(R.id.idIVQrcode);
+        ims = (ImageView) findViewById(R.id.stamp1);
+        pdf = (ImageView) findViewById(R.id.stamp12);
+        final LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
+        //ActionBar ab = getActionBar();
+        //ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF54A9EB")));
         Bitmap bitmap;
         ButterKnife.bind(this);
 
         readData1();
         readData();
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.splash_screenbackground);
+        scaledbmp = Bitmap.createScaledBitmap(bmp, 140, 140, false);
+
+        ims.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // calling method to
+                // generate our PDF file.
+                Bitmap screenShot = TakeScreenShot(ll);
+                MediaStore.Images.Media.insertImage(
+                        getContentResolver(),
+                        screenShot,
+                        "Image",
+                        "Captured ScreenShot"
+                );
+                Toast.makeText(getApplicationContext(), "Screen Captured.",Toast.LENGTH_SHORT).show();
+            }
+               // generatePDF();
+           // }
+        });
+
+        pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                generatePDF();
+            }
+        });
+
+
+
 
     }
 
@@ -138,11 +198,12 @@ public class IdCard extends AppCompatActivity {
                     JSONObject bodyObject = jsonObject.getJSONObject("body");
                     String id = bodyObject.getString("id");
                     String guid = bodyObject.getString("guid");
-                    String gui = bodyObject.getString("des");
+                    String des = bodyObject.getString("des");
+                    String ids = bodyObject.getString("ids");
                     e.setText("Name : "+id);
                     d.setText("Contact : "+guid);
-                    f.setText("Designation : "+gui);
-                    qr(id,guid,employeeid);
+                    f.setText("Designation : "+des);
+                    qr(ids);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -155,9 +216,9 @@ public class IdCard extends AppCompatActivity {
             }
         });
     }
-            public void qr(final String name,final String contact,final String idd) {
+            public void qr(final String idd) {
                 StringBuilder textToSend = new StringBuilder();
-                textToSend.append(name+" | "+contact+" | "+idd);
+                textToSend.append(idd);
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 try {
@@ -215,6 +276,60 @@ public class IdCard extends AppCompatActivity {
                 .into(circle);
 
     }
+
+
+    private void generatePDF() {
+        PdfDocument pdfDocument = new PdfDocument();
+        Paint paint = new Paint();
+        Paint title = new Paint();
+        PdfDocument.PageInfo mypageInfo = new PdfDocument.PageInfo.Builder(pagewidth, pageHeight, 1).create();
+        PdfDocument.Page myPage = pdfDocument.startPage(mypageInfo);
+
+        Canvas canvas = myPage.getCanvas();
+        canvas.drawBitmap(scaledbmp, 56, 40, paint);
+
+        title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+
+        title.setTextSize(15);
+
+        title.setColor(ContextCompat.getColor(this, R.color.colorAccent));
+        canvas.drawText("ID CARD.", 209, 100, title);
+        canvas.drawText("MEENA ELECTRIC AND ENGINEERING WORK", 209, 80, title);
+        title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        title.setColor(ContextCompat.getColor(this, R.color.colorAccent));
+        title.setTextSize(15);
+        title.setTextAlign(Paint.Align.CENTER);
+        //canvas.drawText("This is sample document which we have created.", 396, 560, title);
+        canvas.drawBitmap(bitmap,250,30,title);
+
+        pdfDocument.finishPage(myPage);
+
+        File file = new File(Environment.getExternalStorageDirectory(), "GFG.pdf");
+        try {
+
+            pdfDocument.writeTo(new FileOutputStream(file));
+
+
+            Toast.makeText(IdCard.this, "PDF file generated successfully.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+        pdfDocument.close();
+    }
+
+
+    public Bitmap TakeScreenShot(View rootView){
+        bitmap = Bitmap.createBitmap(rootView.getWidth(),rootView.getHeight(),Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        canvas.drawColor(0xFFFFFFFF);
+        rootView.draw(canvas);
+
+        return bitmap;
+    }
+
+
 
     @Override
     public void onBackPressed() {

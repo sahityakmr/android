@@ -161,12 +161,31 @@ public class MainActivity5 extends AppCompatActivity {
 
     }
 
+
+
     private void openCameraAndTakePicture() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        photoFile = createImageFile();
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", photoFile));
-        cameraActivityResultLauncher.launch(takePictureIntent);
-    }
+
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            photoFile = createImageFile();
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(MainActivity5.this, getApplicationContext().getPackageName() + ".provider", photoFile));
+                            cameraActivityResultLauncher.launch(takePictureIntent);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+                }
+
 
     private void registerForPicture() {
         cameraActivityResultLauncher = registerForActivityResult(

@@ -12,7 +12,8 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:id="@+id/ll">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
             android:id="@+id/emailid211"
             style="@style/modifiedEditText"
             android:ems="10"
-            android:hint="ID"
+            android:hint="Designation"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -136,19 +137,36 @@
             app:layout_constraintVertical_bias="0.447" />
 
         <ImageView
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="20dp"
             android:layout_gravity="left"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1sp"
+            android:layout_marginTop="1sp"
+            android:layout_marginRight="1sp"
+            android:layout_marginBottom="1sp"
             app:srcCompat="@drawable/ic_baseline_fingerprintgreen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.447" />
+            app:layout_constraintVertical_bias="0.447"
+            android:id="@+id/stamp1"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="1sp"
+            android:layout_marginTop="1sp"
+            android:layout_marginRight="1sp"
+            android:layout_marginBottom="1sp"
+            app:srcCompat="@drawable/ic_baseline_perm_device_information_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.447"
+            android:id="@+id/stamp12"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

@@ -72,7 +72,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.RecyclerView
                 }
 
                 if (position == 1) {
-                    Intent intent = new Intent(v.getContext(), UserLoginActivity1.class);
+                    Intent intent = new Intent(v.getContext(), ValidateIDCard.class);
                     mcontext.startActivity(intent);
 
                     Toast.makeText(v.getContext(), "Login to Enroll", Toast.LENGTH_LONG).show();

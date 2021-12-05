@@ -252,7 +252,7 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
 
         // added data to array list
         recyclerDataArrayList.add(new RecyclerData("Dash Boad", R.drawable.employee));
-        recyclerDataArrayList.add(new RecyclerData("Web Layout ", R.drawable.hierarchy));
+        recyclerDataArrayList.add(new RecyclerData("ID VALIDATION ", R.drawable.hierarchy));
         recyclerDataArrayList.add(new RecyclerData("Change Signature", R.drawable.employee));
  //       recyclerDataArrayList.add(new RecyclerData("Control Panel", R.drawable.clipboard));
 //        recyclerDataArrayList.add(new RecyclerData("Attendance Check", R.drawable.search));
@@ -496,6 +496,9 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
 
         if (pressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
+            Intent intent = new Intent(Admin.this, AdminLogin.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
             finish();
         } else {
             if (boomMenuButton.isClosed()

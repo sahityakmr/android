@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +76,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
     private String guid;
     private String[] fingerprints;
     private long pressedTime;
+    TextView txtMarquee;
     private final String filename2 = "address.txt";
     String filess;
     private RecyclerView recyclerView;
@@ -112,6 +114,13 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
         id = intent.getStringExtra("id");
         guid = intent.getStringExtra("guid");
         readData();
+        txtMarquee = (TextView) findViewById(R.id.marqueeText);
+        txtMarquee.setSingleLine(true);
+        txtMarquee.setMarqueeRepeatLimit(-1);
+        txtMarquee.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+
+
+        txtMarquee.setSelected(true);
 
 
 //        button4 = (Button) findViewById(R.id.button4);

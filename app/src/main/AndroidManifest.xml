@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.NFC" android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -73,6 +74,9 @@
         <activity android:name=".AdminLogin"/>
         <activity android:name=".AdminForgot"/>
         <activity android:name=".DashBoard"/>
+        <activity android:name=".Nfc"/>
+        <activity android:name=".NfcWrite"/>
+        <activity android:name=".ValidateIDCard"/>
 
         <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
