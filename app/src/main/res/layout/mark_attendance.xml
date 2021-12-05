@@ -111,14 +111,10 @@
         android:id="@+id/fingerstring"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/received_value_id2"
-        android:layout_centerHorizontal="true"
+        android:text="FETCH Data"
         android:layout_marginTop="20dp"
-        android:background="#fbfefd"
         android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        app:srcCompat="@drawable/ic_baseline_fingerprint_24" />
+        android:gravity="center" />
 
 
     <Button

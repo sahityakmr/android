@@ -200,10 +200,15 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
     }
 
     private String cleanFP(String fingerprint) {
+        if(fingerprint == null || fingerprint.length() < 10){
+            return "";
+        }
+        fingerprint = fingerprint.replaceAll("\n", "");
         int sInd = fingerprint.indexOf('#');
         int eInd = fingerprint.lastIndexOf('#');
-
-        return fingerprint.substring(sInd + 1, eInd).replaceAll("\n", "");
+        if(sInd < 0 || eInd < 0)
+            return fingerprint;
+        return fingerprint.substring(sInd + 1, eInd);
     }
 
     private void markAttendance(String ids) {
@@ -650,7 +655,17 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
                         mark_attendance.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //imgFinger.setImageBitmap(bitmap);
+                                Runnable runnable = () -> {
+                                    for (String fingerprint : biometric.getFingerprints()) {
+                                        String cleanedFp = cleanFP(fingerprint);
+                                        if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
+                                            markAttendance(biometric.getId());
+                                            break;
+                                        }
+                                    }
+                                    lastCapFingerData = null;
+                                };
+                                new Thread(runnable).start();
                             }
                         });
 
@@ -722,22 +737,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
         switch (item.getItemId()) {
             case R.id.search_item:
                 StartSyncCapture();
-                while (lastCapFingerData == null) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                for (String fingerprint : biometric.getFingerprints()) {
-                    String cleanedFp = cleanFP(fingerprint);
-                    if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
-                        markAttendance(biometric.getId());
-                        break;
-                    }
-                }
-                lastCapFingerData = null;
-
                 return true;
             case R.id.upload_item:
                 // do your code
