@@ -235,9 +235,9 @@ public class ValidateIDCard extends AppCompatActivity implements PopupMenu.OnMen
             {
 
                 Intent intent = new Intent(ValidateIDCard.this, Admin.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
-                finish();
+            //    finish();
             }
             Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         } else {

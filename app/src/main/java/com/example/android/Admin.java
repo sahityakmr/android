@@ -305,24 +305,24 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
         switch (id) {
             case R.id.nav_home:
                 Intent intent = new Intent(Admin.this, MainActivity4.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
-                finish();
+
 
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_notification:
                 Intent intent2 = new Intent(Admin.this, mark_attendance.class);
-                intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+             //   intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent2);
-                finish();
+             //   finish();
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_settings:
                 Intent intent3 = new Intent(Admin.this, MainActivity51.class);
-                intent3.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            //    intent3.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent3);
-                finish();
+            //    finish();
                 navigationView.setCheckedItem(id);
                 break;
             case R.id.nav_leave:
@@ -342,25 +342,25 @@ public class Admin extends AppCompatActivity implements NavigationView.OnNavigat
                 break;
             case R.id.nav_salary:
                 Intent intent4 = new Intent(Admin.this, Scanner.class);
-                intent4.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+           //     intent4.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent4);
-                finish();
+          //      finish();
                 navigationView.setCheckedItem(id);
                 break;
 
             case R.id.action_settings:
                 Intent intent6 = new Intent(Admin.this, MainActivity6.class);
-                intent6.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+          //      intent6.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent6);
-                finish();
+           //     finish();
                 navigationView.setCheckedItem(id);
                 break;
 
             case R.id.nav_scanner:
                 Intent intent5 = new Intent(Admin.this, Employee_Login.class);
-                intent5.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+         //       intent5.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent5);
-                finish();
+         //       finish();
                 navigationView.setCheckedItem(id);
                 break;
         }

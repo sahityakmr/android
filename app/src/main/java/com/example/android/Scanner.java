@@ -15,7 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.example.android.http.AsyncResponse;
+import com.example.android.http.HttpCall;
 import com.google.zxing.client.android.Intents;
 
 import org.apache.http.NameValuePair;
@@ -27,7 +32,11 @@ import org.json.JSONObject;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Scanner extends AppCompatActivity implements View.OnClickListener {
@@ -36,10 +45,12 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
     Button btnScan;
     JSONObject jObj = null;
     String json = "";
-    String scanResult,file;
+    String scanResult,file,employee_id;
     String serverResponse=null;
     ProgressBar loading;
     public ProgressDialog pDialog;
+    CircleImageView circlen;
+    String urli;
 
     //create JSON parser Object
     JSONParser jParser = new JSONParser();
@@ -50,6 +61,10 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
     private final String TAG_ID = "id";
     private final String TAG_LASTNAME = "lastname";
     private final String TAG_FIRSTNAME = "firstname";
+    private final String TAG_employee_id = "employee_id";
+    private final String TAG_aadhar = "aadhar";
+    private final String TAG_birthdate = "birthdate";
+    private final String TAG_contact_info = "contact_info";
    // private final String TAG_contact_info = "contact_info";
 
     //declare JSONArray
@@ -62,6 +77,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         txtScanResult=(TextView)findViewById(R.id.txtScanResult);
         btnScan=(Button)findViewById(R.id.btnScan);
         readData();
+        circlen = (CircleImageView) findViewById(R.id.circle);
         btnScan.setOnClickListener(this);
     }
 
@@ -114,7 +130,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                     new LoadEmployeeInformation().execute();
 
                 } catch (JSONException e) {
-                    // Log.d(LOG_TAG, "This should never happen");
+                     Log.d("LOG_TAG", "This should never happen");
                 }
                 //this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
             }
@@ -125,7 +141,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                     obj.put(Settings.ZXING_FORMAT, "");
                     obj.put(Settings.ZXING_CANCELLED, true);
                 } catch (JSONException e) {
-                    // Log.d(LOG_TAG, "This should never happen");
+                     Log.d("LOG_TAG", "This should never happen");
                 }
                 //this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
             } else {
@@ -173,8 +189,12 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                             String id = c.getString(TAG_ID);
                             String lastname = c.getString(TAG_LASTNAME);
                             String firstname = c.getString(TAG_FIRSTNAME);
-                            //String contact_info = c.getString(TAG_FIRSTNAME);
-                            serverResponse=id+"\n"+lastname+"\n"+firstname;
+                            employee_id = c.getString(TAG_employee_id);
+                            String aadhar = c.getString(TAG_aadhar);
+                            String birthdate = c.getString(TAG_birthdate);
+                            String contact_info = c.getString(TAG_contact_info);
+                            serverResponse=id+"\nFIRST NAME = "+firstname+"\nLAST NAME = "+lastname+"\nEMPLOYEE ID = "+employee_id+"\n BIRTHDATE = "+birthdate+"\nAADHAR NUMBER = "+aadhar+"\nMOBILE = "+contact_info;
+
                         }
                     }
                 } catch (JSONException e) {
@@ -192,6 +212,9 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                     if(serverResponse!=null){
                         txtScanResult.setText(serverResponse);
                         btnScan.setVisibility(View.INVISIBLE);
+                        circlen.setVisibility(View.VISIBLE);
+
+
                     }else{
                         txtScanResult.setText("this employee ID does not exist!!!");
                     }
@@ -203,6 +226,52 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
+
+    public void circleS(final View view)
+    {
+        insert(employee_id);
+        //new IdCard.GetHttpResponse(IdCard.this).execute();
+        // Do something in response to button click
+    }
+
+
+
+
+
+    public void insert(final String employeeid) {
+        Map<String, String> requestBodyMap = new HashMap<>();
+        requestBodyMap.put("employeeid", employeeid);
+        HttpCall.makeFormRequest(this, file+"/Android/q.php", requestBodyMap, new AsyncResponse() {
+            @Override
+            public void postExecute(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject bodyObject = jsonObject.getJSONObject("body");
+                    urli = bodyObject.getString("url");
+                    test(urli);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void postError(VolleyError error) {
+
+            }
+        });
+    }
+
+
+    private void test(final String a)
+    {
+        Glide.with(this)
+                .load(urli)
+                .into(circlen);
+
+    }
 
     private void readData() {
         try {

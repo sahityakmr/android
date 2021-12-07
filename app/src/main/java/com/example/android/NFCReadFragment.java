@@ -127,8 +127,9 @@ public class NFCReadFragment extends DialogFragment {
                     //finish();
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity(), "Something Went Wrong,Please Restart The App", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Attendance Marked Out Succesfully", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
+
                 }
             }
 

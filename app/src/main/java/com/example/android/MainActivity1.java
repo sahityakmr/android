@@ -279,7 +279,12 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
 
     public void  clickEvent(View v)
     {
-        Toast.makeText(getBaseContext(), "Press back ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Press back1 ", Toast.LENGTH_SHORT).show();
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            drawer.isDrawerOpen(GravityCompat.END);
+        }
     }
 
 

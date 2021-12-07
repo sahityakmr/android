@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class Nfc extends AppCompatActivity implements Listener{
     private Button mBtWrite;
     private Button mBtRead;
     private Button manual;
+    private TextView id;
 
     private NFCWriteFragment mNfcWriteFragment;
     private NFCReadFragment mNfcReadFragment;
@@ -52,7 +54,9 @@ public class Nfc extends AppCompatActivity implements Listener{
         manual.setVisibility(View.GONE);
       //  mBtWrite.setOnClickListener(view -> showWriteFragment());
         mBtWrite.setVisibility(View.GONE);
-        mBtRead.setOnClickListener(view -> showReadFragment());
+        id = (TextView) findViewById(R.id.et_view);
+        //mBtRead.setOnClickListener(view -> showReadFragment());
+        showReadFragment();
     }
 
     private void initNFC(){
@@ -124,34 +128,56 @@ public class Nfc extends AppCompatActivity implements Listener{
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-        Log.d(TAG, "onNewIntent: "+intent.getAction());
-
-        if(tag != null) {
-            Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
-            Ndef ndef = Ndef.get(tag);
 
 
+        if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+            id.setText("NFC Tag\n" + ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            Log.d(TAG, "onNewIntent: " + intent.getAction());
 
-            if (isDialogDisplayed) {
 
-                if (isWrite) {
+            if (tag != null) {
+                Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
+                Ndef ndef = Ndef.get(tag);
 
-                    String messageToWrite = mEtMessage.getText().toString();
-                    mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
-                    mNfcWriteFragment.onNfcDetected(ndef,messageToWrite);
 
-                } else {
-                    Log.d("TAG", "Empty Tag || Id Not Found On Server" );
+                if (isDialogDisplayed) {
 
-                    mNfcReadFragment = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
-                    mNfcReadFragment.onNfcDetected(ndef);
+                    if (isWrite) {
 
+                        String messageToWrite = mEtMessage.getText().toString();
+                        mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+                        mNfcWriteFragment.onNfcDetected(ndef, messageToWrite);
+
+                    } else {
+
+
+                        mNfcReadFragment = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
+                        mNfcReadFragment.onNfcDetected(ndef);
+
+                    }
                 }
             }
         }
     }
+
+
+    private String ByteArrayToHexString(byte [] inarray) {
+        int i, j, in;
+        String [] hex = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
+        String out= "";
+
+        for(j = 0 ; j < inarray.length ; ++j)
+        {
+            in = (int) inarray[j] & 0xff;
+            i = (in >> 4) & 0x0f;
+            out += hex[i];
+            i = in & 0x0f;
+            out += hex[i];
+        }
+        return out;
+    }
+
 
     @Override
     public void onBackPressed() {

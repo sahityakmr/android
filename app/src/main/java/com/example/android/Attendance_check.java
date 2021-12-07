@@ -114,7 +114,7 @@ public class Attendance_check extends AppCompatActivity {
         LogIn = findViewById(R.id.Login59);
         idBox = findViewById(R.id.idBoxx);
         //idBox.setText(e_id);
-        CardView cardView = (CardView) findViewById(R.id.card_view990);
+        CardView cardView = (CardView) findViewById(R.id.card_view991);
         //cardView.setRadius(20F);
         text_card = findViewById(R.id.text_card1);
         text_card_contact = findViewById(R.id.text_card21);

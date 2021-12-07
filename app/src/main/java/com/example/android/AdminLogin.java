@@ -186,6 +186,9 @@ public class AdminLogin extends AppCompatActivity{
 
         if (pressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
+            Intent intent = new Intent(AdminLogin.this, MainActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
             finish();
         } else {
             Intent intent = new Intent(AdminLogin.this, MainActivity1.class);

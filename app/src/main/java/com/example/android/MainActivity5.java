@@ -74,7 +74,7 @@ import static androidx.core.content.FileProvider.getUriForFile;
 public class MainActivity5 extends AppCompatActivity {
     //   private static final String TAG = MainActivity5.class.getSimpleName();
 
-    Bitmap bitmap, photo;
+    Bitmap bitmap, photo, photos;
 
     boolean check = true;
 
@@ -192,11 +192,13 @@ public class MainActivity5 extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+
+                        photo = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                         Toast.makeText(this, "Saved Image with Name : " + photoFile.getName(), Toast.LENGTH_SHORT).show();
-                        imageView.setImageBitmap(myBitmap);
+                        imageView.setImageBitmap(photo);
                     }
                 }
+
         );
     }
 

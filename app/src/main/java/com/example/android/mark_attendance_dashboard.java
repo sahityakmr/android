@@ -2,6 +2,7 @@ package com.example.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -39,20 +40,30 @@ public class mark_attendance_dashboard extends AppCompatActivity {
 //        EmailShow.setText(EmailHolder);
           FINGERSTRINGHolder = intent.getStringExtra(mark_attendance.userFinger);
           fingerShow.setText(FINGERSTRINGHolder);
-
-        button1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                finish();
-                Intent intentt = new Intent(mark_attendance_dashboard.this, MainActivity1.class);
-
+          Handler handler = new Handler();
+          handler.postDelayed(new Runnable(){
+              public void run() {
+                  Intent intentt = new Intent(mark_attendance_dashboard.this, MainActivity1.class);
+//                intentt.setFlags(intentt.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentt);
                 Toast.makeText(mark_attendance_dashboard.this, "WELCOME TO MEENA ELECTRICAL & ENGINEERING WORKS", Toast.LENGTH_LONG).show();
-                // intentt.setFlags(intentt.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
-            }
-        });
+//
+              }
+          },10000);
+
+//        button1.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                finish();
+//                Intent intentt = new Intent(mark_attendance_dashboard.this, MainActivity1.class);
+//                intentt.setFlags(intentt.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intentt);
+//                Toast.makeText(mark_attendance_dashboard.this, "WELCOME TO MEENA ELECTRICAL & ENGINEERING WORKS", Toast.LENGTH_LONG).show();
+//
+//                finish();
+//            }
+//        });
     }
     @Override
     protected void onDestroy() {

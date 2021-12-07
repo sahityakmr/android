@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.NFC" android:required="true"/>
+    <uses-feature android:name="android.hardware.nfc" />
 
     <application
         android:allowBackup="true"
@@ -74,7 +75,18 @@
         <activity android:name=".AdminLogin"/>
         <activity android:name=".AdminForgot"/>
         <activity android:name=".DashBoard"/>
-        <activity android:name=".Nfc"/>
+        <activity android:name=".Nfc">
+        <intent-filter>
+            <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            <action android:name="android.nfc.action.TAG_DISCOVERED" />
+            <category android:name="android.intent.category.DEFAULT" />
+
+        </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/tech_filter" />
+        </activity>
         <activity android:name=".NfcWrite"/>
         <activity android:name=".ValidateIDCard"/>
 
@@ -84,11 +96,14 @@
             android:exported="false"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:clearTaskOnLaunch="true"
+            android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="com.example.android.SCAN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
         </activity>
 
 
@@ -137,4 +152,8 @@
     </application>
     <!--            android:authorities="${applicationId}.provider"-->
 <!--    android:authorities=" edu.usna.mobileos.cameraexamples.fileprovider"-->
+
+<!--    <action android:name="NfcAdapter.ACTION_NDEF_DISCOVERED" />-->
+<!--    <action android:name="NfcAdapter.ACTION_TECH_DISCOVERED" />-->
+<!--    <action android:name="NfcAdapter.ACTION_TAG_DISCOVERED" />-->
 </manifest>

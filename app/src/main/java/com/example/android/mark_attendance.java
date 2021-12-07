@@ -216,15 +216,19 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
         requestMap.put("ids", ids);
         requestMap.put("lat", latitudeTextView.getText().toString());
         requestMap.put("longi", longitTextView.getText().toString());
-        HttpCall.makeFormRequest(this, file + "/android/finger_check.php", requestMap, new AsyncResponse() {
+        HttpCall.makeFormRequest(this, file + "/Android/finger_check.php", requestMap, new AsyncResponse() {
             @Override
             public void postExecute(String response) {
                 Log.i("TAG", "postExecute: " + response);
+                Toast.makeText(mark_attendance.this, "Mark Done", Toast.LENGTH_SHORT).show();
+               // Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+                //startActivity(intent);
+
             }
 
             @Override
             public void postError(VolleyError error) {
-
+                Toast.makeText(mark_attendance.this, "Something gone Wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

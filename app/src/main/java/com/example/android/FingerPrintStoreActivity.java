@@ -468,7 +468,7 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
 
 
                 Toast.makeText(FingerPrintStoreActivity.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity5.class);
+                Intent intent = new Intent(FingerPrintStoreActivity.this, MainActivity3.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra("message_key", imageid);
 
