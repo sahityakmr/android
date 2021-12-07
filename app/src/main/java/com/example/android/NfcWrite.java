@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class NfcWrite extends AppCompatActivity implements Listener{
     private boolean isWrite = false;
     private long pressedTime;
     String str;
+    private TextView id;
 
 
     private NfcAdapter mNfcAdapter;
@@ -60,6 +62,7 @@ public class NfcWrite extends AppCompatActivity implements Listener{
        // mBtRead.setOnClickListener(view -> showReadFragment());
         mEtMessage.setText(str);
         mEtMessage.setEnabled(false);
+        id = (TextView) findViewById(R.id.et_view);
     }
 
     private void initNFC(){
@@ -138,44 +141,65 @@ public class NfcWrite extends AppCompatActivity implements Listener{
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+            id.setText("NFC Tag\n" + ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-        Log.d(TAG, "onNewIntent: "+intent.getAction());
+            Log.d(TAG, "onNewIntent: " + intent.getAction());
 
-        if(tag != null) {
-            Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
-            Ndef ndef = Ndef.get(tag);
+            if (tag != null) {
+                Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
+                Ndef ndef = Ndef.get(tag);
 
 
+                if (isDialogDisplayed) {
 
-            if (isDialogDisplayed) {
+                    if (isWrite) {
 
-                if (isWrite) {
+                        String messageToWrite = mEtMessage.getText().toString();
+                        String sourceStr = mEtMessage.getText().toString();
 
-                    String messageToWrite = mEtMessage.getText().toString();
-                    String sourceStr = mEtMessage.getText().toString();
+                        try {
+                            //encrypt12(mEtMessage.getText().toString(), Integer.parseInt("1"));
+                            //String encrypted = AESUtils.encrypt(sourceStr);
+                            //Log.d("TEST", "encrypted:" + encrypted);
+                            mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+                            mNfcWriteFragment.onNfcDetected(ndef, messageToWrite);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        //                    mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
+                        //                    mNfcWriteFragment.onNfcDetected(ndef,messageToWrite);
 
-                    try {
-                        //encrypt12(mEtMessage.getText().toString(), Integer.parseInt("1"));
-                        //String encrypted = AESUtils.encrypt(sourceStr);
-                        //Log.d("TEST", "encrypted:" + encrypted);
-                        mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
-                        mNfcWriteFragment.onNfcDetected(ndef,messageToWrite);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } else {
+
+                        mNfcReadFragment = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
+                        mNfcReadFragment.onNfcDetected(ndef);
+                        Log.d("TAG", "Empty Tag || Id Not Found On Server");
                     }
-//                    mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
-//                    mNfcWriteFragment.onNfcDetected(ndef,messageToWrite);
-
-                } else {
-
-                    mNfcReadFragment = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
-                    mNfcReadFragment.onNfcDetected(ndef);
-                    Log.d("TAG", "Empty Tag || Id Not Found On Server" );
                 }
             }
         }
     }
+
+
+    private String ByteArrayToHexString(byte [] inarray) {
+        int i, j, in;
+        String [] hex = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
+        String out= "";
+
+        for(j = 0 ; j < inarray.length ; ++j)
+        {
+            in = (int) inarray[j] & 0xff;
+            i = (in >> 4) & 0x0f;
+            out += hex[i];
+            i = in & 0x0f;
+            out += hex[i];
+        }
+        return out;
+    }
+
+
 
     @Override
     public void onBackPressed() {
