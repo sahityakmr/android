@@ -59,7 +59,8 @@
         <activity android:name=".SecondActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivity5" />
-        <activity android:name=".FingerPrintStoreActivity" />
+        <activity android:name=".FingerPrintStoreActivity" >
+        </activity>
         <activity android:name=".Attendance_check"/>
         <activity android:name=".Custom_Action"/>
         <activity android:name=".Credential"/>

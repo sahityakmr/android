@@ -16,7 +16,6 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +38,8 @@ import com.google.android.gms.tasks.Task;
 import com.mantra.mfs100.FingerData;
 import com.mantra.mfs100.MFS100;
 import com.mantra.mfs100.MFS100Event;
+
+import net.iharder.Base64;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -646,7 +647,8 @@ public class FingerPrintStoreActivity extends AppCompatActivity implements MFS10
                         SetTextOnUIThread(mfs100.GetErrorMsg(ret));
                     } else {
                         lastCapFingerData = fingerData;
-                        fingerprints[index] = "#" + Base64.encodeToString(fingerData.ISOTemplate(), Base64.DEFAULT) + "#";
+                        String encodedBytes = Base64.encodeBytes(lastCapFingerData.ISOTemplate());
+                        fingerprints[index] = "#" + encodedBytes + "#";
                         final Bitmap bitmap = BitmapFactory.decodeByteArray(fingerData.FingerImage(), 0,
                                 fingerData.FingerImage().length);
                         FingerPrintStoreActivity.this.runOnUiThread(new Runnable() {

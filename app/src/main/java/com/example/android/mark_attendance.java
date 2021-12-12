@@ -46,15 +46,16 @@ import com.mantra.mfs100.FingerData;
 import com.mantra.mfs100.MFS100;
 import com.mantra.mfs100.MFS100Event;
 
+import net.iharder.Base64;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class mark_attendance extends AppCompatActivity implements MFS100Event,PopupMenu.OnMenuItemClickListener {
+public class mark_attendance extends AppCompatActivity implements MFS100Event, PopupMenu.OnMenuItemClickListener {
 //public class mark_attendance extends AppCompatActivity implements MFS100Event {
 
     EditText Email, Password;
@@ -120,7 +121,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
         fingerprints = new String[10];
 
 
-
         LogIn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -135,9 +135,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
 
 
         });
-
-
-
 
 
 //        LogIn.setOnClickListener(new View.OnClickListener() {
@@ -200,13 +197,13 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
     }
 
     private String cleanFP(String fingerprint) {
-        if(fingerprint == null || fingerprint.length() < 10){
+        if (fingerprint == null || fingerprint.length() < 10) {
             return "";
         }
         fingerprint = fingerprint.replaceAll("\n", "");
         int sInd = fingerprint.indexOf('#');
         int eInd = fingerprint.lastIndexOf('#');
-        if(sInd < 0 || eInd < 0)
+        if (sInd < 0 || eInd < 0)
             return fingerprint;
         return fingerprint.substring(sInd + 1, eInd);
     }
@@ -221,8 +218,8 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
             public void postExecute(String response) {
                 Log.i("TAG", "postExecute: " + response);
                 Toast.makeText(mark_attendance.this, "Mark Done", Toast.LENGTH_SHORT).show();
-               // Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
-                //startActivity(intent);
+                Intent intent = new Intent(mark_attendance.this, mark_attendance_dashboard.class);
+                startActivity(intent);
 
             }
 
@@ -639,7 +636,7 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
         }
     }
 
-    private void StartSyncCapture() {
+    private void StartSyncCapture(com.example.android.other.AsyncResponse asyncResponse) {
         new Thread(new Runnable() {
 
             @Override
@@ -660,13 +657,23 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
                             @Override
                             public void run() {
                                 Runnable runnable = () -> {
+                                    boolean matched = false;
                                     for (String fingerprint : biometric.getFingerprints()) {
                                         String cleanedFp = cleanFP(fingerprint);
-                                        if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), Base64.getDecoder().decode(cleanedFp)) > 90) {
+                                        byte[] cleanedFpBytes = new byte[0];
+                                        try {
+                                            cleanedFpBytes = Base64.decode(cleanedFp);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        if (mfs100.MatchISO(lastCapFingerData.ISOTemplate(), cleanedFpBytes) > 90) {
+                                            matched = true;
                                             markAttendance(biometric.getId());
                                             break;
                                         }
                                     }
+                                    asyncResponse.postExecute(matched);
+
                                     lastCapFingerData = null;
                                 };
                                 new Thread(runnable).start();
@@ -731,16 +738,24 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
         } catch (IOException e) {
             e.printStackTrace();
         }
-       // printMessage("reading to file " + filename2 + " completed..");
+        // printMessage("reading to file " + filename2 + " completed..");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case R.id.search_item:
-                StartSyncCapture();
+                StartSyncCapture(new com.example.android.other.AsyncResponse() {
+                    @Override
+                    public void postExecute(boolean success) {
+                        if (!success) {
+                            Toast.makeText(mark_attendance.this, "Invalid Fingerprint", Toast.LENGTH_LONG).show();
+                            Log.d("TAG", "postExecute: Invalid FP");
+                        }
+                    }
+                });
                 return true;
             case R.id.upload_item:
                 // do your code
@@ -753,7 +768,6 @@ public class mark_attendance extends AppCompatActivity implements MFS100Event,Po
                 return false;
         }
     }
-
 
 
     @Override
