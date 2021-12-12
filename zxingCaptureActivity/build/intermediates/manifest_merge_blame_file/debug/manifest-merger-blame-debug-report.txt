@@ -26,7 +26,7 @@
 26    android:versionName="3.61 beta 1" >
 27
 28    <uses-sdk android:minSdkVersion="1" />
-28-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml
+28-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml
 29
 30    <!--
 31  For Donut and above we must specify that we use the camera, but intentionally omit the
@@ -35,334 +35,334 @@
 34  to this effect on first launch.
 35    -->
 36    <uses-feature android:name="android.hardware.camera" />
-36-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:33:3-57
-36-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:33:17-55
+36-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:33:3-57
+36-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:33:17-55
 37
 38    <uses-permission android:name="android.permission.CAMERA" />
-38-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:144:3-62
-38-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:144:20-60
+38-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:144:3-62
+38-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:144:20-60
 39    <uses-permission android:name="android.permission.READ_CONTACTS" />
-39-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:145:3-69
-39-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:145:20-67
+39-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:145:3-69
+39-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:145:20-67
 40    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-40-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:146:3-70
-40-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:146:20-68
+40-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:146:3-70
+40-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:146:20-68
 41    <uses-permission android:name="android.permission.INTERNET" />
-41-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:147:3-64
-41-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:147:20-62
+41-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:147:3-64
+41-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:147:20-62
 42    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-42-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:148:3-90
-42-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:148:20-88
+42-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:148:3-90
+42-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:148:20-88
 43    <uses-permission android:name="android.permission.VIBRATE" />
-43-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:149:3-63
-43-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:149:20-61
+43-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:149:3-63
+43-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:149:20-61
 44    <uses-permission android:name="android.permission.FLASHLIGHT" />
-44-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:150:3-66
-44-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:150:20-64
+44-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:150:3-66
+44-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:150:20-64
 45    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-45-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:151:3-78
-45-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:151:20-76
+45-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:151:3-78
+45-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:151:20-76
 46
 47    <!-- Wifi related -->
 48    <uses-permission
-48-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:154:3-155:45
+48-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:154:3-155:45
 49        android:name="android.permission.WRITE_SETTINGS"
-49-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:154:20-68
+49-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:154:20-68
 50        tools:ignore="ProtectedPermissions" />
-50-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:155:7-42
+50-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:155:7-42
 51    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-51-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:156:3-74
-51-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:156:20-71
+51-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:156:3-74
+51-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:156:20-71
 52    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-52-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:157:3-74
-52-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:157:20-71
+52-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:157:3-74
+52-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:157:20-71
 53    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-53-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:158:3-77
-53-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:158:20-74
+53-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:158:3-77
+53-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:158:20-74
 54    <uses-permission android:name="android.permission.WAKE_LOCK" />
-54-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:159:3-66
-54-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:159:20-63
+54-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:159:3-66
+54-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:159:20-63
 55
 56    <application>
-56-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:34:3-143:17
+56-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:34:3-143:17
 57        <activity
-57-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:35:5-75:16
+57-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:35:5-75:16
 58            android:name="com.google.zxing.client.android.CaptureActivity"
-58-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:35:15-46
+58-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:35:15-46
 59            android:clearTaskOnLaunch="true"
-59-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:40:15-47
+59-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:40:15-47
 60            android:configChanges="orientation|keyboardHidden"
-60-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:37:15-65
+60-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:37:15-65
 61            android:screenOrientation="landscape"
-61-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:36:15-52
+61-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:36:15-52
 62            android:stateNotNeeded="true"
-62-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:41:15-44
+62-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:41:15-44
 63            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-63-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:38:15-73
+63-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:38:15-73
 64            android:windowSoftInputMode="stateAlwaysHidden" >
-64-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:39:15-62
+64-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:39:15-62
 65            <intent-filter>
-65-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:42:7-45:23
+65-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:42:7-45:23
 66                <action android:name="com.google.zxing.client.android.SCAN" />
-66-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:43:9-70
-66-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:43:17-68
+66-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:43:9-70
+66-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:43:17-68
 67
 68                <category android:name="android.intent.category.DEFAULT" />
-68-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-68-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+68-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+68-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 69            </intent-filter>
 70            <!-- Allow web apps to launch Barcode Scanner by linking to http://zxing.appspot.com/scan. -->
 71            <intent-filter>
-71-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:47:7-52:23
+71-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:47:7-52:23
 72                <action android:name="android.intent.action.VIEW" />
-72-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
-72-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
+72-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
+72-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
 73
 74                <category android:name="android.intent.category.DEFAULT" />
-74-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-74-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+74-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+74-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 75                <category android:name="android.intent.category.BROWSABLE" />
-75-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
-75-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
+75-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
+75-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
 76
 77                <data
-77-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+77-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
 78                    android:host="zxing.appspot.com"
-78-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
+78-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
 79                    android:path="/scan"
-79-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
+79-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
 80                    android:scheme="http" />
-80-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
+80-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
 81            </intent-filter>
 82            <!-- We also support a Google Product Search URL. -->
 83            <intent-filter>
-83-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:54:7-59:23
+83-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:54:7-59:23
 84                <action android:name="android.intent.action.VIEW" />
-84-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
-84-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
+84-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
+84-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
 85
 86                <category android:name="android.intent.category.DEFAULT" />
-86-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-86-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+86-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+86-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 87                <category android:name="android.intent.category.BROWSABLE" />
-87-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
-87-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
+87-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
+87-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
 88
 89                <data
-89-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+89-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
 90                    android:host="www.google.com"
-90-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
+90-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
 91                    android:path="/m/products/scan"
-91-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
+91-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
 92                    android:scheme="http" />
-92-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
+92-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
 93            </intent-filter>
 94            <!-- And the UK version. -->
 95            <intent-filter>
-95-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:61:7-66:23
+95-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:61:7-66:23
 96                <action android:name="android.intent.action.VIEW" />
-96-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
-96-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
+96-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
+96-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
 97
 98                <category android:name="android.intent.category.DEFAULT" />
-98-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-98-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+98-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+98-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 99                <category android:name="android.intent.category.BROWSABLE" />
-99-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
-99-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
+99-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
+99-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
 100
 101                <data
-101-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+101-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
 102                    android:host="www.google.co.uk"
-102-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
+102-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
 103                    android:path="/m/products/scan"
-103-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
+103-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
 104                    android:scheme="http" />
-104-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
+104-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
 105            </intent-filter>
 106            <intent-filter>
-106-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:68:7-73:23
+106-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:68:7-73:23
 107                <action android:name="android.intent.action.VIEW" />
-107-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
-107-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
+107-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
+107-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
 108
 109                <category android:name="android.intent.category.DEFAULT" />
-109-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-109-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+109-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+109-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 110                <category android:name="android.intent.category.BROWSABLE" />
-110-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
-110-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
+110-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:9-69
+110-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:50:19-67
 111
 112                <data
-112-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+112-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
 113                    android:host="scan"
-113-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
+113-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:37-69
 114                    android:path="/"
-114-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
+114-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:70-90
 115                    android:scheme="zxing" />
-115-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
+115-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:15-36
 116            </intent-filter>
 117        </activity>
 118        <activity
-118-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:76:5-79:16
+118-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:76:5-79:16
 119            android:name="com.google.zxing.client.android.PreferencesActivity"
-119-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:76:15-50
+119-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:76:15-50
 120            android:label="@string/preferences_name"
-120-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:77:15-55
+120-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:77:15-55
 121            android:stateNotNeeded="true" >
-121-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:78:15-44
+121-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:78:15-44
 122        </activity>
 123        <activity
-123-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:5-97:16
+123-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:5-97:16
 124            android:name="com.google.zxing.client.android.encode.EncodeActivity"
-124-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:15-52
+124-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:15-52
 125            android:label="@string/share_name" >
-125-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:53-87
+125-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:80:53-87
 126            <intent-filter>
-126-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:81:7-84:23
+126-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:81:7-84:23
 127                <action android:name="com.google.zxing.client.android.ENCODE" />
-127-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:82:9-72
-127-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:82:17-70
+127-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:82:9-72
+127-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:82:17-70
 128
 129                <category android:name="android.intent.category.DEFAULT" />
-129-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-129-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+129-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+129-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 130            </intent-filter>
 131            <!-- This allows us to handle the Share button in Contacts. -->
 132            <intent-filter>
-132-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:86:7-90:23
+132-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:86:7-90:23
 133                <action android:name="android.intent.action.SEND" />
-133-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:9-60
-133-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:17-58
+133-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:9-60
+133-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:17-58
 134
 135                <category android:name="android.intent.category.DEFAULT" />
-135-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-135-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+135-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+135-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 136
 137                <data android:mimeType="text/x-vcard" />
-137-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
-137-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:89:15-46
+137-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+137-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:89:15-46
 138            </intent-filter>
 139            <!-- This allows us to handle sharing any plain text . -->
 140            <intent-filter>
-140-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:92:7-96:23
+140-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:92:7-96:23
 141                <action android:name="android.intent.action.SEND" />
-141-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:9-60
-141-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:17-58
+141-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:9-60
+141-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:87:17-58
 142
 143                <category android:name="android.intent.category.DEFAULT" />
-143-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-143-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+143-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+143-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 144
 145                <data android:mimeType="text/plain" />
-145-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
-145-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:89:15-46
+145-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:51:9-92
+145-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:89:15-46
 146            </intent-filter>
 147        </activity>
 148        <activity
-148-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:98:5-106:16
+148-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:98:5-106:16
 149            android:name="com.google.zxing.client.android.book.SearchBookContentsActivity"
-149-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:98:15-62
+149-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:98:15-62
 150            android:configChanges="orientation|keyboardHidden"
-150-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:101:15-65
+150-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:101:15-65
 151            android:label="@string/sbc_name"
-151-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:99:15-47
+151-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:99:15-47
 152            android:screenOrientation="landscape" >
-152-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:100:15-52
+152-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:100:15-52
 153            <intent-filter>
-153-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:102:7-105:23
+153-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:102:7-105:23
 154                <action android:name="com.google.zxing.client.android.SEARCH_BOOK_CONTENTS" />
-154-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:103:9-86
-154-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:103:17-84
+154-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:103:9-86
+154-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:103:17-84
 155
 156                <category android:name="android.intent.category.DEFAULT" />
-156-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-156-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+156-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+156-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 157            </intent-filter>
 158        </activity>
 159        <activity
-159-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:107:5-111:16
+159-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:107:5-111:16
 160            android:name="com.google.zxing.client.android.wifi.WifiActivity"
-160-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:107:15-48
+160-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:107:15-48
 161            android:configChanges="orientation|keyboardHidden"
-161-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:110:15-65
+161-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:110:15-65
 162            android:label="@string/wa_name"
-162-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:108:15-46
+162-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:108:15-46
 163            android:screenOrientation="landscape" >
-163-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:109:15-52
+163-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:109:15-52
 164        </activity>
 165        <activity
-165-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:112:5-120:16
+165-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:112:5-120:16
 166            android:name="com.google.zxing.client.android.share.ShareActivity"
-166-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:112:15-50
+166-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:112:15-50
 167            android:label="@string/share_name"
-167-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:113:15-49
+167-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:113:15-49
 168            android:screenOrientation="user"
-168-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:114:15-47
+168-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:114:15-47
 169            android:theme="@android:style/Theme.Light" >
-169-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:115:15-57
+169-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:115:15-57
 170            <intent-filter>
-170-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:116:7-119:23
+170-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:116:7-119:23
 171                <action android:name="com.google.zxing.client.android.SHARE" />
-171-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:117:9-71
-171-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:117:17-69
+171-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:117:9-71
+171-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:117:17-69
 172
 173                <category android:name="android.intent.category.DEFAULT" />
-173-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-173-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+173-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+173-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 174            </intent-filter>
 175        </activity>
 176        <activity
-176-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:121:5-127:16
+176-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:121:5-127:16
 177            android:name="com.google.zxing.client.android.share.BookmarkPickerActivity"
-177-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:121:15-59
+177-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:121:15-59
 178            android:label="@string/bookmark_picker_name" >
-178-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:122:15-59
+178-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:122:15-59
 179            <intent-filter>
-179-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:123:7-126:23
+179-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:123:7-126:23
 180                <action android:name="android.intent.action.PICK" />
-180-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:9-60
-180-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:17-58
+180-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:9-60
+180-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:17-58
 181
 182                <category android:name="android.intent.category.DEFAULT" />
-182-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-182-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+182-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+182-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 183            </intent-filter>
 184        </activity>
 185        <activity
-185-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:128:5-135:16
+185-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:128:5-135:16
 186            android:name="com.google.zxing.client.android.share.AppPickerActivity"
-186-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:128:15-54
+186-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:128:15-54
 187            android:configChanges="orientation"
-187-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:130:15-50
+187-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:130:15-50
 188            android:label="@string/app_picker_name" >
-188-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:129:15-54
+188-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:129:15-54
 189            <intent-filter>
-189-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:123:7-126:23
+189-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:123:7-126:23
 190                <action android:name="android.intent.action.PICK" />
-190-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:9-60
-190-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:17-58
+190-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:9-60
+190-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:124:17-58
 191
 192                <category android:name="android.intent.category.DEFAULT" />
-192-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-192-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+192-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+192-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 193            </intent-filter>
 194        </activity>
 195        <activity
-195-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:136:5-142:16
+195-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:136:5-142:16
 196            android:name="com.google.zxing.client.android.HelpActivity"
-196-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:136:15-43
+196-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:136:15-43
 197            android:screenOrientation="user" >
-197-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:137:15-47
+197-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:137:15-47
 198            <intent-filter>
-198-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:138:7-141:23
+198-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:138:7-141:23
 199                <action android:name="android.intent.action.VIEW" />
-199-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
-199-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
+199-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:9-60
+199-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:48:17-58
 200
 201                <category android:name="android.intent.category.DEFAULT" />
-201-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
-201-->C:\Users\singh\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
+201-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:9-67
+201-->D:\Workspace\AndroidStudioProjects\s_android\zxingCaptureActivity\src\main\AndroidManifest.xml:44:19-65
 202            </intent-filter>
 203        </activity>
 204    </application>
