@@ -71,9 +71,12 @@ import com.example.android.R;
 
 import static androidx.core.content.FileProvider.getUriForFile;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity5 extends AppCompatActivity {
     //   private static final String TAG = MainActivity5.class.getSimpleName();
-
+    private static final String TAG = "MainActivity5";
     Bitmap bitmap, photo, photos;
 
     boolean check = true;
@@ -192,7 +195,7 @@ public class MainActivity5 extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-
+                        Log.d(TAG, "registerForPicture: photo " + String.valueOf(photoFile));
                         photo = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                         Toast.makeText(this, "Saved Image with Name : " + photoFile.getName(), Toast.LENGTH_SHORT).show();
                         imageView.setImageBitmap(photo);
@@ -221,6 +224,7 @@ public class MainActivity5 extends AppCompatActivity {
         }
 
         // Save a file: path for use with ACTION_VIEW intents
+        Log.d(TAG, "createImageFile: returning " + image.getName());
         return image;
     }
 
@@ -258,7 +262,7 @@ public class MainActivity5 extends AppCompatActivity {
         byteArrayOutputStreamObject = new ByteArrayOutputStream();
         //bitmap.compress(Bitmap.CompressFormat.JPEG,50, byteArrayOutputStreamObject);
 
-        photo.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStreamObject);
+        photo.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStreamObject);
 
 
         byte[] byteArrayVar = byteArrayOutputStreamObject.toByteArray();
@@ -276,27 +280,33 @@ public class MainActivity5 extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(String string1) {
+            protected void onPostExecute(String response) {
 
-                super.onPostExecute(string1);
+                super.onPostExecute(response);
 
                 // Dismiss the progress dialog after done uploading.
                 progressDialog.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
 
-                // Printing uploading success message coming from server on android app.
-                Toast.makeText(MainActivity5.this, string1, Toast.LENGTH_LONG).show();
+                    // Printing uploading success message coming from server on android app.
+                    Toast.makeText(MainActivity5.this, response, Toast.LENGTH_LONG).show();
 
-                // SettingNavigation image as transparent after done uploading.
-                imageView.setImageResource(android.R.color.transparent);
-                //  Intent intent = new Intent(MainActivity3.this,MainActivity1.class);
-                Intent intent = new Intent(MainActivity5.this, MainActivity1.class);
-                startActivity(intent);
-                // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    // SettingNavigation image as transparent after done uploading.
+                    imageView.setImageResource(android.R.color.transparent);
+                    //  Intent intent = new Intent(MainActivity3.this,MainActivity1.class);
+                    Intent intent = new Intent(MainActivity5.this, MainActivity1.class);
+                    startActivity(intent);
+                    // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e ( "response", "" + response );
+                }
             }
 
-            @Override
+                @Override
             protected String doInBackground(Void... params) {
 
                 ImageProcessClass imageProcessClass = new ImageProcessClass();
@@ -307,7 +317,7 @@ public class MainActivity5 extends AppCompatActivity {
 
                 HashMapParams.put(ImagePath, ConvertImage);
 
-                String FinalData = imageProcessClass.ImageHttpRequest(file + "/Android/Payroll_and_Attendance_system/image-gallery/photos/Documents/img_upload_to_server.php", HashMapParams);
+                String FinalData = imageProcessClass.ImageHttpRequest(file + "/Android/Images/img_upload_to_server1.php", HashMapParams);
 
                 return FinalData;
             }

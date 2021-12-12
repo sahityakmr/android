@@ -25,10 +25,11 @@ import java.util.Map;
 
 public class LeaveStatus extends AppCompatActivity {
     private final String filename2 = "address.txt";
-    String file;
+    private final String filename3 = "employeeid.txt";
+    String file,file3;
     private long pressedTime;
     TextView tex;
-    EditText etx;
+    TextView etx;
     int PERMISSION_ID = 44;
     Button Logi;
     HashMap<String, String> hashMap = new HashMap<>();
@@ -41,16 +42,18 @@ public class LeaveStatus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leave_status);
         readData();
+        readData1();
         tex = (TextView) findViewById(R.id.textView63);
 
         //FINGERSTRING.setVisibility(View.GONE);
-        etx = findViewById(R.id.idBox71);
+        etx = (TextView) findViewById(R.id.idBox71);
         //idBox.setText(e_id);
         CardView cardView = (CardView) findViewById(R.id.card_view999);
         cardView.setRadius(20F);
         text_card = findViewById(R.id.text_card431);
         text_card_contact = findViewById(R.id.text_card23);
         Logi = (Button) findViewById(R.id.fi);
+        etx.setText(file3);
 
 
         Logi.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +119,25 @@ public class LeaveStatus extends AppCompatActivity {
             e.printStackTrace();
         }
        // printMessage("reading to file " + filename2 + " completed..");
+    }
+
+    private void readData1() {
+        try {
+            FileInputStream fin = openFileInput(filename3);
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1) {
+                temp.append((char) a);
+            }
+
+            // setting text from the file.
+            file3 = temp.toString();
+            fin.close();
+            // UserLoginFunction(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //   printMessage("reading to file " + filename2 + " completed..");
     }
 
 

@@ -137,7 +137,7 @@ public class Attendance_check extends AppCompatActivity {
                             // loadfingers();
                             idBox.setClickable(false);
                             idBox.setFocusable(false);
-                            String[] names = new String[]{"Time IN.:-" + (attendance.gettimein()), "Time Out.:-" + (attendance.gettimeout()), "Total Hour(s).:-" + (attendance.getnumberofhour()), "Date.:-" + (attendance.getdate())};
+                            String[] names = new String[]{"Time IN.:-" + (attendance.gettimein()), "Time Out.:-" + (attendance.gettimeout()), "Total Time.:-" + (attendance.getdate())};
                             //text_card.setText(biometric.getFirstname());
 //                        names = new String[] {"City.:-" + city, "State.:-" + state, "Address:-" + add, "Zip:-" + zip};
                             text_card.setText(Arrays.toString(names));
@@ -232,6 +232,9 @@ public class Attendance_check extends AppCompatActivity {
 
     if (pressedTime + 2000 > System.currentTimeMillis()) {
         super.onBackPressed();
+        Intent intent = new Intent(Attendance_check.this, Custom_Action.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
         finish();
     } else {
         Intent intent = new Intent(Attendance_check.this, MainActivity1.class);

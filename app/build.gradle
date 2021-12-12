@@ -90,6 +90,7 @@ dependencies {
     //  implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation files('libs/mantra.mfs100.jar')
+    implementation files('libs/base64-2.3.7.jar')
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'

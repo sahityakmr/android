@@ -35,13 +35,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.net.Uri;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Scanner extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtScanResult;
+    TextView txtScanResult, call;
     Button btnScan;
     JSONObject jObj = null;
     String json = "";
@@ -50,7 +51,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
     ProgressBar loading;
     public ProgressDialog pDialog;
     CircleImageView circlen;
-    String urli;
+    String urli, contact_info;
 
     //create JSON parser Object
     JSONParser jParser = new JSONParser();
@@ -78,6 +79,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         btnScan=(Button)findViewById(R.id.btnScan);
         readData();
         circlen = (CircleImageView) findViewById(R.id.circle);
+        call = (TextView) findViewById(R.id.call);
         btnScan.setOnClickListener(this);
     }
 
@@ -192,7 +194,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                             employee_id = c.getString(TAG_employee_id);
                             String aadhar = c.getString(TAG_aadhar);
                             String birthdate = c.getString(TAG_birthdate);
-                            String contact_info = c.getString(TAG_contact_info);
+                            contact_info = c.getString(TAG_contact_info);
                             serverResponse=id+"\nFIRST NAME = "+firstname+"\nLAST NAME = "+lastname+"\nEMPLOYEE ID = "+employee_id+"\n BIRTHDATE = "+birthdate+"\nAADHAR NUMBER = "+aadhar+"\nMOBILE = "+contact_info;
 
                         }
@@ -200,6 +202,7 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                 } catch (JSONException e) {
                     Log.e("error: ", e.getMessage());
                 }
+
             }
             return null;
         }
@@ -213,6 +216,8 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
                         txtScanResult.setText(serverResponse);
                         btnScan.setVisibility(View.INVISIBLE);
                         circlen.setVisibility(View.VISIBLE);
+                        call.setVisibility(View.VISIBLE);
+                        call.setText(contact_info);
 
 
                     }else{
@@ -235,7 +240,20 @@ public class Scanner extends AppCompatActivity implements View.OnClickListener {
         // Do something in response to button click
     }
 
+    public void call(final View view)
+    {
 
+        Uri u = Uri.parse("tel:" +call.getText().toString());
+        Intent i = new Intent(Intent.ACTION_DIAL, u);
+        try {
+            startActivity(i);
+        }
+        catch(SecurityException s)
+        {
+            Toast.makeText(this,"An Error Occured", Toast.LENGTH_LONG).show();
+        }
+
+    }
 
 
 

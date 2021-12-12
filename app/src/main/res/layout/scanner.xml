@@ -16,6 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+
+
     <Button
         android:id="@+id/btnScan"
         android:layout_width="match_parent"
@@ -32,6 +34,15 @@
         app:civ_border_color="#FF000000"
         app:civ_border_width="1sp"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="call"
+        android:visibility="gone"
+        android:autoLink="phone"
+        android:linksClickable="true"/>
 
 
 </LinearLayout>

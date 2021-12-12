@@ -313,7 +313,7 @@ public class MainActivity3 extends AppCompatActivity {
 
                 HashMapParams.put(ImagePath, ConvertImage);
 
-                String FinalData = imageProcessClass.ImageHttpRequest(file + "/Android/Payroll_and_Attendance_system/image-gallery/photos/Documents/img_upload_to_server.php", HashMapParams);
+                String FinalData = imageProcessClass.ImageHttpRequest(file + "/Android/Images/img_upload_to_server.php", HashMapParams);
 
                 return FinalData;
             }
